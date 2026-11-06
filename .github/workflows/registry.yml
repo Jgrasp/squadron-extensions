@@ -1,0 +1,91 @@
+name: Registry
+
+on:
+  push:
+    branches: [main]
+    paths: [registry.json]
+  pull_request:
+    paths: [registry.json]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: registry-${{ github.ref }}
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      todo: ${{ steps.plan.outputs.todo }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/plan.mjs >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: plan
+    if: needs.plan.outputs.todo != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        entry: ${{ fromJson(needs.plan.outputs.todo) }}
+    env:
+      ID: ${{ matrix.entry.id }}
+      VERSION: ${{ matrix.entry.version }}
+      REPOSITORY: ${{ matrix.entry.repository }}
+      COMMIT: ${{ matrix.entry.commit }}
+      SUBDIR: ${{ matrix.entry.path }}
+      SOURCE: source
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: registry
+          persist-credentials: false
+      - name: Fetch the extension at its commit
+        run: |
+          git init -q source
+          git -C source fetch -q --depth 1 "$REPOSITORY" "$COMMIT"
+          git -C source checkout -q FETCH_HEAD
+      - run: rustup target add wasm32-wasip2
+      - name: Build and pack
+        run: node registry/scripts/pack.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.entry.id }}
+          path: out/*.tar.gz
+          if-no-files-found: error
+
+  publish:
+    needs: [plan, build]
+    if: github.event_name != 'pull_request' && needs.plan.outputs.todo != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - name: Release the archives and update the index
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/publish.mjs
+      - name: Commit the index
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git diff --cached --quiet || git commit -m "Update the index"
+          git push
