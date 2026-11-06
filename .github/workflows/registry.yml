@@ -20,7 +20,7 @@ jobs:
     outputs:
       todo: ${{ steps.plan.outputs.todo }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -48,7 +48,7 @@ jobs:
       SUBDIR: ${{ matrix.entry.path }}
       SOURCE: source
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           path: registry
           persist-credentials: false
@@ -60,7 +60,7 @@ jobs:
       - run: rustup target add wasm32-wasip2
       - name: Build and pack
         run: node registry/scripts/pack.mjs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.entry.id }}
           path: out/*.tar.gz
@@ -73,8 +73,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
         with:
           path: out
           merge-multiple: true
