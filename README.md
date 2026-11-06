@@ -2,6 +2,8 @@
 
 The catalog of extensions for [Squadron](https://github.com/Jgrasp/squadron), and the kit to write them.
 
+**[Writing an extension: the guide](docs/guide.md)**: quick start, `extension.json`, the Rust API, panels, secrets, permissions, limits and publishing.
+
 - `api/`: the `squadron_extension_api` crate and its WIT contract.
 - `examples/hello/`: a complete extension: buttons, a panel, tools for agents, a secret and HTTPS requests.
 - `registry.json`: the extensions in the catalog, one entry each.
@@ -30,4 +32,4 @@ One pull request adds or updates one extension. Squadron installs what CI built 
 
 ## Write an extension
 
-Depend on the API with `squadron_extension_api = { git = "https://github.com/Jgrasp/squadron-extensions" }`, build with `cargo build --release --target wasm32-wasip2`, and load the folder in Squadron with Settings › Extensions › Add a folder. Start from `examples/hello`.
+Start from `examples/hello` and follow [the guide](docs/guide.md).
