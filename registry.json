@@ -1,1 +1,8 @@
-{}
+{
+  "hello": {
+    "repository": "https://github.com/Jgrasp/squadron-extensions",
+    "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
+    "path": "examples/hello",
+    "version": "1.0.0"
+  }
+}
