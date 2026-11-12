@@ -4,5 +4,11 @@
     "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
     "path": "examples/hello",
     "version": "1.0.0"
+  },
+  "workspace-share": {
+    "repository": "https://github.com/Jgrasp/squadron-workspace-share",
+    "commit": "65c9451b852f9320a4fe36a1e38fa2a46fe75161",
+    "path": ".",
+    "version": "0.1.0"
   }
 }
