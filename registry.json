@@ -5,9 +5,9 @@
     "path": "examples/hello",
     "version": "1.0.0"
   },
-  "workspace-share": {
-    "repository": "https://github.com/Jgrasp/squadron-workspace-share",
-    "commit": "65c9451b852f9320a4fe36a1e38fa2a46fe75161",
+  "google-workspace-share": {
+    "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
+    "commit": "2ccd716e1328d1488665a0666f8ff8765f6df586",
     "path": ".",
     "version": "0.1.0"
   }
