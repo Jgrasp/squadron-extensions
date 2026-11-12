@@ -3,7 +3,7 @@
   "extensions": [
     {
       "id": "google-workspace-share",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "name": {
         "en": "Artifact share on Google Workspace",
         "fr": "Partage d’artifacts sur Google Workspace"
@@ -13,9 +13,9 @@
         "fr": "Partage un artifact html avec votre équipe en app web Google Apps Script, avec un état que tout le monde modifie ensemble"
       },
       "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
-      "commit": "2ccd716e1328d1488665a0666f8ff8765f6df586",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.1.0/google-workspace-share-0.1.0.tar.gz",
-      "sha256": "42d384c04a8851d310e0e4a66cc8793b596d5f45cd4dc12796b4fcc592ad6a1a",
+      "commit": "c1d26de7385d40e8095bd98c879cd94a57afbf83",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.1.1/google-workspace-share-0.1.1.tar.gz",
+      "sha256": "d833802dc929d47d7e19d92991420518c659c2d3a3099c7d1acdc208aae0c91b",
       "permissions": {
         "exec": [
           "python3"
