@@ -81,7 +81,7 @@ Buttons and menu entries. Squadron draws them in its own style: an extension cho
 
 | Field | Rule |
 | --- | --- |
-| `slot` | `agent.tools` (the toolbar of an agent), `agent.menu` (its ⋯ menu, before Archive) or `menu.squadron` (the Squadron menu). |
+| `slot` | `agent.tools` (the toolbar of an agent), `agent.menu` (its ⋯ menu, before Archive), `menu.squadron` (the Squadron menu) or `artifact.actions` (the Share menu of the Artifacts panel, after Publish on claude.ai). |
 | `id` | Lowercase letters, digits and dashes, unique in the extension. The item's key is `<extension>.<id>`. |
 | `label` | A text. |
 | `hint` | Optional text, shown under the label in menus and as a tooltip on buttons. |
@@ -96,6 +96,7 @@ Buttons and menu entries. Squadron draws them in its own style: an extension cho
 | `{ "squadron": "kanban" }` | Runs a Squadron action: `newAgent`, `jump`, `kanban`, `editor`, `terminal`, `diff`, `sidebar`, `find`, `interrupt`, `back`, `forward`, `search`, `projects`, `quit`. |
 | `{ "run": "count" }` | Calls `run("count", agent)` in the extension's WebAssembly. Needs `wasm`. |
 | `{ "panel.open": "main" }` | Opens or closes one of the extension's panels. |
+| `{ "artifact.share": { … } }` | Makes the item a share destination of the open artifact. `artifact.actions` only. See [Sharing an artifact](#sharing-an-artifact). |
 
 `terminal.run`, `prompt.insert` and `panel.open` need an agent, so they cannot go in `menu.squadron`.
 
@@ -133,6 +134,16 @@ See [Panels](#panels).
 | `hint` | Optional text, for example where to create the token. |
 
 See [Secrets and network](#secrets-and-network).
+
+### contributes.skills
+
+Folders of the extension, each holding a `SKILL.md`, that become skills of every agent, named `<extension>:<folder>`:
+
+```json
+"skills": ["skills/share"]
+```
+
+The user allows them first, like commands. Squadron copies them into a plugin folder and starts Claude Code with `--plugin-dir`, so they reach the agents started or restarted after the approval. Files beside `SKILL.md` (scripts, templates) come along.
 
 ### contributes.theme
 
@@ -186,6 +197,7 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `started` | none | `{}`. Sent once the extension is loaded, also after a reload. |
 | `agent.done` | yes | `{}`. The agent finished its turn. |
 | `agent.waiting` | yes | `{ "waiting": … }`. The agent waits for the user. |
+| `timer` | none | `{}`. The delay of `host::set_timer` is over. Since 1.1.0. |
 | `panel.message` | the agent of the panel | `{ "panel": "<id>", "message": … }`. A panel called `squadron.send`. |
 
 ### Host functions
@@ -201,8 +213,56 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::exec(program, args, dir)` | Runs a program listed in `permissions.exec`, without a shell. `dir` defaults to the home folder. Returns `code`, `stdout` and `stderr`. |
 | `host::fetch(request)` | Sends an HTTPS request to a host listed in `permissions.network`. See [Secrets and network](#secrets-and-network). |
 | `host::panel_post(panel, message)` | Sends a JSON message to one of the extension's open panels. |
+| `host::agents()` | The agents open in Squadron, with their status, since when, and whether they are pinned, remote, shown or archivable. Needs `agents: ["read"]`. Since 1.1.0. |
+| `host::archive_agent(agent)` | Archives an agent as the user would; refused while it works, waits, is pinned, remote or shown. Needs `agents: ["archive"]`. Since 1.1.0. |
+| `host::set_timer(seconds)` | Sends the event `timer` in `seconds`, 10 at least, replacing the one pending. Since 1.1.0. |
+| `host::data_dir()` | A folder of the extension's own, made on the first call and kept across restarts and updates, for the files `host::exec` works on. Since 1.2.0. |
 
 The WebAssembly has no access to files, the network or environment variables other than through these functions.
+
+## Sharing an artifact
+
+An item of `artifact.actions` with the action `artifact.share` is a destination of the Share menu:
+
+```json
+{
+  "slot": "artifact.actions",
+  "id": "team",
+  "label": { "en": "Share with the team" },
+  "hint": { "en": "Google web app for your Workspace domain" },
+  "action": {
+    "artifact.share": {
+      "confirm": { "en": "“{artifact.title}” becomes a web app for your team." },
+      "lines": ["Google Apps Script · clasp"],
+      "shared": { "en": "Shared with the team" },
+      "share": "Use the hello:share skill to share the artifact {artifact.id} in {artifact.dir}, working in {extension.data}/sites/{agent.id}-{artifact.id}. Then call publish_artifact with id {artifact.id}, destination {destination} and its link.",
+      "update": { "tool": "update" },
+      "unshare": { "tool": "unshare" },
+      "delete": { "en": "Also delete the project" },
+      "deleteHint": { "en": "What the team entered is deleted with it." }
+    }
+  }
+}
+```
+
+| Field | Rule |
+| --- | --- |
+| `confirm` | Required text, shown before sharing. |
+| `lines` | Optional one-line strings shown in the confirmation, like what the share needs. |
+| `shared` | Optional text, the title once shared. The label otherwise. |
+| `share` | Required step. |
+| `update` | Optional step, offered once the artifact changed since it was shared. |
+| `unshare` | Optional step behind Stop sharing. |
+| `delete`, `deleteHint` | Optional texts of a checkbox in the Stop sharing confirmation. |
+
+A step is either:
+
+- **a prompt**. Squadron starts an agent of its own in the project of the artifact's agent, with the project's default settings, and sends it the prompt; it sends the next prompts of the same artifact and destination to that agent while it is not archived. The agent ends with `publish_artifact` and `id`, `destination` and `link` (any `https://` address), or an empty `link` to clear it;
+- **`{ "tool": "<name>" }`**. Squadron calls `call_tool(name, input, agent)` in the WebAssembly, with `agent` the artifact's agent and `input` the JSON `{ "verb", "destination", "artifact": { "id", "title", "dir", "entry" }, "link", "delete", "data" }`. The tool returns the link for `share` and `update`; its error shows to the user. The tool needs no entry in `contributes.tools`, so agents never see it.
+
+Prompts and `confirm` take `{artifact.id}`, `{artifact.title}`, `{artifact.dir}` (the artifact's folder), `{artifact.entry}` (its page), `{agent}` (the agent's name), `{agent.id}`, `{destination}` (the item's key), `{extension.data}` (the extension's data folder), `{link}` and `{delete}` (`true` when the box is ticked).
+
+Squadron keeps one link per destination and artifact, with the time of the share. The menu then gives Open, Copy link, Update when the artifact changed and `update` exists, and Stop sharing when `unshare` exists. A band shows under the panel's header while a step runs. When the extension still waits for the user's approval, the first click asks for it.
 
 ## Panels
 
@@ -278,8 +338,9 @@ A tool with a `command` receives each secret that is set as an environment varia
 
 - `exec`: program names that `host::exec` may run, with any arguments.
 - `network`: exact host names that `host::fetch` may reach.
+- `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0.
 
-When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, every `terminal.run` command and every tool `command`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
+When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
 
 Allowed commands run with the user's rights. Ask only for what you need, and say why in your description.
 
