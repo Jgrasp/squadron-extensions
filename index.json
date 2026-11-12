@@ -2,6 +2,27 @@
   "api": 1,
   "extensions": [
     {
+      "id": "google-workspace-share",
+      "version": "0.1.0",
+      "name": {
+        "en": "Artifact share on Google Workspace",
+        "fr": "Partage d’artifacts sur Google Workspace"
+      },
+      "description": {
+        "en": "Shares an html artifact with your team as a Google Apps Script web app, with a state everyone edits together",
+        "fr": "Partage un artifact html avec votre équipe en app web Google Apps Script, avec un état que tout le monde modifie ensemble"
+      },
+      "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
+      "commit": "2ccd716e1328d1488665a0666f8ff8765f6df586",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.1.0/google-workspace-share-0.1.0.tar.gz",
+      "sha256": "42d384c04a8851d310e0e4a66cc8793b596d5f45cd4dc12796b4fcc592ad6a1a",
+      "permissions": {
+        "exec": [
+          "python3"
+        ]
+      }
+    },
+    {
       "id": "hello",
       "version": "1.0.0",
       "name": {
@@ -22,27 +43,6 @@
         ],
         "network": [
           "api.github.com"
-        ]
-      }
-    },
-    {
-      "id": "workspace-share",
-      "version": "0.1.0",
-      "name": {
-        "en": "Google Workspace share",
-        "fr": "Partage Google Workspace"
-      },
-      "description": {
-        "en": "Shares an html artifact with your team as a Google Apps Script web app, with a state everyone edits together",
-        "fr": "Partage un artifact html avec votre équipe en app web Google Apps Script, avec un état que tout le monde modifie ensemble"
-      },
-      "repository": "https://github.com/Jgrasp/squadron-workspace-share",
-      "commit": "65c9451b852f9320a4fe36a1e38fa2a46fe75161",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/workspace-share-0.1.0/workspace-share-0.1.0.tar.gz",
-      "sha256": "98cfb9a5b0b2a81759c09171e9454026e1a1203eaeaee3b46fb8b6db8c678f5e",
-      "permissions": {
-        "exec": [
-          "python3"
         ]
       }
     }
