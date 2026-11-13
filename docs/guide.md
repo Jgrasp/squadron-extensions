@@ -133,7 +133,7 @@ See [Panels](#panels).
 | `id` | Lowercase letters, digits and dashes. |
 | `label` | A text. |
 | `hint` | Optional text, for example where to create the token. |
-| `url` | Optional `https://` link, shown under the field: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.47.0. |
+| `url` | Optional `https://` link, shown under the field: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
 
 See [Secrets and network](#secrets-and-network).
 
@@ -160,7 +160,7 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].id` | Lowercase letters, digits and dashes. |
 | `fields[].label` | A text, shown as the field's placeholder. |
 | `fields[].hint` | Optional text, shown under the field. |
-| `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.47.0. |
+| `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
 | `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
 
 The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
