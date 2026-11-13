@@ -135,6 +135,34 @@ See [Panels](#panels).
 
 See [Secrets and network](#secrets-and-network).
 
+### contributes.accounts
+
+For a service whose address depends on the user, such as Jira or a self-hosted GitLab, with one or more accounts. Since 1.3.0.
+
+```json
+"accounts": {
+  "label": { "en": "Jira sites", "fr": "Sites Jira" },
+  "fields": [
+    { "id": "site", "label": { "en": "Site" }, "kind": "host", "hint": { "en": "company.atlassian.net" } },
+    { "id": "email", "label": { "en": "Email" } },
+    { "id": "token", "label": { "en": "API token" }, "kind": "secret" }
+  ]
+}
+```
+
+| Field | Rule |
+| --- | --- |
+| `label` | A text, the title of the list in Settings › Extensions. |
+| `fields` | At least one field, each id once. |
+| `fields[].id` | Lowercase letters, digits and dashes. |
+| `fields[].label` | A text, shown as the field's placeholder. |
+| `fields[].hint` | Optional text, shown as the field's tooltip. |
+| `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
+
+The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
+
+See [Accounts](#accounts).
+
 ### contributes.skills
 
 Folders of the extension, each holding a `SKILL.md`, that become skills of every agent, named `<extension>:<folder>`:
@@ -199,6 +227,7 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `agent.waiting` | yes | `{ "waiting": … }`. The agent waits for the user. |
 | `timer` | none | `{}`. The delay of `host::set_timer` is over. Since 1.1.0. |
 | `panel.message` | the agent of the panel | `{ "panel": "<id>", "message": … }`. A panel called `squadron.send`. |
+| `accounts.changed` | none | `{}`. The user added, edited or removed one of the extension's accounts. Since 1.3.0. |
 
 ### Host functions
 
@@ -217,6 +246,11 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::archive_agent(agent)` | Archives an agent as the user would; refused while it works, waits, is pinned, remote or shown. Needs `agents: ["archive"]`. Since 1.1.0. |
 | `host::set_timer(seconds)` | Sends the event `timer` in `seconds`, 10 at least, replacing the one pending. Since 1.1.0. |
 | `host::data_dir()` | A folder of the extension's own, made on the first call and kept across restarts and updates, for the files `host::exec` works on. Since 1.2.0. |
+| `host::accounts()` | The extension's accounts: their `id` and their `text` and `host` fields, never the secrets. Since 1.3.0. |
+| `host::fetch_bytes(request)` | Like `host::fetch`, with the body as bytes, for images and files. Since 1.3.0. |
+| `host::download(request, name)` | Like `host::fetch`, writing the body to `name` in the data folder. `name` is a relative path of plain names, with no `..` and no hidden name. Returns `status`, `headers`, `path` and `size`. Since 1.3.0. |
+| `host::open_file(path)` | Opens a document or an image of the data folder in the user's app for it. Programs and files outside the data folder are refused. Since 1.3.0. |
+| `host::exec_input(program, args, dir, input)` | Like `host::exec`, writing `input` to the program's standard input. Since 1.3.0. |
 
 The WebAssembly has no access to files, the network or environment variables other than through these functions.
 
@@ -323,10 +357,39 @@ let answer = host::fetch(&Request {
 
 `host::fetch`:
 
-- only `https://`, only to a host listed in `permissions.network`;
-- redirects to another host are not followed: you get the 3xx answer;
+- only `https://`, only to a host listed in `permissions.network` or the `host` field of one of the extension's accounts;
+- redirects to a host that is not allowed are not followed: you get the 3xx answer. A redirect to another host drops the `Authorization` header;
 - `{{id}}` only works in header values, not in the URL or the body;
 - an unset secret makes the request fail with a message asking the user to set it.
+
+### Accounts
+
+`{{<account>.<field>}}` in a header value gives a field of one of the extension's accounts, secret or not, `<account>` being the `id` that `host::accounts` returns. The fields of an account that has a `host` field only go to that host: a request elsewhere fails.
+
+`{{base64:<a>:<b>}}` gives the base64 of the values of `a` and `b` joined by `:`, which HTTP Basic auth wants. Each part is a secret id or an account field:
+
+```rust
+use squadron_extension_api::{Request, host};
+
+for account in host::accounts() {
+    let site = account.fields.iter().find(|(k, _)| k == "site").map(|(_, v)| v.clone()).unwrap_or_default();
+    let me = host::fetch(&Request {
+        method: "GET".into(),
+        url: format!("https://{site}/rest/api/3/myself"),
+        headers: vec![(
+            "Authorization".into(),
+            format!("Basic {{{{base64:{0}.email:{0}.token}}}}", account.id),
+        )],
+        body: None,
+    })?;
+}
+```
+
+Secrets, alone or encoded, become `[secret]` if they come back in a response; the other fields, such as the email, stay as they are.
+
+### Files and images
+
+`host::fetch_bytes` keeps the body as bytes: send an image to a panel as a `data:` URL, which the panel's policy allows. `host::download` writes a larger file, 200 MB at most, to the data folder, and `host::open_file` opens it for the user.
 
 A tool with a `command` receives each secret that is set as an environment variable `SQUADRON_<ID>`, uppercase with dashes turned into underscores: `SQUADRON_TOKEN` for `token`, `SQUADRON_API_KEY` for `api-key`. `host::exec` and `terminal.run` never receive secrets.
 
@@ -336,8 +399,8 @@ A tool with a `command` receives each secret that is set as an environment varia
 "permissions": { "exec": ["git"], "network": ["api.github.com"] }
 ```
 
-- `exec`: program names that `host::exec` may run, with any arguments.
-- `network`: exact host names that `host::fetch` may reach.
+- `exec`: program names that `host::exec` and `host::exec_input` may run, with any arguments. `claude` runs the Claude Code set up in Squadron, not the one on the `PATH`.
+- `network`: exact host names that `host::fetch`, `host::fetch_bytes` and `host::download` may reach. The `host` field of an account needs no entry: the user typed it.
 - `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0.
 
 When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
@@ -352,7 +415,8 @@ Allowed commands run with the user's rights. Ask only for what you need, and say
 | Memory | 64 MB. |
 | State | 1 MB. |
 | `host::exec`, tool commands | 120 s; tool commands return the last 30,000 characters. |
-| `host::fetch` | 30 s, 8 MB of response. |
+| `host::fetch`, `host::fetch_bytes` | 30 s, 8 MB of response. |
+| `host::download` | 120 s, 200 MB. |
 | Answer to a click or a tool | 150 s. |
 | Manifest | 256 KB. |
 | Published archive | 50 MB, 2,000 files. |
