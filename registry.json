@@ -7,8 +7,8 @@
   },
   "google-workspace-share": {
     "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
-    "commit": "c1d26de7385d40e8095bd98c879cd94a57afbf83",
+    "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
     "path": ".",
-    "version": "0.1.1"
+    "version": "0.2.0"
   }
 }
