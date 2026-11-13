@@ -70,6 +70,7 @@ Every problem in the manifest shows under the extension in Settings › Extensio
 | `id` | yes | Lowercase letters, digits and dashes, 40 characters at most. It prefixes everything the extension adds, so it never changes once published. |
 | `version` | yes | Like `1.2.3`. |
 | `api` | yes | `1`. |
+| `squadron` | no | The Squadron versions the extension runs on: `">=0.45.0"`, or `">=0.45.0 <0.50.0"` when it stops working from a version on. Discover and updates offer the newest version that fits the user's Squadron; an installed version that does not fit is turned off until the user updates one or the other. |
 | `name` | yes | A text: `{ "en": "…", "fr": "…" }`. English is required; other languages are optional and fall back to English. |
 | `description` | no | A text. |
 | `wasm` | no | The path of the compiled component, inside the extension folder. Needed for `run` actions, tools without `command`, and anything in [Logic in Rust](#logic-in-rust). |
@@ -423,7 +424,7 @@ Allowed commands run with the user's rights. Ask only for what you need, and say
 
 An extension that crashes or passes a limit is restarted with a fresh instance, keeping its state, and its error shows in Settings › Extensions.
 
-An extension built against a newer API than the installed Squadron fails to load. Keep the API version you build against in step with the Squadron versions you support.
+An extension built against a newer API than the installed Squadron fails to load. Declare the oldest Squadron that has the API you use in `squadron`.
 
 ## Test and debug
 
@@ -435,28 +436,27 @@ An extension built against a newer API than the installed Squadron fails to load
 
 ## Publish
 
-Extensions are published from their own public GitHub repository, listed in [`registry.json`](../registry.json):
+Extensions are published from their own public GitHub repository, listed once in [`registry.json`](../registry.json):
 
-1. Your extension needs, at the commit you publish: its `extension.json`, a `Cargo.lock` if it has Rust code (CI builds with `--locked`), and a license.
+1. Your extension needs: its `extension.json`, a `CHANGELOG.md`, a `Cargo.lock` if it has Rust code (CI builds with `--locked`), and a license.
 2. Open a pull request that adds one entry:
 
    ```json
    "my-extension": {
-     "repository": "https://github.com/you/my-extension",
-     "commit": "<full sha of the commit to publish>",
-     "path": ".",
-     "version": "1.0.0"
+     "repository": "https://github.com/you/my-extension"
    }
    ```
 
-   `path` is the folder of `extension.json` in the repository, and `version` must match it at that commit.
-3. CI checks the entry and builds the extension from that commit. Once the pull request is reviewed and merged, CI publishes the archive as a release of this repository and adds it to `index.json`, with its sha256.
+   Add `"path": "<folder>"` when `extension.json` is not at the root of the repository.
+3. Once the pull request is reviewed and merged, the extension is listed: its versions come from your repository.
 
-The archive holds `extension.json`, the `.wasm` file and every file of the folder that is not Rust source (`src/`, `Cargo.toml`, `Cargo.lock`, `build.rs`). Squadron installs exactly what CI built from the reviewed commit.
+To publish a version, raise `version` in `extension.json`, add its section to `CHANGELOG.md`, commit, and push a tag `v<version>` (`v1.2.0`), or `<id>/v<version>` when the extension lives in a folder. Every hour, CI takes the newest tag of each listed repository, builds it, checks that `extension.json` has the registry's id and the tag's version and that the changelog has its section, then publishes the archive as a release of this repository and adds it to `index.json` with its sha256. You can also start it at once from the Actions tab of this repository.
 
-To publish an update, open a pull request that changes `commit` and raises `version`. Users get a notification and update in one click; a new command or host asks for their approval again.
+A tag CI refuses goes into [`rejected.json`](../rejected.json) with the reason, and stays there until you push a fixed commit under the next version, or move the tag. The previous version stays on offer meanwhile.
 
-One pull request adds or updates one extension.
+The archive holds `extension.json`, the `.wasm` file and every file of the folder that is not Rust source (`src/`, `Cargo.toml`, `Cargo.lock`, `build.rs`). Squadron installs exactly what CI built from the tagged commit. Users get a notification and update in one click; a new command or host asks for their approval again.
+
+`index.json` keeps the 10 newest versions of each extension under `versions`, newest first, so that a Squadron too old for the newest one still gets the newest it can run.
 
 ### Changelog
 
@@ -473,14 +473,14 @@ Squadron shows what changed in a version in **What's new**, on its update window
 - First version: the open sprint next to your agents.
 ```
 
-- One `## <version> · <date>` section per published version, newest first. The version is the one of `extension.json`, the date is `YYYY-MM-DD`, the day you open the pull request.
+- One `## <version> · <date>` section per published version, newest first. The version is the one of `extension.json`, the date is `YYYY-MM-DD`, the day you tag it.
 - Under it, one `- ` line per change, written for the user: what they can do now, or what works differently. No commit hashes, no refactors, nothing they can't see. Inline code and links are fine; no images, HTML or deeper headings.
 - At most 20 lines per version and 300 characters per line.
 - English in `CHANGELOG.md`. A translation goes in `CHANGELOG.<language>.md` (`CHANGELOG.fr.md`), with the same sections; Squadron falls back on English for a version the translation lacks.
-- A pull request that raises `version` needs the section of that version, with at least one line, at the commit it publishes: CI refuses it otherwise.
+- The tagged commit needs the section of its version, with at least one line: CI refuses it otherwise.
 
 CI copies the 20 newest sections into `index.json`, as `changelog: [{ "version", "date", "notes": { "en": [...], "fr": [...] } }]`. Squadron shows the versions between the one installed and the new one.
 
 ### Your own source
 
-Users can add other sources than the official one, in **Settings › Extensions › Discover › Add a marketplace**. A source is a GitHub repository organized like this one: fork it, enable GitHub Actions in the fork, empty `registry.json` and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `index.json` from the `main` branch and downloads archives only from the releases of that repository. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.
+Users can add other sources than the official one, in **Settings › Extensions › Discover › Add a marketplace**. A source is a GitHub repository organized like this one: fork it, enable GitHub Actions in the fork, empty `registry.json`, `rejected.json` (`{}`) and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `index.json` from the `main` branch and downloads archives only from the releases of that repository. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.

@@ -6,13 +6,15 @@ on:
     paths: [registry.json]
   pull_request:
     paths: [registry.json]
+  schedule:
+    - cron: '23 * * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: registry-${{ github.ref }}
+  group: registry-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
 
 jobs:
   plan:
@@ -27,7 +29,6 @@ jobs:
       - id: plan
         env:
           GH_TOKEN: ${{ github.token }}
-          BASE: ${{ github.event.pull_request.base.sha }}
         run: node scripts/plan.mjs >> "$GITHUB_OUTPUT"
 
   build:
@@ -47,6 +48,7 @@ jobs:
       COMMIT: ${{ matrix.entry.commit }}
       SUBDIR: ${{ matrix.entry.path }}
       SOURCE: source
+      KEEP_GOING: ${{ github.event_name != 'pull_request' && '1' || '' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -65,12 +67,13 @@ jobs:
           name: ${{ matrix.entry.id }}
           path: |
             out/*.tar.gz
-            out/*.changelog.json
+            out/*.meta.json
+            out/*.rejected.json
           if-no-files-found: error
 
   publish:
     needs: [plan, build]
-    if: github.event_name != 'pull_request' && needs.plan.outputs.todo != '[]'
+    if: always() && github.event_name != 'pull_request' && needs.plan.result == 'success' && needs.plan.outputs.todo != '[]'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -80,6 +83,7 @@ jobs:
         with:
           path: out
           merge-multiple: true
+      - run: mkdir -p out
       - name: Release the archives and update the index
         env:
           GH_TOKEN: ${{ github.token }}
@@ -88,6 +92,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add index.json
+          git add index.json rejected.json
           git diff --cached --quiet || git commit -m "Update the index"
           git push
