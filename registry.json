@@ -1,20 +1,12 @@
 {
   "hello": {
     "repository": "https://github.com/Jgrasp/squadron-extensions",
-    "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
-    "path": "examples/hello",
-    "version": "1.0.0"
+    "path": "examples/hello"
   },
   "google-workspace-share": {
-    "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
-    "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
-    "path": ".",
-    "version": "0.2.0"
+    "repository": "https://github.com/Jgrasp/squadron-google-workspace-share"
   },
   "jira": {
-    "repository": "https://github.com/Jgrasp/squadron-jira",
-    "commit": "f43101b7d936843624b963dff6d218ef2714b451",
-    "path": ".",
-    "version": "0.1.0"
+    "repository": "https://github.com/Jgrasp/squadron-jira"
   }
 }
