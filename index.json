@@ -45,6 +45,31 @@
           "api.github.com"
         ]
       }
+    },
+    {
+      "id": "jira",
+      "version": "0.1.0",
+      "name": {
+        "en": "Jira",
+        "fr": "Jira"
+      },
+      "description": {
+        "en": "The open sprint of your Jira projects next to your agents: read a ticket, put it in your message or turn it into an instruction",
+        "fr": "Le sprint en cours de vos projets Jira à côté de vos agents : lire un ticket, le mettre dans votre message ou en faire une consigne"
+      },
+      "repository": "https://github.com/Jgrasp/squadron-jira",
+      "commit": "f43101b7d936843624b963dff6d218ef2714b451",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
+      "sha256": "6da29acc5bc22931fd72240a32f23ebebab56e2b653974cc2e550503494c0df5",
+      "permissions": {
+        "exec": [
+          "claude",
+          "git"
+        ],
+        "network": [
+          "api.media.atlassian.com"
+        ]
+      }
     }
   ]
 }
