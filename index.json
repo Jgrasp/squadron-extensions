@@ -3,7 +3,6 @@
   "extensions": [
     {
       "id": "google-workspace-share",
-      "version": "0.2.0",
       "name": {
         "en": "Artifact share on Google Workspace",
         "fr": "Partage d’artifacts sur Google Workspace"
@@ -13,18 +12,128 @@
         "fr": "Partage un artifact html avec votre équipe en app web Google Apps Script, avec un état que tout le monde modifie ensemble"
       },
       "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
-      "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.0/google-workspace-share-0.2.0.tar.gz",
-      "sha256": "6b556b0627ad6836ec3f263c6f6327eb51c73c2452d42e3f5d8999abaafdc224",
+      "version": "0.2.1",
+      "commit": "35e27a1d2a67a311f6c194b1309a74083cb0e622",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.1/google-workspace-share-0.2.1.tar.gz",
+      "sha256": "ce7f3d585280feb908ec4e4d1230c9c2f4993479bc367a598ca2d9b26feff520",
+      "squadron": ">=0.45.0",
       "permissions": {
         "exec": [
           "python3"
         ]
-      }
+      },
+      "changelog": [
+        {
+          "version": "0.2.1",
+          "date": "2026-11-13",
+          "notes": {
+            "en": [
+              "Stop sharing no longer fails when Google refuses to delete the Apps Script project: the link is cut and the project stays in your Drive."
+            ],
+            "fr": [
+              "Arrêter le partage n’échoue plus quand Google refuse de supprimer le projet Apps Script : le lien est coupé et le projet reste dans votre Drive."
+            ]
+          }
+        },
+        {
+          "version": "0.2.0",
+          "date": "2026-11-13",
+          "notes": {
+            "en": [
+              "A subagent on Sonnet does the share in the artifact's conversation, with its progress on the Artifacts panel.",
+              "Shared artifacts are cleaned up after 90 days by default, which you can change in the extension's settings.",
+              "The shared link is the one of your domain, which opens even when the browser's default Google account is another one."
+            ],
+            "fr": [
+              "Un sous-agent sur Sonnet fait le partage dans la conversation de l’artifact, avec sa progression dans le panneau Artifacts.",
+              "Les artifacts partagés sont nettoyés au bout de 90 jours par défaut, réglable dans les réglages de l’extension.",
+              "Le lien partagé est celui de votre domaine, qui s’ouvre même quand le compte Google par défaut du navigateur est un autre."
+            ]
+          }
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-12",
+          "notes": {
+            "en": [
+              "First version: shares an html artifact with your Workspace domain as a Google Apps Script web app, with a state everyone edits together."
+            ],
+            "fr": [
+              "Première version : partage un artifact html avec votre domaine Workspace en app web Google Apps Script, avec un état que tout le monde modifie ensemble."
+            ]
+          }
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.2.1",
+          "commit": "35e27a1d2a67a311f6c194b1309a74083cb0e622",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.1/google-workspace-share-0.2.1.tar.gz",
+          "sha256": "ce7f3d585280feb908ec4e4d1230c9c2f4993479bc367a598ca2d9b26feff520",
+          "squadron": ">=0.45.0",
+          "permissions": {
+            "exec": [
+              "python3"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.2.1",
+              "date": "2026-11-13",
+              "notes": {
+                "en": [
+                  "Stop sharing no longer fails when Google refuses to delete the Apps Script project: the link is cut and the project stays in your Drive."
+                ],
+                "fr": [
+                  "Arrêter le partage n’échoue plus quand Google refuse de supprimer le projet Apps Script : le lien est coupé et le projet reste dans votre Drive."
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-13",
+              "notes": {
+                "en": [
+                  "A subagent on Sonnet does the share in the artifact's conversation, with its progress on the Artifacts panel.",
+                  "Shared artifacts are cleaned up after 90 days by default, which you can change in the extension's settings.",
+                  "The shared link is the one of your domain, which opens even when the browser's default Google account is another one."
+                ],
+                "fr": [
+                  "Un sous-agent sur Sonnet fait le partage dans la conversation de l’artifact, avec sa progression dans le panneau Artifacts.",
+                  "Les artifacts partagés sont nettoyés au bout de 90 jours par défaut, réglable dans les réglages de l’extension.",
+                  "Le lien partagé est celui de votre domaine, qui s’ouvre même quand le compte Google par défaut du navigateur est un autre."
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-12",
+              "notes": {
+                "en": [
+                  "First version: shares an html artifact with your Workspace domain as a Google Apps Script web app, with a state everyone edits together."
+                ],
+                "fr": [
+                  "Première version : partage un artifact html avec votre domaine Workspace en app web Google Apps Script, avec un état que tout le monde modifie ensemble."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "version": "0.2.0",
+          "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.0/google-workspace-share-0.2.0.tar.gz",
+          "sha256": "6b556b0627ad6836ec3f263c6f6327eb51c73c2452d42e3f5d8999abaafdc224",
+          "permissions": {
+            "exec": [
+              "python3"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "hello",
-      "version": "1.0.0",
       "name": {
         "en": "Hello",
         "fr": "Hello"
@@ -34,6 +143,7 @@
         "fr": "Extension d’exemple écrite en Rust"
       },
       "repository": "https://github.com/Jgrasp/squadron-extensions",
+      "version": "1.0.0",
       "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
       "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.0.0/hello-1.0.0.tar.gz",
       "sha256": "753c63529a065be39045442aeb65fd05ec36dce4a3b4b102e067868726a8a507",
@@ -44,11 +154,26 @@
         "network": [
           "api.github.com"
         ]
-      }
+      },
+      "versions": [
+        {
+          "version": "1.0.0",
+          "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.0.0/hello-1.0.0.tar.gz",
+          "sha256": "753c63529a065be39045442aeb65fd05ec36dce4a3b4b102e067868726a8a507",
+          "permissions": {
+            "exec": [
+              "git"
+            ],
+            "network": [
+              "api.github.com"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "jira",
-      "version": "0.1.0",
       "name": {
         "en": "Jira",
         "fr": "Jira"
@@ -58,6 +183,7 @@
         "fr": "Le sprint en cours de vos projets Jira à côté de vos agents : lire un ticket, le mettre dans votre message ou en faire une consigne"
       },
       "repository": "https://github.com/Jgrasp/squadron-jira",
+      "version": "0.1.0",
       "commit": "f43101b7d936843624b963dff6d218ef2714b451",
       "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
       "sha256": "6da29acc5bc22931fd72240a32f23ebebab56e2b653974cc2e550503494c0df5",
@@ -69,7 +195,24 @@
         "network": [
           "api.media.atlassian.com"
         ]
-      }
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "commit": "f43101b7d936843624b963dff6d218ef2714b451",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
+          "sha256": "6da29acc5bc22931fd72240a32f23ebebab56e2b653974cc2e550503494c0df5",
+          "permissions": {
+            "exec": [
+              "claude",
+              "git"
+            ],
+            "network": [
+              "api.media.atlassian.com"
+            ]
+          }
+        }
+      ]
     }
   ]
 }
