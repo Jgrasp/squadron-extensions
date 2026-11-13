@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { read } from './changelog.mjs'
 
 const { ID: id, VERSION: version, SOURCE: source, SUBDIR: subdir } = process.env
 const dir = resolve(source, subdir)
@@ -9,6 +10,9 @@ if (!dir.startsWith(resolve(source))) throw new Error('path leaves the repositor
 const manifest = JSON.parse(readFileSync(join(dir, 'extension.json'), 'utf8'))
 if (manifest.id !== id) throw new Error(`extension.json says id ${manifest.id}, the registry says ${id}`)
 if (manifest.version !== version) throw new Error(`extension.json says version ${manifest.version}, the registry says ${version}`)
+
+const { changelog, problems } = read(dir, version)
+if (problems.length) throw new Error(problems.join('\n'))
 
 if (existsSync(join(dir, 'Cargo.toml'))) execFileSync('cargo', ['build', '--release', '--locked', '--target', 'wasm32-wasip2'], { cwd: dir, stdio: 'inherit' })
 
@@ -22,6 +26,7 @@ if (manifest.wasm) {
 }
 
 mkdirSync('out', { recursive: true })
+writeFileSync(`out/${id}-${version}.changelog.json`, JSON.stringify(changelog))
 writeFileSync('out/files', files.join('\n'))
 execFileSync('tar', ['--create', '--gzip', '--file', resolve('out', `${id}-${version}.tar.gz`), '--owner=0', '--group=0', '--numeric-owner', '--no-recursion', '--directory', dir, '--files-from', resolve('out/files')], { stdio: 'inherit' })
 console.log(files.join('\n'))

@@ -458,6 +458,29 @@ To publish an update, open a pull request that changes `commit` and raises `vers
 
 One pull request adds or updates one extension.
 
+### Changelog
+
+Squadron shows what changed in a version in **What's new**, on its update window, from a `CHANGELOG.md` next to `extension.json`.
+
+```markdown
+## 0.2.0 · 2026-11-10
+
+- Options in Settings: what the panel lists, and ticket chips in messages.
+- The `sprint` tool lists subtasks under their parent.
+
+## 0.1.0 · 2026-11-02
+
+- First version: the open sprint next to your agents.
+```
+
+- One `## <version> · <date>` section per published version, newest first. The version is the one of `extension.json`, the date is `YYYY-MM-DD`, the day you open the pull request.
+- Under it, one `- ` line per change, written for the user: what they can do now, or what works differently. No commit hashes, no refactors, nothing they can't see. Inline code and links are fine; no images, HTML or deeper headings.
+- At most 20 lines per version and 300 characters per line.
+- English in `CHANGELOG.md`. A translation goes in `CHANGELOG.<language>.md` (`CHANGELOG.fr.md`), with the same sections; Squadron falls back on English for a version the translation lacks.
+- A pull request that raises `version` needs the section of that version, with at least one line, at the commit it publishes: CI refuses it otherwise.
+
+CI copies the 20 newest sections into `index.json`, as `changelog: [{ "version", "date", "notes": { "en": [...], "fr": [...] } }]`. Squadron shows the versions between the one installed and the new one.
+
 ### Your own source
 
-Users can add other sources than the official one, in **Add an extension › Another source**. A source is a GitHub repository organized like this one: fork it, enable GitHub Actions in the fork, empty `registry.json` and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `index.json` from the `main` branch and downloads archives only from the releases of that repository. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.
+Users can add other sources than the official one, in **Settings › Extensions › Discover › Add a marketplace**. A source is a GitHub repository organized like this one: fork it, enable GitHub Actions in the fork, empty `registry.json` and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `index.json` from the `main` branch and downloads archives only from the releases of that repository. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.

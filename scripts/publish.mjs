@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 
 const REPO = process.env.GITHUB_REPOSITORY
 const registry = JSON.parse(readFileSync('registry.json', 'utf8'))
@@ -14,6 +14,7 @@ for (const file of readdirSync('out').filter((f) => f.endsWith('.tar.gz'))) {
   const entry = registry[id]
   const tag = `${id}-${entry.version}`
   const sha256 = createHash('sha256').update(readFileSync(path)).digest('hex')
+  const notes = `out/${tag}.changelog.json`
   const manifest = JSON.parse(execFileSync('tar', ['--extract', '--gzip', '--to-stdout', '--file', path, 'extension.json'], { encoding: 'utf8' }))
   execFileSync('gh', ['release', 'create', tag, path, '--title', `${manifest.name?.en ?? id} ${entry.version}`, '--notes', `${entry.repository}/tree/${entry.commit}`], { stdio: 'inherit' })
   kept.set(id, {
@@ -26,6 +27,7 @@ for (const file of readdirSync('out').filter((f) => f.endsWith('.tar.gz'))) {
     archive: `https://github.com/${REPO}/releases/download/${tag}/${file}`,
     sha256,
     permissions: manifest.permissions ?? {},
+    ...(existsSync(notes) ? { changelog: JSON.parse(readFileSync(notes, 'utf8')) } : {}),
   })
 }
 
