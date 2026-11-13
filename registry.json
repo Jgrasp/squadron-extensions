@@ -10,5 +10,11 @@
     "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
     "path": ".",
     "version": "0.2.0"
+  },
+  "jira": {
+    "repository": "https://github.com/Jgrasp/squadron-jira",
+    "commit": "f43101b7d936843624b963dff6d218ef2714b451",
+    "path": ".",
+    "version": "0.1.0"
   }
 }
