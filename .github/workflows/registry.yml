@@ -63,7 +63,9 @@ jobs:
       - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.entry.id }}
-          path: out/*.tar.gz
+          path: |
+            out/*.tar.gz
+            out/*.changelog.json
           if-no-files-found: error
 
   publish:
