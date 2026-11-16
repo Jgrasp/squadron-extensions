@@ -1,3 +1,7 @@
+## 1.2.0 · 2026-11-16
+
+- Comptes GitHub dans Settings, testés avant d’être enregistrés et vérifiés à chaque ouverture de la page de l’extension.
+
 ## 1.1.0 · 2026-11-16
 
 - Options Salutation et Ton, et une page de réglages qui remet le compteur à zéro.

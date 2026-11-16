@@ -164,6 +164,7 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].hint` | Optional text, shown under the field. |
 | `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
 | `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
+| `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.49.0. See [Testing an account](#testing-an-account). |
 
 The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
 
@@ -250,6 +251,8 @@ squadron_extension!(Hello);
 ```
 
 An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in (its worktree, or its project). An error returned by `run` shows to the user; an error returned by `call_tool` goes back to the agent.
+
+`check_account` tests an account the user adds or saved: see [Testing an account](#testing-an-account). Since 1.6.0.
 
 ### Events
 
@@ -469,6 +472,41 @@ for account in host::accounts() {
 
 Secrets, alone or encoded, become `[secret]` if they come back in a response; the other fields, such as the email, stay as they are.
 
+### Testing an account
+
+With `"check": true` in `contributes.accounts`, the extension's details test an account before saving it: the main button of the form is **Test the connection**, and **Add the account** or **Save** only shows once the test worked. Each account of the list shows whether it works, checked when the page opens and again with ↻; Settings marks the extension in red when one fails. Since API 1.6.0, so declare `"squadron": ">=0.49.0"`.
+
+Squadron calls `check_account` with the account, saved or not:
+
+```rust
+use squadron_extension_api::{Account, Extension, Request, host};
+
+impl Extension for Jira {
+    fn check_account(account: Account) -> Result<String, String> {
+        let site = account.fields.iter().find(|(k, _)| k == "site").map(|(_, v)| v.clone()).unwrap_or_default();
+        let me = host::fetch(&Request {
+            method: "GET".into(),
+            url: format!("https://{site}/rest/api/3/myself"),
+            headers: vec![("Authorization".into(), format!("Basic {{{{base64:{0}.email:{0}.token}}}}", account.id))],
+            body: None,
+        })?;
+        match me.status {
+            200 => Ok(r#"{ "text": { "en": "Connected as Ada", "fr": "Connectée en tant qu’Ada" }, "detail": { "en": "12 projects", "fr": "12 projets" } }"#.into()),
+            401 => Err(r#"{ "title": { "en": "Jira refused this email and token" }, "detail": { "en": "The token may be wrong, expired or revoked." }, "field": "token" }"#.into()),
+            status => Err(format!("Jira answered {status}.")),
+        }
+    }
+}
+```
+
+- An account the user has not saved yet gets an id of its own for the time of the call. While `check_account` runs, `{{<account.id>.<field>}}` gives the values the user typed, secrets included, and its `host` field is reachable. The secrets stay in Squadron's memory, never written and never passed to the WebAssembly. Editing an account keeps its id, and a secret left empty is the saved one.
+- `host::accounts()` does not list an account that is not saved.
+- `Ok` means it works: `text` (shown in green, "Connected as …") and an optional `detail` ("12 projects"). `Err` means it does not: `title`, an optional `detail`, and `field`, the id of the field to fix, which the form marks. Texts are strings or `{ "en": "…", "fr": "…" }`. A plain string works too: it becomes `text` or `title`, so `host::fetch(…)?` gives a readable failure. An `"ok"` key, when present, decides.
+- Squadron checks the fields itself first, as it does when saving: an empty field or a site that is not an address fails on that field without calling the extension.
+- A check answers within 150 s like a click, and runs after the calls already waiting.
+
+The Hello example tests its GitHub accounts.
+
 ### Files and images
 
 `host::fetch_bytes` keeps the body as bytes: send an image to a panel as a `data:` URL, which the panel's policy allows. `host::download` writes a larger file, 200 MB at most, to the data folder, and `host::open_file` opens it for the user.
@@ -514,6 +552,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.3.0 | `>=0.45.0` |
 | 1.4.0 | `>=0.46.0` |
 | 1.5.0 | `>=0.47.0` |
+| 1.6.0 | `>=0.49.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
