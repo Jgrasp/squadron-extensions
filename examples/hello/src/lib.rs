@@ -11,10 +11,32 @@ fn show(count: u32) {
     host::panel_post("main", &format!(r#"{{"count":{count}}}"#));
 }
 
+fn option(name: &str) -> Option<String> {
+    let options = host::options();
+    let rest = &options[options.find(&format!(r#""{name}":""#))? + name.len() + 4..];
+    Some(rest[..rest.find('"')?].to_string())
+}
+
+fn reset() {
+    host::state_set("count", None);
+    show(0);
+    host::settings_post(r#"{"count":0}"#);
+}
+
 fn add() {
     let next = count() + 1;
     host::state_set("count", Some(&next.to_string()));
     show(next);
+}
+
+fn draft_of(data: &str) -> String {
+    let rest = &data[data.find(r#""draft":""#).map_or(data.len(), |at| at + 9)..];
+    rest[..rest.find('"').unwrap_or(0)].to_string()
+}
+
+fn brief(draft: &str, short: bool) {
+    let text = if short { "Say hello." } else { "Say hello, then list the files you would read first." };
+    host::update_new_agent(draft, &format!(r#"{{"text":"{text}","goal":"The agent said hello","status":{{"state":"done","text":"Written by Hello"}}}}"#));
 }
 
 impl Extension for Hello {
@@ -23,7 +45,11 @@ impl Extension for Hello {
             ("started", _) => host::set_badge("count", Some(&count().to_string())),
             ("panel.message", _) if data.contains(r#""type":"count""#) => add(),
             ("panel.message", _) => show(count()),
+            ("settings.message", _) if data.contains(r#""type":"reset""#) => reset(),
+            ("settings.message", _) => host::settings_post(&format!(r#"{{"count":{}}}"#, count())),
             ("agent.done", Some(agent)) => host::notify("Hello", &format!("{} finished its turn.", agent.name)),
+            ("new-agent.regenerate", _) => brief(&draft_of(&data), data.contains(r#""short""#)),
+            ("new-agent.started", Some(agent)) => host::notify("Hello", &format!("{} started from the Hello draft.", agent.name)),
             _ => {}
         }
     }
@@ -36,7 +62,18 @@ impl Extension for Hello {
             }
             "greet" => {
                 let agent = agent.ok_or("No agent to greet.")?;
-                host::insert_prompt(&agent.id, &format!("Hello {}, what are you working on?", agent.name));
+                let greeting = option("greeting").unwrap_or_else(|| "Hello".into());
+                let end = if option("tone").as_deref() == Some("warm") { " 🙂" } else { "" };
+                host::insert_prompt(&agent.id, &format!("{greeting} {}, what are you working on?{end}", agent.name));
+                Ok(())
+            }
+            "draft" => {
+                let agent = agent.ok_or("No agent to start from.")?;
+                let draft = host::open_new_agent(
+                    &agent.id,
+                    r#"{"name":"Hello task","link":{"key":"HELLO-1","title":"Say hello"},"choices":{"label":"Context","items":[{"id":"short","label":"Short","on":false}]},"status":{"state":"running","text":"Hello is writing the first message…"}}"#,
+                );
+                brief(&draft, false);
                 Ok(())
             }
             _ => Err(format!("Unknown action {action}.")),
@@ -54,6 +91,7 @@ impl Extension for Hello {
                 Ok(if out.stdout.is_empty() { "No changed file.".into() } else { out.stdout })
             }
             "clicks" => Ok(format!("The Count button was clicked {} times.", count())),
+            "options" => Ok(host::options()),
             "github_user" => {
                 let answer = host::fetch(&Request {
                     method: "GET".into(),
