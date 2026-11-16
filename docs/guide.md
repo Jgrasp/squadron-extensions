@@ -164,7 +164,7 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].hint` | Optional text, shown under the field. |
 | `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
 | `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
-| `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.49.0. See [Testing an account](#testing-an-account). |
+| `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.48.0. See [Testing an account](#testing-an-account). |
 
 The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
 
@@ -474,7 +474,7 @@ Secrets, alone or encoded, become `[secret]` if they come back in a response; th
 
 ### Testing an account
 
-With `"check": true` in `contributes.accounts`, the extension's details test an account before saving it: the main button of the form is **Test the connection**, and **Add the account** or **Save** only shows once the test worked. Each account of the list shows whether it works, checked when the page opens and again with ↻; Settings marks the extension in red when one fails. Since API 1.6.0, so declare `"squadron": ">=0.49.0"`.
+With `"check": true` in `contributes.accounts`, the extension's details test an account before saving it: the main button of the form is **Test the connection**, and **Add the account** or **Save** only shows once the test worked. Each account of the list shows whether it works, checked when the page opens and again with ↻; Settings marks the extension in red when one fails. Since API 1.6.0, so declare `"squadron": ">=0.48.0"`.
 
 Squadron calls `check_account` with the account, saved or not:
 
@@ -552,7 +552,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.3.0 | `>=0.45.0` |
 | 1.4.0 | `>=0.46.0` |
 | 1.5.0 | `>=0.47.0` |
-| 1.6.0 | `>=0.49.0` |
+| 1.6.0 | `>=0.48.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
