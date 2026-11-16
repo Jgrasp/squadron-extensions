@@ -6,6 +6,7 @@ An extension adds things to Squadron without rebuilding it: buttons and menu ent
 - [extension.json](#extensionjson)
 - [Logic in Rust](#logic-in-rust)
 - [Panels](#panels)
+- [Opening New agent](#opening-new-agent)
 - [Secrets and network](#secrets-and-network)
 - [Permissions and approval](#permissions-and-approval)
 - [Limits](#limits)
@@ -168,6 +169,35 @@ The user adds, edits and removes accounts in the extension's details. Every fiel
 
 See [Accounts](#accounts).
 
+### contributes.settings
+
+Options that Squadron draws on the extension's page in Settings › Extensions, and a settings page of the extension's own under them. Since 1.4.0.
+
+```json
+"settings": {
+  "options": [
+    { "id": "sprint", "label": { "en": "Tickets in the panel" }, "hint": { "en": "…" }, "kind": "select", "default": "open",
+      "choices": [{ "value": "open", "label": { "en": "Open sprint" } }, { "value": "next", "label": { "en": "Open and next sprints" } }] },
+    { "id": "chips", "label": { "en": "Ticket keys in messages" }, "kind": "toggle", "default": true },
+    { "id": "limit", "label": { "en": "Tickets per search" }, "kind": "number", "min": 1, "max": 100, "default": 50 },
+    { "id": "folder", "label": { "en": "Download folder" }, "kind": "text" }
+  ],
+  "page": "settings/index.html",
+  "title": { "en": "Sharing" }
+}
+```
+
+| Field | Rule |
+| --- | --- |
+| `options[].id` | Lowercase letters, digits and dashes, each id once. |
+| `options[].label`, `options[].hint` | A text, and an optional text under it. |
+| `options[].kind` | `toggle`, `select` (with `choices`, each a `value` and a `label`), `text` (one line) or `number` (optional `min` and `max`). |
+| `options[].default` | Optional, of the kind of the option. Without it: off, `min` or 0, the first choice, an empty text. |
+| `page` | Optional, the path of an `.html` file inside the extension folder, shown under the options while the extension is on. |
+| `title` | Optional text above the page. |
+
+Squadron keeps the values the user changed, checks them against the manifest, and falls back on the default when one no longer fits after an update. `host::options()` returns all of them as a JSON object by id, defaults included, and the event `options.changed` carries the same object each time the user changes one. The settings page works like a panel: `squadron.send` sends `settings.message` to the WebAssembly, which answers with `host::settings_post`. It and the panels also get `squadron.options` and `squadron.setOption(id, value)`, which need no WebAssembly.
+
 ### contributes.skills
 
 Folders of the extension, each holding a `SKILL.md`, that become skills of every agent, named `<extension>:<folder>`:
@@ -233,6 +263,11 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `timer` | none | `{}`. The delay of `host::set_timer` is over. Since 1.1.0. |
 | `panel.message` | the agent of the panel | `{ "panel": "<id>", "message": … }`. A panel called `squadron.send`. |
 | `accounts.changed` | none | `{}`. The user added, edited or removed one of the extension's accounts. Since 1.3.0. |
+| `options.changed` | none | The values of `host::options()`. The user changed one of the extension's options. Since 1.4.0. |
+| `settings.message` | none | `{ "message": … }`. The extension's settings page called `squadron.send`. Since 1.4.0. |
+| `new-agent.regenerate` | none | `{ "draft": "<id>", "choices": ["<id>", …] }`. The user clicked Regenerate, or changed the checkboxes of a draft without touching its first message. See [Opening New agent](#opening-new-agent). Since 1.5.0. |
+| `new-agent.started` | the agent that started | `{ "draft": "<id>" }`. The user started the agent of a draft. Since 1.5.0. |
+| `new-agent.closed` | none | `{ "draft": "<id>" }`. The window closed without starting an agent, or the user unlinked it. Since 1.5.0. |
 
 ### Host functions
 
@@ -256,6 +291,10 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::download(request, name)` | Like `host::fetch`, writing the body to `name` in the data folder. `name` is a relative path of plain names, with no `..` and no hidden name. Returns `status`, `headers`, `path` and `size`. Since 1.3.0. |
 | `host::open_file(path)` | Opens a document or an image of the data folder in the user's app for it. Programs and files outside the data folder are refused. Since 1.3.0. |
 | `host::exec_input(program, args, dir, input)` | Like `host::exec`, writing `input` to the program's standard input. Since 1.3.0. |
+| `host::options()` | The values of the options of `contributes.settings`, as a JSON object by id, defaults included. Since 1.4.0. |
+| `host::settings_post(message)` | Sends a JSON message to the extension's settings page while it is open. Since 1.4.0. |
+| `host::open_new_agent(agent, draft)` | Opens the New agent window in the project of `agent`, filled from `draft`, and returns the id of the draft. See [Opening New agent](#opening-new-agent). Since 1.5.0. |
+| `host::update_new_agent(id, draft)` | Fills the open draft `id`, leaving the name, first message and Done when the user edited. Since 1.5.0. |
 
 The WebAssembly has no access to files, the network or environment variables other than through these functions.
 
@@ -339,6 +378,44 @@ For a page that looks like Squadron with no effort, add its stylesheet. It style
 ```html
 <link rel="stylesheet" href="/_squadron/kit.css" />
 ```
+
+## Opening New agent
+
+From a button, a panel or a tool, the extension can open Squadron's New agent window in the project of an agent, already filled, then fill it more while it works, for example while Haiku writes the first message from a ticket. Since 1.5.0, so declare `"squadron": ">=0.47.0"`.
+
+```rust
+let draft = host::open_new_agent(&agent.id, r#"{
+  "name": "RING-128 Card payment: 3-D Secure on iOS",
+  "link": { "key": "RING-128", "title": "Card payment: 3-D Secure on iOS", "url": "https://acme.atlassian.net/browse/RING-128" },
+  "context": "<ticket source=\"jira\" key=\"RING-128\">…</ticket>",
+  "choices": { "label": { "en": "Context given to Haiku and to the agent" }, "items": [{ "id": "comments", "label": "Comments", "on": true }] },
+  "status": { "state": "running", "text": { "en": "Haiku is preparing the instructions…" } }
+}"#);
+let (text, goal) = brief(&context)?;
+host::update_new_agent(&draft, &json!({ "text": text, "goal": goal, "status": { "state": "done" } }).to_string());
+```
+
+Every key of a draft is optional:
+
+| Key | What Squadron does with it |
+| --- | --- |
+| `name` | The name of the agent. |
+| `text` | The first message. |
+| `goal` | Done when. |
+| `context` | Added after the first message when the agent starts, never shown in the window. A `<ticket>` block there shows as a chip in the conversation. |
+| `link` | `{ "key", "title", "url" }`, at the top of the window with the extension's logo. The key opens `url` (`https://` only) in the browser, ✕ unlinks. |
+| `choices` | `{ "label", "items": [{ "id", "label", "on" }] }`, checkboxes folded under the link. |
+| `status` | `{ "state": "running" \| "done" \| "error", "text" }`, a band above the first message, with Regenerate once it is not running. |
+
+Labels and texts are strings or `{ "en": "…", "fr": "…" }`. `null` removes the link, the checkboxes or the band.
+
+- One draft at a time: opening another closes the first.
+- `host::update_new_agent` never replaces a name, first message or Done when the user edited; `context`, `link`, `choices` and `status` are always replaced. It does nothing once the window is closed or the user unlinked.
+- Regenerate empties the first message, puts the band back to running and sends `new-agent.regenerate` with the ids that are checked: answer it with `host::update_new_agent`.
+- `new-agent.started` comes with the agent that started, to show it on the ticket; `new-agent.closed` when the user cancels or unlinks.
+- The rest of the window is Squadron's as usual: model, effort, advisor, permission mode, agent type, files.
+
+The Hello example opens one from **New agent from Hello** in the agent menu.
 
 ## Secrets and network
 
@@ -428,7 +505,17 @@ Allowed commands run with the user's rights. Ask only for what you need, and say
 
 An extension that crashes or passes a limit is restarted with a fresh instance, keeping its state, and its error shows in Settings › Extensions.
 
-An extension built against a newer API than the installed Squadron fails to load. Declare the oldest Squadron that has the API you use in `squadron`.
+An extension built against a newer API than the installed Squadron fails to load. Declare the oldest Squadron that has the API you use in `squadron`:
+
+| API | Squadron |
+| --- | --- |
+| 1.1.0 | `>=0.39.0` |
+| 1.2.0 | `>=0.44.0` |
+| 1.3.0 | `>=0.45.0` |
+| 1.4.0 | `>=0.46.0` |
+| 1.5.0 | `>=0.47.0` |
+
+Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
 ## Test and debug
 
