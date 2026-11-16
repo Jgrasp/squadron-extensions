@@ -255,10 +255,11 @@
         "fr": "Le sprint en cours de vos projets Jira à côté de vos agents : lire un ticket, le mettre dans votre message ou en faire une consigne"
       },
       "repository": "https://github.com/Jgrasp/squadron-jira",
-      "version": "0.1.0",
-      "commit": "f43101b7d936843624b963dff6d218ef2714b451",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
-      "sha256": "6da29acc5bc22931fd72240a32f23ebebab56e2b653974cc2e550503494c0df5",
+      "version": "0.2.0",
+      "commit": "76666f73affcb6d6c5f0dffdac36590144c60e56",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.2.0/jira-0.2.0.tar.gz",
+      "sha256": "f58fe711a9a78c00c80b3c3358af0cc0625923239e483b7592aac5206c0232f8",
+      "squadron": ">=0.47.0",
       "permissions": {
         "exec": [
           "claude",
@@ -268,7 +269,123 @@
           "api.media.atlassian.com"
         ]
       },
+      "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-16",
+          "notes": {
+            "en": [
+              "The Jira logo on the extension and on the Jira button of each agent",
+              "Board: the open sprint in a column per status, with filters by project, assignee, status, type, priority and epic",
+              "Launch agent opens the New agent window filled by Haiku from the ticket, with the fields it reads to check or uncheck",
+              "The ticket shows its fields beside its description when the panel is wide, and its comments can be searched and sorted"
+            ],
+            "fr": [
+              "Le logo Jira sur l’extension et sur le bouton Jira de chaque agent",
+              "Tableau : le sprint en cours en une colonne par statut, avec des filtres par projet, assigné, statut, type, priorité et epic",
+              "Lancer un agent ouvre la fenêtre Nouvel agent remplie par Haiku à partir du ticket, avec les champs qu’il lit à cocher ou décocher",
+              "Le ticket montre ses champs à côté de sa description quand le panneau est large, et ses commentaires se cherchent et se trient"
+            ]
+          }
+        },
+        {
+          "version": "0.1.1",
+          "date": "2026-11-16",
+          "notes": {
+            "en": [
+              "The API token field links to the Atlassian page that creates it, and says to pick the token without scopes"
+            ],
+            "fr": [
+              "Le champ du jeton d’API mène à la page Atlassian qui le crée, et indique de prendre le jeton sans portées"
+            ]
+          }
+        },
+        {
+          "version": "0.1.0",
+          "date": "2026-11-13",
+          "notes": {
+            "en": [
+              "The open sprint of the Jira projects of a Squadron project in a panel next to the agent",
+              "A ticket goes into your message, or Haiku turns it into an instruction",
+              "Attachments open in their app",
+              "Agents get jira_ticket, jira_sprint and jira_search"
+            ],
+            "fr": [
+              "Le sprint en cours des projets Jira d’un projet Squadron, dans un panneau à côté de l’agent",
+              "Un ticket va dans votre message, ou Haiku en fait une consigne",
+              "Les pièces jointes s’ouvrent dans leur application",
+              "Les agents disposent de jira_ticket, jira_sprint et jira_search"
+            ]
+          }
+        }
+      ],
       "versions": [
+        {
+          "version": "0.2.0",
+          "commit": "76666f73affcb6d6c5f0dffdac36590144c60e56",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.2.0/jira-0.2.0.tar.gz",
+          "sha256": "f58fe711a9a78c00c80b3c3358af0cc0625923239e483b7592aac5206c0232f8",
+          "squadron": ">=0.47.0",
+          "permissions": {
+            "exec": [
+              "claude",
+              "git"
+            ],
+            "network": [
+              "api.media.atlassian.com"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.2.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The Jira logo on the extension and on the Jira button of each agent",
+                  "Board: the open sprint in a column per status, with filters by project, assignee, status, type, priority and epic",
+                  "Launch agent opens the New agent window filled by Haiku from the ticket, with the fields it reads to check or uncheck",
+                  "The ticket shows its fields beside its description when the panel is wide, and its comments can be searched and sorted"
+                ],
+                "fr": [
+                  "Le logo Jira sur l’extension et sur le bouton Jira de chaque agent",
+                  "Tableau : le sprint en cours en une colonne par statut, avec des filtres par projet, assigné, statut, type, priorité et epic",
+                  "Lancer un agent ouvre la fenêtre Nouvel agent remplie par Haiku à partir du ticket, avec les champs qu’il lit à cocher ou décocher",
+                  "Le ticket montre ses champs à côté de sa description quand le panneau est large, et ses commentaires se cherchent et se trient"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The API token field links to the Atlassian page that creates it, and says to pick the token without scopes"
+                ],
+                "fr": [
+                  "Le champ du jeton d’API mène à la page Atlassian qui le crée, et indique de prendre le jeton sans portées"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-13",
+              "notes": {
+                "en": [
+                  "The open sprint of the Jira projects of a Squadron project in a panel next to the agent",
+                  "A ticket goes into your message, or Haiku turns it into an instruction",
+                  "Attachments open in their app",
+                  "Agents get jira_ticket, jira_sprint and jira_search"
+                ],
+                "fr": [
+                  "Le sprint en cours des projets Jira d’un projet Squadron, dans un panneau à côté de l’agent",
+                  "Un ticket va dans votre message, ou Haiku en fait une consigne",
+                  "Les pièces jointes s’ouvrent dans leur application",
+                  "Les agents disposent de jira_ticket, jira_sprint et jira_search"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.1.0",
           "commit": "f43101b7d936843624b963dff6d218ef2714b451",
