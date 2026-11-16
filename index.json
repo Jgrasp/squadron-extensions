@@ -143,10 +143,11 @@
         "fr": "Extension d’exemple écrite en Rust"
       },
       "repository": "https://github.com/Jgrasp/squadron-extensions",
-      "version": "1.0.0",
-      "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.0.0/hello-1.0.0.tar.gz",
-      "sha256": "753c63529a065be39045442aeb65fd05ec36dce4a3b4b102e067868726a8a507",
+      "version": "1.1.0",
+      "commit": "50555f791ed6c4b4aae81e8d48429f1dc6286c7f",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
+      "sha256": "4df93b6764a7ed225e12898a6d82079c4d0f08185b5eba634c9fcabcdc8e10c3",
+      "squadron": ">=0.47.0",
       "permissions": {
         "exec": [
           "git"
@@ -155,7 +156,78 @@
           "api.github.com"
         ]
       },
+      "changelog": [
+        {
+          "version": "1.1.0",
+          "date": "2026-11-16",
+          "notes": {
+            "en": [
+              "Greeting and Tone options, and a settings page that resets the counter.",
+              "New agent from Hello, in the agent menu: opens the New agent window filled by the extension."
+            ],
+            "fr": [
+              "Options Salutation et Ton, et une page de réglages qui remet le compteur à zéro.",
+              "Nouvel agent depuis Hello, dans le menu de l’agent : ouvre la fenêtre New agent remplie par l’extension."
+            ]
+          }
+        },
+        {
+          "version": "1.0.0",
+          "date": "2026-11-06",
+          "notes": {
+            "en": [
+              "First version: a Count button, a panel, a greeting in the agent menu and three tools for your agents."
+            ],
+            "fr": [
+              "Première version : un bouton Compter, un panneau, une salutation dans le menu de l’agent et trois outils pour vos agents."
+            ]
+          }
+        }
+      ],
       "versions": [
+        {
+          "version": "1.1.0",
+          "commit": "50555f791ed6c4b4aae81e8d48429f1dc6286c7f",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
+          "sha256": "4df93b6764a7ed225e12898a6d82079c4d0f08185b5eba634c9fcabcdc8e10c3",
+          "squadron": ">=0.47.0",
+          "permissions": {
+            "exec": [
+              "git"
+            ],
+            "network": [
+              "api.github.com"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "1.1.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "Greeting and Tone options, and a settings page that resets the counter.",
+                  "New agent from Hello, in the agent menu: opens the New agent window filled by the extension."
+                ],
+                "fr": [
+                  "Options Salutation et Ton, et une page de réglages qui remet le compteur à zéro.",
+                  "Nouvel agent depuis Hello, dans le menu de l’agent : ouvre la fenêtre New agent remplie par l’extension."
+                ]
+              }
+            },
+            {
+              "version": "1.0.0",
+              "date": "2026-11-06",
+              "notes": {
+                "en": [
+                  "First version: a Count button, a panel, a greeting in the agent menu and three tools for your agents."
+                ],
+                "fr": [
+                  "Première version : un bouton Compter, un panneau, une salutation dans le menu de l’agent et trois outils pour vos agents."
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "1.0.0",
           "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
