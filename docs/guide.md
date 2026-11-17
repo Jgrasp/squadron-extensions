@@ -125,6 +125,7 @@ Claude Code asks the user before each call, as for any tool.
 | `id` | Lowercase letters, digits and dashes. |
 | `title` | A text. |
 | `page` | The path of an `.html` file inside the extension folder. |
+| `window` | Optional, Squadron 0.51 and later. `"maximized"` or `"fullscreen"` opens the panel in its own window instead of beside the conversation. |
 
 See [Panels](#panels).
 
@@ -348,6 +349,8 @@ Squadron keeps one link per destination and artifact, with the time of the share
 ## Panels
 
 A panel is an HTML page of the extension, shown beside the conversation like the terminal or the diff. The user chooses where it goes (beside, below, full screen) and Squadron remembers it.
+
+With `"window"`, the panel opens in its own window, maximized or full screen. `panel.open` opens it, or brings it to the front, from any agent. The page, its bridge and its theme stay the same. The window does not reload when the user shows another agent, `panel.message` carries the agent shown in the main window, `panel.closed` comes when the user closes the window, and a minimized window sets `document.hidden`.
 
 The page runs in an isolated frame:
 
