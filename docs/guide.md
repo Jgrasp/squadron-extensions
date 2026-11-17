@@ -125,7 +125,7 @@ Claude Code asks the user before each call, as for any tool.
 | `id` | Lowercase letters, digits and dashes. |
 | `title` | A text. |
 | `page` | The path of an `.html` file inside the extension folder. |
-| `window` | Optional, Squadron 0.51 and later. `"floating"`, `"maximized"` or `"fullscreen"` opens the panel in its own window instead of beside the conversation. A floating window is resizable and comes back with its last size and position. |
+| `window` | Optional, Squadron 0.52 and later. `"floating"`, `"maximized"` or `"fullscreen"` opens the panel in its own window instead of beside the conversation. A floating window is resizable and comes back with its last size and position. |
 
 See [Panels](#panels).
 
