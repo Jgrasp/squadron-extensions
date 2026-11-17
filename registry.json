@@ -8,5 +8,8 @@
   },
   "jira": {
     "repository": "https://github.com/Jgrasp/squadron-jira"
+  },
+  "agent-office": {
+    "repository": "https://github.com/Jgrasp/squadron-agent-office"
   }
 }
