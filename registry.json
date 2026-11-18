@@ -11,5 +11,8 @@
   },
   "agent-office": {
     "repository": "https://github.com/Jgrasp/squadron-agent-office"
+  },
+  "github": {
+    "repository": "https://github.com/Jgrasp/squadron-github"
   }
 }
