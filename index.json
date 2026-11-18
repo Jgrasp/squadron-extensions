@@ -13,11 +13,11 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzNhMzIzOCIvPjxwYXRoIGQ9Ik01IDE4bDgtNCA4IDQtOCA0eiIgZmlsbD0iI2M5YzJiNiIvPjxwYXRoIGQ9Ik01IDE4djRsOCA0di00eiIgZmlsbD0iIzhkODU5MCIvPjxwYXRoIGQ9Ik0yMSAxOHY0bC04IDR2LTR6IiBmaWxsPSIjNmE1ZTY2Ii8+PHBhdGggZD0iTTEzIDExbDctMy41IDcgMy41LTcgMy41eiIgZmlsbD0iI2U5ZTRkYyIvPjxwYXRoIGQ9Ik0xMyAxMXY4bDcgMy41di04eiIgZmlsbD0iI2E4YTE5NiIvPjxwYXRoIGQ9Ik0yNyAxMXY4bC03IDMuNXYtOHoiIGZpbGw9IiM3YTZlNzYiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjYiIHI9IjEuOCIgZmlsbD0iI0UwOEE1QiIvPjwvc3ZnPgo=",
       "repository": "https://github.com/Jgrasp/squadron-agent-office",
-      "version": "0.1.0",
-      "commit": "ef53c256084e26c18ba095398f4e95abbc23461a",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.1.0/agent-office-0.1.0.tar.gz",
-      "sha256": "ec31bd0b0983bbba1cb0658a211d2adfc475a7987323c421a8b4f1f3fe1ed6f2",
-      "squadron": ">=0.52.0",
+      "version": "0.2.0",
+      "commit": "fe89f936f48c98c8389eb9bbe9fe63fb24e9c46a",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
+      "sha256": "df25d45b9c3dea9c24ff1b77f0aeb544a66ece2d86d52568fc90708a15a31121",
+      "squadron": ">=0.53.0",
       "permissions": {
         "agents": [
           "activity",
@@ -31,6 +31,22 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-18",
+          "notes": {
+            "en": [
+              "The office opens on its own when Squadron starts; turn it off in Settings › Extensions › Agent Office",
+              "The Agent Office button leaves the agent's tools: open the office again from its settings, which show whether it is open and what your agents are doing",
+              "Names show only over agents that wait for you, failed or are unread, never while they walk, and stay sharp"
+            ],
+            "fr": [
+              "Le bureau s’ouvre tout seul au démarrage de Squadron ; désactivez-le dans Réglages › Extensions › Agent Office",
+              "Le bouton Agent Office quitte les outils de l’agent : rouvrez le bureau depuis ses réglages, qui montrent s’il est ouvert et ce que font vos agents",
+              "Les noms ne s’affichent qu’au-dessus des agents qui vous attendent, en erreur ou non lus, jamais pendant qu’ils marchent, et restent nets"
+            ]
+          }
+        },
         {
           "version": "0.1.0",
           "date": "2026-11-17",
@@ -51,6 +67,61 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.2.0",
+          "commit": "fe89f936f48c98c8389eb9bbe9fe63fb24e9c46a",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
+          "sha256": "df25d45b9c3dea9c24ff1b77f0aeb544a66ece2d86d52568fc90708a15a31121",
+          "squadron": ">=0.53.0",
+          "permissions": {
+            "agents": [
+              "activity",
+              "show"
+            ],
+            "projects": [
+              "read"
+            ],
+            "usage": [
+              "read"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.2.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "The office opens on its own when Squadron starts; turn it off in Settings › Extensions › Agent Office",
+                  "The Agent Office button leaves the agent's tools: open the office again from its settings, which show whether it is open and what your agents are doing",
+                  "Names show only over agents that wait for you, failed or are unread, never while they walk, and stay sharp"
+                ],
+                "fr": [
+                  "Le bureau s’ouvre tout seul au démarrage de Squadron ; désactivez-le dans Réglages › Extensions › Agent Office",
+                  "Le bouton Agent Office quitte les outils de l’agent : rouvrez le bureau depuis ses réglages, qui montrent s’il est ouvert et ce que font vos agents",
+                  "Les noms ne s’affichent qu’au-dessus des agents qui vous attendent, en erreur ou non lus, jamais pendant qu’ils marchent, et restent nets"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-17",
+              "notes": {
+                "en": [
+                  "First version: your agents at work in an isometric office, one room per project and one block per group, live, in a floating window of its own",
+                  "A status wall with Claude's session and weekly limits and the state of its API",
+                  "Click an agent to see what it does and open it; click an office to count its agents",
+                  "New layout, and the ★ menu to keep a layout and open with it"
+                ],
+                "fr": [
+                  "Première version : vos agents au travail dans un bureau isométrique, une pièce par projet et un bloc par groupe, en direct, dans une fenêtre flottante à part",
+                  "Un mur d’état avec les limites de session et de semaine de Claude et l’état de son API",
+                  "Cliquez sur un agent pour voir ce qu’il fait et l’ouvrir ; cliquez sur un bureau pour compter ses agents",
+                  "Nouveau plan, et le menu ★ pour garder un plan et ouvrir avec lui"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.1.0",
           "commit": "ef53c256084e26c18ba095398f4e95abbc23461a",
