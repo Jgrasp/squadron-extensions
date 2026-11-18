@@ -74,7 +74,7 @@ Every problem in the manifest shows under the extension in Settings › Extensio
 | `squadron` | no | The Squadron versions the extension runs on: `">=0.45.0"`, or `">=0.45.0 <0.50.0"` when it stops working from a version on. Discover and updates offer the newest version that fits the user's Squadron; an installed version that does not fit is turned off until the user updates one or the other. |
 | `name` | yes | A text: `{ "en": "…", "fr": "…" }`. English is required; other languages are optional and fall back to English. |
 | `description` | no | A text. |
-| `logo` | no | The path of an `.svg` file inside the extension folder, not hidden, 64 KB at most. Squadron shows it as an image, so its scripts never run, on the extension's page, in Settings, Manage, updates and About, and on items with `"icon": "logo"`. Without it, the first letter of the name on a color. A logo that is missing, too large or not SVG puts the extension in error. Since Squadron 0.47.0. |
+| `logo` | no | The path of an `.svg` file inside the extension folder, not hidden, 64 KB at most. Squadron shows it as an image, so its scripts never run, on the extension's page, in Settings, Manage, updates and About, and on items with `"icon": "logo"`. The registry copies it into `index.json`, so the catalog shows it before install. Without it, the first letter of the name on a color. A logo that is missing, too large or not SVG puts the extension in error. Since Squadron 0.47.0. |
 | `wasm` | no | The path of the compiled component, inside the extension folder. Needed for `run` actions, tools without `command`, and anything in [Logic in Rust](#logic-in-rust). |
 | `permissions` | no | See [Permissions and approval](#permissions-and-approval). |
 
