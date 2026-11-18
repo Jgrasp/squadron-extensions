@@ -92,6 +92,102 @@
       ]
     },
     {
+      "id": "github",
+      "name": {
+        "en": "GitHub",
+        "fr": "GitHub"
+      },
+      "description": {
+        "en": "Pull requests and GitHub Actions runs of your GitHub projects in Squadron: review, comment, merge",
+        "fr": "Les pull requests et les runs GitHub Actions de vos projets GitHub dans Squadron : relire, commenter, fusionner"
+      },
+      "repository": "https://github.com/Jgrasp/squadron-github",
+      "version": "0.1.0",
+      "commit": "cb025b037a052d1a80f4d2f32d8d26647c7b9eec",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.0/github-0.1.0.tar.gz",
+      "sha256": "8c0e20de058f442bf460e9336e96a191886e02f2f8f50765375a64edce169910",
+      "squadron": ">=0.53.0",
+      "permissions": {
+        "network": [
+          "api.github.com"
+        ],
+        "exec": [
+          "gh"
+        ]
+      },
+      "forge": {
+        "remotes": [
+          "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+        ]
+      },
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-18",
+          "notes": {
+            "en": [
+              "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+              "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+              "GitHub Actions runs of each project, with a notification when one ends",
+              "Chips for GitHub pull request links in conversations",
+              "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+            ],
+            "fr": [
+              "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+              "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+              "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+              "Des puces pour les liens de pull requests GitHub dans les conversations",
+              "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+            ]
+          }
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "commit": "cb025b037a052d1a80f4d2f32d8d26647c7b9eec",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.0/github-0.1.0.tar.gz",
+          "sha256": "8c0e20de058f442bf460e9336e96a191886e02f2f8f50765375a64edce169910",
+          "squadron": ">=0.53.0",
+          "permissions": {
+            "network": [
+              "api.github.com"
+            ],
+            "exec": [
+              "gh"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.1.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+                  "GitHub Actions runs of each project, with a notification when one ends",
+                  "Chips for GitHub pull request links in conversations",
+                  "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+                  "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+                  "Des puces pour les liens de pull requests GitHub dans les conversations",
+                  "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "google-workspace-share",
       "name": {
         "en": "Artifact share on Google Workspace",
