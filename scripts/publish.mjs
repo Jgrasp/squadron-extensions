@@ -14,7 +14,7 @@ const newer = (a, b) => {
   return false
 }
 
-const RELEASE = ['version', 'commit', 'archive', 'sha256', 'squadron', 'permissions', 'changelog']
+const RELEASE = ['version', 'commit', 'archive', 'sha256', 'squadron', 'permissions', 'forge', 'changelog']
 const releaseOf = (e) => Object.fromEntries(RELEASE.filter((k) => e[k] !== undefined).map((k) => [k, e[k]]))
 
 const kept = new Map(
@@ -42,6 +42,7 @@ for (const file of readdirSync('out').filter((f) => f.endsWith('.tar.gz'))) {
     sha256,
     squadron: manifest.squadron,
     permissions: manifest.permissions ?? {},
+    forge: Array.isArray(manifest.contributes?.forge?.remotes) ? { remotes: manifest.contributes.forge.remotes } : undefined,
     changelog: meta.changelog,
   })
   const versions = [release, ...before.filter((r) => r.version !== version)].sort((a, b) => (newer(a.version, b.version) ? -1 : 1)).slice(0, KEPT)

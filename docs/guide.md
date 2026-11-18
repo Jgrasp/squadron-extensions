@@ -222,7 +222,7 @@ Makes the extension the provider of pull requests and pipelines for the projects
 | `calls` | The calls the extension answers. Squadron hides what needs a call that is not listed. |
 | `verdicts` | Optional, all three by default: the verdicts a review may post. |
 
-The forge's name and logo are the extension's.
+The forge's name and logo are the extension's. The registry copies `remotes` into `index.json`, so that Squadron offers to install the extension for a project whose remote no installed extension recognizes.
 
 ### contributes.skills
 
