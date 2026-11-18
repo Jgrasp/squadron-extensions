@@ -312,6 +312,7 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::exec(program, args, dir)` | Runs a program listed in `permissions.exec`, without a shell. `dir` defaults to the home folder. Returns `code`, `stdout` and `stderr`. |
 | `host::fetch(request)` | Sends an HTTPS request to a host listed in `permissions.network`. See [Secrets and network](#secrets-and-network). |
 | `host::panel_post(panel, message)` | Sends a JSON message to one of the extension's open panels. |
+| `host::panel_open(panel)` | Opens one of the extension's panels, or brings it to the front when it is already open: a panel with `window` in its own window, another beside the agent on screen. Errors on an unknown panel id, and on a panel without `window` while no agent is on screen. Works from the `started` event at launch: Squadron queues it until its window is ready. Since 1.9.0, so declare `"squadron": ">=0.54.0"`. |
 | `host::agents()` | The agents open in Squadron, with their status, since when, and whether they are pinned, remote, shown or archivable. Needs `agents: ["read"]`. Since 1.1.0. |
 | `host::archive_agent(agent)` | Archives an agent as the user would; refused while it works, waits, is pinned, remote or shown. Needs `agents: ["archive"]`. Since 1.1.0. |
 | `host::set_timer(seconds)` | Sends the event `timer` in `seconds`, 10 at least, replacing the one pending. Since 1.1.0. |
@@ -376,7 +377,7 @@ Squadron keeps one link per destination and artifact, with the time of the share
 
 A panel is an HTML page of the extension, shown beside the conversation like the terminal or the diff. The user chooses where it goes (beside, below, full screen) and Squadron remembers it.
 
-With `"window"`, the panel opens in its own window: floating, maximized or full screen. `panel.open` opens it, or brings it to the front, from any agent. The page, its bridge and its theme stay the same. The window does not reload when the user shows another agent, `panel.message` carries the agent shown in the main window, `panel.closed` comes when the user closes the window, and a minimized window sets `document.hidden`.
+With `"window"`, the panel opens in its own window: floating, maximized or full screen. `panel.open` opens it, or brings it to the front, from any agent. Without a click, the WebAssembly opens it with `host::panel_open`. The page, its bridge and its theme stay the same. The window does not reload when the user shows another agent, `panel.message` carries the agent shown in the main window, `panel.closed` comes when the user closes the window, and a minimized window sets `document.hidden`.
 
 The page runs in an isolated frame:
 
@@ -646,6 +647,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.6.0 | `>=0.49.0` |
 | 1.7.0 | `>=0.52.0` |
 | 1.8.0 | `>=0.53.0` |
+| 1.9.0 | `>=0.54.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
