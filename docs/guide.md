@@ -208,7 +208,7 @@ Makes the extension the provider of pull requests and pipelines for the projects
 "forge": {
   "remotes": ["^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"],
   "links": ["https?://(?:www\\.)?github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)/pull/(?<number>[0-9]+)"],
-  "calls": ["pull", "numbered", "lists", "remarks", "me", "reply", "post", "merge", "update", "runs"],
+  "calls": ["pull", "numbered", "lists", "remarks", "me", "reply", "resolve", "post", "merge", "update", "runs"],
   "verdicts": ["approve", "request_changes", "comment"]
 }
 ```
@@ -485,6 +485,7 @@ impl Extension for GitHub {
 | `remarks` | `NumberArgs` | `Vec<Remark>`, oldest first |
 | `me` | `NoArgs` | `Person` |
 | `reply` | `ReplyArgs` | `null`. `to` and `kind` are those of the thread's first remark. |
+| `resolve` | `ResolveArgs` | `null`, once the thread of `to` is resolved, or reopened when `resolved` is false. `to` and `kind` are those of the thread's first remark. |
 | `post` | `PostArgs` | `Posted`: how many drafts went through, whether the summary did, and why it stopped |
 | `merge` | `NumberArgs` | `null`, with the method the extension chooses |
 | `update` | `UpdateArgs` | `null` |
@@ -496,6 +497,7 @@ The types are in `squadron_extension_api::forge`, every field with a default, so
 - `Pull.checks`: `passing`, `failing`, `pending`, or none.
 - `Pull.reviewed` and `Reviewer.verdict`: `approved`, `changes_requested`, `commented`, and `waiting` for a reviewer.
 - `Remark.kind`: `line` or `general`. `Remark.id` is a string of your own, unique in the pull request.
+- `Remark.resolved`: on the first remark of a thread the host can resolve, whether it is; `None` elsewhere. `Remark.commit`: the commit a line remark was written on, when the host says.
 - `PostArgs.verdict`: `approve`, `request_changes` or `comment`.
 - `Run.status`: `success`, `failure`, `cancelled`, `skipped`, `running`, `queued`.
 - Dates in RFC 3339.
