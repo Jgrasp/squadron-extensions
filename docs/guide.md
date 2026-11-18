@@ -200,6 +200,30 @@ Options that Squadron draws on the extension's page in Settings › Extensions, 
 
 Squadron keeps the values the user changed, checks them against the manifest, and falls back on the default when one no longer fits after an update. `host::options()` returns all of them as a JSON object by id, defaults included, and the event `options.changed` carries the same object each time the user changes one. The settings page works like a panel: `squadron.send` sends `settings.message` to the WebAssembly, which answers with `host::settings_post`. It and the panels also get `squadron.options` and `squadron.setOption(id, value)`, which need no WebAssembly.
 
+### contributes.forge
+
+Makes the extension the provider of pull requests and pipelines for the projects whose remote it recognizes. Needs `wasm` and `accounts`. Since 1.8.0. See [Forge providers](#forge-providers).
+
+```json
+"forge": {
+  "remotes": ["^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"],
+  "links": ["https?://(?:www\\.)?github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)/pull/(?<number>[0-9]+)"],
+  "calls": ["pull", "numbered", "lists", "remarks", "me", "reply", "post", "merge", "update", "runs"],
+  "verdicts": ["approve", "request_changes", "comment"]
+}
+```
+
+| Field | Rule |
+| --- | --- |
+| `remotes` | Regexes matched, anchored, against the origin remote as `host/path`: lowercase host, no scheme, user or port, no `.git` nor trailing `/`. `git@github.com:Acme/Shop.git` gives `github.com/Acme/Shop`. |
+| `links` | Regexes for a pull request's web address, unanchored, with a `number` group. Squadron uses them for the chips of links in conversations and to find the pull request an agent opened. |
+| `{account}` | In `remotes` and `links`, the `host` fields of the extension's accounts, for self-hosted servers. |
+| Groups | Named groups only. The repo is the value of every group but `number`, in order, joined by `/`. Use one pattern per form and ASCII classes, no `\w`, no lookaround: the same pattern runs in Rust and in JavaScript. |
+| `calls` | The calls the extension answers. Squadron hides what needs a call that is not listed. |
+| `verdicts` | Optional, all three by default: the verdicts a review may post. |
+
+The forge's name and logo are the extension's.
+
 ### contributes.skills
 
 Folders of the extension, each holding a `SKILL.md`, that become skills of every agent, named `<extension>:<folder>`:
@@ -254,6 +278,8 @@ squadron_extension!(Hello);
 An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in (its worktree, or its project). An error returned by `run` shows to the user; an error returned by `call_tool` goes back to the agent.
 
 `check_account` tests an account the user adds or saved: see [Testing an account](#testing-an-account). Since 1.6.0.
+
+`forge` answers Squadron's pull request and pipeline calls: see [Forge providers](#forge-providers). Since 1.8.0.
 
 ### Events
 
@@ -423,6 +449,65 @@ Labels and texts are strings or `{ "en": "…", "fr": "…" }`. `null` removes t
 
 The Hello example opens one from **New agent from Hello** in the agent menu.
 
+## Forge providers
+
+An extension with `contributes.forge` answers Squadron's calls for the pull requests and pipelines of the projects it recognizes. Since API 1.8.0.
+
+```rust
+use squadron_extension_api::forge::{self, Input, NoArgs, NumberArgs, Person, Remark};
+use squadron_extension_api::Extension;
+
+impl Extension for GitHub {
+    fn forge(call: String, input: String) -> Result<String, String> {
+        match call.as_str() {
+            "me" => {
+                let _: Input<NoArgs> = forge::input(&input)?;
+                forge::answer(&Person { name: "ada".into(), avatar: String::new() })
+            }
+            "remarks" => {
+                let asked: Input<NumberArgs> = forge::input(&input)?;
+                let found: Vec<Remark> = remarks(&asked.repo, asked.args.number)?;
+                forge::answer(&found)
+            }
+            _ => Err(forge::unsupported(&call)),
+        }
+    }
+}
+```
+
+`input` is `{ "host": "github.com", "repo": "acme/shop", "groups": { "owner": "acme", "name": "shop" }, "args": { … } }`. Squadron reads git itself and never passes the remote, which can hold a token. The extension picks the account among `host::accounts()`.
+
+| Call | `args` | Answer |
+| --- | --- | --- |
+| `pull` | `BranchArgs` | The `Pull` of the branch, the most recently updated in any state, or `null` |
+| `numbered` | `NumberArgs` | `Numbered`: the `Pull`, with `additions`, `deletions` and `files` when known |
+| `lists` | `NoArgs` | `Lists`: `review`, `mine` and `others`, open pull requests, 50 each at most |
+| `remarks` | `NumberArgs` | `Vec<Remark>`, oldest first |
+| `me` | `NoArgs` | `Person` |
+| `reply` | `ReplyArgs` | `null`. `to` and `kind` are those of the thread's first remark. |
+| `post` | `PostArgs` | `Posted`: how many drafts went through, whether the summary did, and why it stopped |
+| `merge` | `NumberArgs` | `null`, with the method the extension chooses |
+| `update` | `UpdateArgs` | `null` |
+| `runs` | `NoArgs` | `Vec<Run>`, newest first, 20 at most |
+
+The types are in `squadron_extension_api::forge`, every field with a default, so an answer built with an older crate still reads. Texts take these values:
+
+- `Pull.state`: `open`, `merged`, `declined`, `closed`, `superseded`.
+- `Pull.checks`: `passing`, `failing`, `pending`, or none.
+- `Pull.reviewed` and `Reviewer.verdict`: `approved`, `changes_requested`, `commented`, and `waiting` for a reviewer.
+- `Remark.kind`: `line` or `general`. `Remark.id` is a string of your own, unique in the pull request.
+- `PostArgs.verdict`: `approve`, `request_changes` or `comment`.
+- `Run.status`: `success`, `failure`, `cancelled`, `skipped`, `running`, `queued`.
+- Dates in RFC 3339.
+
+An error is a plain text, or `forge::failure(code, title, detail)` with texts as strings or `{ "en": "…", "fr": "…" }`. `forge::no_account(title)` (code `account`) leads the user to Settings › Pull requests. `forge::unsupported(call)` (code `unsupported`) hides what needs the call.
+
+Calls run on up to 4 instances of the extension at once, so that the pull request views, the pipelines and the agents' pull requests do not wait for each other:
+
+- These instances get no events, not even `started`, and their `host::set_timer` does nothing. Events, actions, tools and `check_account` stay on the main instance.
+- They share `host::state_get` and `host::state_set`, never memory: a cache kept in a `static` lives in one instance only. Reading then writing one key is not atomic across instances, so keep a key per thing rather than a counter that several calls bump.
+- A call identical to one in flight gets its answer instead of running again.
+
 ## Secrets and network
 
 Declare the secrets in `contributes.secrets`. The user fills them in the extension's details in Settings › Extensions, and Squadron keeps them in the system keyring. Neither the WebAssembly nor the panel can read them.
@@ -540,7 +625,8 @@ Allowed commands run with the user's rights. Ask only for what you need, and say
 | `host::exec`, tool commands | 120 s; tool commands return the last 30,000 characters. |
 | `host::fetch`, `host::fetch_bytes` | 30 s, 8 MB of response. |
 | `host::download` | 120 s, 200 MB. |
-| Answer to a click or a tool | 150 s. |
+| Answer to a click, a tool or a forge call | 150 s. |
+| Forge calls at once | 4, each on its own instance with its own 64 MB. |
 | Manifest | 256 KB. |
 | Published archive | 50 MB, 2,000 files. |
 
@@ -556,6 +642,8 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.4.0 | `>=0.46.0` |
 | 1.5.0 | `>=0.47.0` |
 | 1.6.0 | `>=0.49.0` |
+| 1.7.0 | `>=0.52.0` |
+| 1.8.0 | `>=0.53.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
