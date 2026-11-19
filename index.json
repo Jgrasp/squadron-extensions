@@ -164,6 +164,101 @@
       ]
     },
     {
+      "id": "bitbucket",
+      "name": {
+        "en": "Bitbucket",
+        "fr": "Bitbucket"
+      },
+      "description": {
+        "en": "Pull requests and Pipelines runs of your Bitbucket Cloud projects in Squadron: review, comment, merge",
+        "fr": "Les pull requests et les runs Pipelines de vos projets Bitbucket Cloud dans Squadron : relire, commenter, fusionner"
+      },
+      "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI2ODRmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzggNS43NCkgc2NhbGUoLjA0KSIgZmlsbD0iI2ZmZiIgZD0iTTIyLjIgMzJBMTYgMTYgMCAwIDAgNiA0Ny44YTI2LjM1IDI2LjM1IDAgMCAwIC4yIDIuOGw2Ny45IDQxMi4xYTIxLjc3IDIxLjc3IDAgMCAwIDIxLjMgMTguMmgzMjUuN2ExNiAxNiAwIDAgMCAxNi0xMy40TDUwNSA1MC43YTE2IDE2IDAgMCAwLTEzLjItMTguMyAyNC41OCAyNC41OCAwIDAgMC0yLjgtLjJMMjIuMiAzMnptMjg1LjkgMjk3LjhoLTEwNGwtMjguMS0xNDdoMTU3LjNsLTI1LjIgMTQ3eiIvPjwvc3ZnPgo=",
+      "repository": "https://github.com/Jgrasp/squadron-bitbucket",
+      "version": "0.1.0",
+      "commit": "7f1b238fdcb7a8d45206371e04673a4edbb7a39e",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.1.0/bitbucket-0.1.0.tar.gz",
+      "sha256": "fd58b22243b6c8be254a0d0d8c177882437cfe7aed978cb555877abd3aa7f023",
+      "squadron": ">=0.54.0",
+      "permissions": {
+        "network": [
+          "api.bitbucket.org"
+        ]
+      },
+      "forge": {
+        "remotes": [
+          "^(?:ssh\\.)?bitbucket\\.org/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+        ]
+      },
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-19",
+          "notes": {
+            "en": [
+              "Pull requests of your Bitbucket Cloud projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+              "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+              "Pipelines runs of each project, with a notification when one ends",
+              "Pipelines run on a pull request show its number and title and are filed under PR checks",
+              "Chips for Bitbucket pull request links in conversations",
+              "Bitbucket accounts with an email and an API token checked before it is saved, one per Atlassian user"
+            ],
+            "fr": [
+              "Les pull requests de vos projets Bitbucket Cloud dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+              "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+              "Les runs Pipelines de chaque projet, avec une notification à la fin de chacun",
+              "Les pipelines lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+              "Des puces pour les liens de pull requests Bitbucket dans les conversations",
+              "Des comptes Bitbucket avec un e-mail et un jeton d’API vérifié avant d’être enregistré, un par utilisateur Atlassian"
+            ]
+          }
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "commit": "7f1b238fdcb7a8d45206371e04673a4edbb7a39e",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.1.0/bitbucket-0.1.0.tar.gz",
+          "sha256": "fd58b22243b6c8be254a0d0d8c177882437cfe7aed978cb555877abd3aa7f023",
+          "squadron": ">=0.54.0",
+          "permissions": {
+            "network": [
+              "api.bitbucket.org"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^(?:ssh\\.)?bitbucket\\.org/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.1.0",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "Pull requests of your Bitbucket Cloud projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipelines runs of each project, with a notification when one ends",
+                  "Pipelines run on a pull request show its number and title and are filed under PR checks",
+                  "Chips for Bitbucket pull request links in conversations",
+                  "Bitbucket accounts with an email and an API token checked before it is saved, one per Atlassian user"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets Bitbucket Cloud dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les runs Pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les pipelines lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de pull requests Bitbucket dans les conversations",
+                  "Des comptes Bitbucket avec un e-mail et un jeton d’API vérifié avant d’être enregistré, un par utilisateur Atlassian"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "github",
       "name": {
         "en": "GitHub",
@@ -175,10 +270,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI0MjkyZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuMjUgNS45NSkgc2NhbGUoLjAzOTMpIiBmaWxsPSIjZmZmIiBkPSJNMjQ0LjggOEMxMDYuMSA4IDAgMTEzLjMgMCAyNTJjMCAxMTAuOSA2OS44IDIwNS44IDE2OS41IDIzOS4yIDEyLjggMi4zIDE3LjMtNS42IDE3LjMtMTIuMSAwLTYuMi0uMy00MC40LS4zLTYxLjQgMCAwLTcwIDE1LTg0LjctMjkuOCAwIDAtMTEuNC0yOS4xLTI3LjgtMzYuNiAwIDAtMjIuOS0xNS43IDEuNi0xNS40IDAgMCAyNC45IDIgMzguNiAyNS44IDIxLjkgMzguNiA1OC42IDI3LjUgNzIuOSAyMC45IDIuMy0xNiA4LjgtMjcuMSAxNi0zMy43LTU1LjktNi4yLTExMi4zLTE0LjMtMTEyLjMtMTEwLjUgMC0yNy41IDcuNi00MS4zIDIzLjYtNTguOS0yLjYtNi41LTExLjEtMzMuMyAyLjYtNjcuOSAyMC45LTYuNSA2OSAyNyA2OSAyNyAyMC01LjYgNDEuNS04LjUgNjIuOC04LjVzNDIuOCAyLjkgNjIuOCA4LjVjMCAwIDQ4LjEtMzMuNiA2OS0yNyAxMy43IDM0LjcgNS4yIDYxLjQgMi42IDY3LjkgMTYgMTcuNyAyNS44IDMxLjUgMjUuOCA1OC45IDAgOTYuNS01OC45IDEwNC4yLTExNC44IDExMC41IDkuMiA3LjkgMTcgMjIuOSAxNyA0Ni40IDAgMzMuNy0uMyA3NS40LS4zIDgzLjYgMCA2LjUgNC42IDE0LjQgMTcuMyAxMi4xQzQyOC4yIDQ1Ny44IDQ5NiAzNjIuOSA0OTYgMjUyIDQ5NiAxMTMuMyAzODMuNSA4IDI0NC44IDh6Ii8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-github",
-      "version": "0.1.1",
-      "commit": "76de9b7cff0646b1f553ddd98948f50db4de7198",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.1/github-0.1.1.tar.gz",
-      "sha256": "ced240ba3a8c3a78dd7fd04c6deda3a1970000b916d74f5eb68efd747ee063d7",
+      "version": "0.2.0",
+      "commit": "2fa64377cb6c4143e0aaacfffc944fefe463a8b8",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.2.0/github-0.2.0.tar.gz",
+      "sha256": "de942a130ad5956f2b1197d49f307a59ec467437c0ca42d315117bd17c69ffd6",
       "squadron": ">=0.53.0",
       "permissions": {
         "network": [
@@ -194,6 +289,18 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.2.0",
+          "date": "2026-11-19",
+          "notes": {
+            "en": [
+              "GitHub Actions runs name the pull request they check, so Squadron shows its number and title on the run and files it under PR checks"
+            ],
+            "fr": [
+              "Les runs GitHub Actions indiquent la pull request qu’ils vérifient : Squadron affiche son numéro et son titre sur le run et le range dans « Checks de PR »"
+            ]
+          }
+        },
         {
           "version": "0.1.1",
           "date": "2026-11-19",
@@ -230,6 +337,74 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.2.0",
+          "commit": "2fa64377cb6c4143e0aaacfffc944fefe463a8b8",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.2.0/github-0.2.0.tar.gz",
+          "sha256": "de942a130ad5956f2b1197d49f307a59ec467437c0ca42d315117bd17c69ffd6",
+          "squadron": ">=0.53.0",
+          "permissions": {
+            "network": [
+              "api.github.com"
+            ],
+            "exec": [
+              "gh"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.2.0",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs name the pull request they check, so Squadron shows its number and title on the run and files it under PR checks"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions indiquent la pull request qu’ils vérifient : Squadron affiche son numéro et son titre sur le run et le range dans « Checks de PR »"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs show again for projects that go through the GitHub CLI",
+                  "Merging a pull request uses a method the repository and its base branch rules allow, when your default one is not allowed"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions s’affichent de nouveau pour les projets qui passent par la GitHub CLI",
+                  "La fusion d’une pull request prend une méthode autorisée par le dépôt et les règles de sa branche de base, quand votre méthode par défaut ne l’est pas"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+                  "GitHub Actions runs of each project, with a notification when one ends",
+                  "Chips for GitHub pull request links in conversations",
+                  "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+                  "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+                  "Des puces pour les liens de pull requests GitHub dans les conversations",
+                  "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.1.1",
           "commit": "76de9b7cff0646b1f553ddd98948f50db4de7198",
