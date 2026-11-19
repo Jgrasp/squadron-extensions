@@ -502,6 +502,7 @@ The types are in `squadron_extension_api::forge`, every field with a default, so
 - `Remark.resolved`: on the first remark of a thread the host can resolve, whether it is; `None` elsewhere. `Remark.commit`: the commit a line remark was written on, when the host says.
 - `PostArgs.verdict`: `approve`, `request_changes` or `comment`.
 - `Run.status`: `success`, `failure`, `cancelled`, `skipped`, `running`, `queued`.
+- `Run.pull`: the number of the pull request the run checks, since API 1.11.0. Squadron shows `#N` and the pull request's title on the run's card and counts the run under "PR checks". Left empty, a run still counts as a check when its `event` is `pull_request`, `pull_request_target`, `merge_request_event`, `pullRequest` or `pullrequest`, or its `branch` is the head of an open pull request. An older Squadron ignores it.
 - Dates in RFC 3339.
 
 An error is a plain text, or `forge::failure(code, title, detail)` with texts as strings or `{ "en": "…", "fr": "…" }`. `forge::no_account(title)` (code `account`) leads the user to Settings › Pull requests. `forge::unsupported(call)` (code `unsupported`) hides what needs the call.
@@ -650,6 +651,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.8.0 | `>=0.53.0` |
 | 1.9.0 | `>=0.54.0` |
 | 1.10.0 | `>=0.54.0` |
+| 1.11.0 | `>=0.54.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
