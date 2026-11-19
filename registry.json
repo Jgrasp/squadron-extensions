@@ -14,5 +14,8 @@
   },
   "github": {
     "repository": "https://github.com/Jgrasp/squadron-github"
+  },
+  "bitbucket": {
+    "repository": "https://github.com/Jgrasp/squadron-bitbucket"
   }
 }
