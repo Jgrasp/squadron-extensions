@@ -165,6 +165,7 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].hint` | Optional text, shown under the field. |
 | `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
 | `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
+| `fields[].copy` | Optional list of one-line strings, each once, such as the scopes a token needs. Squadron shows each as a button under the field's hint; a click copies it and the button reads "Copied" for 1.5 s. Plain strings, not texts. Since Squadron 0.54.0. |
 | `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.49.0. See [Testing an account](#testing-an-account). |
 
 The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
@@ -648,6 +649,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.7.0 | `>=0.52.0` |
 | 1.8.0 | `>=0.53.0` |
 | 1.9.0 | `>=0.54.0` |
+| 1.10.0 | `>=0.54.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
