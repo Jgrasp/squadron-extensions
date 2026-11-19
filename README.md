@@ -22,7 +22,7 @@ The catalog of extensions for [Squadron](https://github.com/Jgrasp/squadron), an
    ```
 
    Add `"path"` when `extension.json` is not at the root of the repository.
-3. To publish a version, push a tag `v<version>` matching `extension.json`. Every hour, CI builds the newest tag of each repository, publishes the archive as a release of this repository, with its sha256 in `index.json`, and Squadron offers it in Settings › Extensions. A refused tag goes into `rejected.json` with the reason.
+3. To publish a version, push a tag `v<version>` matching `extension.json`. Every hour, or as soon as you push the tag when your repository starts it ([see the guide](docs/guide.md#publishing-as-soon-as-you-tag)), CI builds the newest tag of each repository, publishes the archive as a release of this repository, with its sha256 in `index.json`, and Squadron offers it in Settings › Extensions. A refused tag goes into `rejected.json` with the reason.
 
 Squadron installs what CI built from your tag, never a file from your repository.
 

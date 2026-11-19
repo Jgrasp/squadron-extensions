@@ -675,13 +675,39 @@ Extensions are published from their own public GitHub repository, listed once in
    Add `"path": "<folder>"` when `extension.json` is not at the root of the repository.
 3. Once the pull request is reviewed and merged, the extension is listed: its versions come from your repository.
 
-To publish a version, raise `version` in `extension.json`, add its section to `CHANGELOG.md`, commit, and push a tag `v<version>` (`v1.2.0`), or `<id>/v<version>` when the extension lives in a folder. Every hour, CI takes the newest tag of each listed repository, builds it, checks that `extension.json` has the registry's id and the tag's version and that the changelog has its section, then publishes the archive as a release of this repository and adds it to `index.json` with its sha256. You can also start it at once from the Actions tab of this repository.
+To publish a version, raise `version` in `extension.json`, add its section to `CHANGELOG.md`, commit, and push a tag `v<version>` (`v1.2.0`), or `<id>/v<version>` when the extension lives in a folder. Every hour, or as soon as you push the tag when your repository starts it ([below](#publishing-as-soon-as-you-tag)), CI takes the newest tag of each listed repository, builds it, checks that `extension.json` has the registry's id and the tag's version and that the changelog has its section, then publishes the archive as a release of this repository and adds it to `index.json` with its sha256. You can also start it at once from the Actions tab of this repository.
 
 A tag CI refuses goes into [`rejected.json`](../rejected.json) with the reason, and stays there until you push a fixed commit under the next version, or move the tag. The previous version stays on offer meanwhile.
 
 The archive holds `extension.json`, the `.wasm` file and every file of the folder that is not Rust source (`src/`, `Cargo.toml`, `Cargo.lock`, `build.rs`). Squadron installs exactly what CI built from the tagged commit. Users get a notification and update in one click; a new command or host asks for their approval again.
 
 `index.json` keeps the 10 newest versions of each extension under `versions`, newest first, so that a Squadron too old for the newest one still gets the newest it can run.
+
+### Publishing as soon as you tag
+
+The hourly run can make you wait. To start it the moment you push a tag, add `.github/workflows/registry.yml` to your extension's repository:
+
+```yaml
+name: Registry
+
+on:
+  push:
+    tags: ['v*']
+
+permissions: {}
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh workflow run registry.yml --repo Jgrasp/squadron-extensions
+        env:
+          GH_TOKEN: ${{ secrets.SQUADRON_REGISTRY_TOKEN }}
+```
+
+Use `tags: ['<id>/v*']` when the extension lives in a folder, and put your own source in `--repo` when you publish there.
+
+`SQUADRON_REGISTRY_TOKEN` is a secret of your repository: a fine-grained token with **Actions: Read and write** on the source repository alone, which starts its workflows and cannot change its files. Only the source's maintainers can make one; without it, your version waits for the hourly run. When the token expires, the job fails and the hourly run still publishes.
 
 ### Changelog
 
