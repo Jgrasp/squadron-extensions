@@ -175,10 +175,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI0MjkyZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuMjUgNS45NSkgc2NhbGUoLjAzOTMpIiBmaWxsPSIjZmZmIiBkPSJNMjQ0LjggOEMxMDYuMSA4IDAgMTEzLjMgMCAyNTJjMCAxMTAuOSA2OS44IDIwNS44IDE2OS41IDIzOS4yIDEyLjggMi4zIDE3LjMtNS42IDE3LjMtMTIuMSAwLTYuMi0uMy00MC40LS4zLTYxLjQgMCAwLTcwIDE1LTg0LjctMjkuOCAwIDAtMTEuNC0yOS4xLTI3LjgtMzYuNiAwIDAtMjIuOS0xNS43IDEuNi0xNS40IDAgMCAyNC45IDIgMzguNiAyNS44IDIxLjkgMzguNiA1OC42IDI3LjUgNzIuOSAyMC45IDIuMy0xNiA4LjgtMjcuMSAxNi0zMy43LTU1LjktNi4yLTExMi4zLTE0LjMtMTEyLjMtMTEwLjUgMC0yNy41IDcuNi00MS4zIDIzLjYtNTguOS0yLjYtNi41LTExLjEtMzMuMyAyLjYtNjcuOSAyMC45LTYuNSA2OSAyNyA2OSAyNyAyMC01LjYgNDEuNS04LjUgNjIuOC04LjVzNDIuOCAyLjkgNjIuOCA4LjVjMCAwIDQ4LjEtMzMuNiA2OS0yNyAxMy43IDM0LjcgNS4yIDYxLjQgMi42IDY3LjkgMTYgMTcuNyAyNS44IDMxLjUgMjUuOCA1OC45IDAgOTYuNS01OC45IDEwNC4yLTExNC44IDExMC41IDkuMiA3LjkgMTcgMjIuOSAxNyA0Ni40IDAgMzMuNy0uMyA3NS40LS4zIDgzLjYgMCA2LjUgNC42IDE0LjQgMTcuMyAxMi4xQzQyOC4yIDQ1Ny44IDQ5NiAzNjIuOSA0OTYgMjUyIDQ5NiAxMTMuMyAzODMuNSA4IDI0NC44IDh6Ii8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-github",
-      "version": "0.1.0",
-      "commit": "cb025b037a052d1a80f4d2f32d8d26647c7b9eec",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.0/github-0.1.0.tar.gz",
-      "sha256": "8c0e20de058f442bf460e9336e96a191886e02f2f8f50765375a64edce169910",
+      "version": "0.1.1",
+      "commit": "76de9b7cff0646b1f553ddd98948f50db4de7198",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.1/github-0.1.1.tar.gz",
+      "sha256": "ced240ba3a8c3a78dd7fd04c6deda3a1970000b916d74f5eb68efd747ee063d7",
       "squadron": ">=0.53.0",
       "permissions": {
         "network": [
@@ -194,6 +194,20 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.1.1",
+          "date": "2026-11-19",
+          "notes": {
+            "en": [
+              "GitHub Actions runs show again for projects that go through the GitHub CLI",
+              "Merging a pull request uses a method the repository and its base branch rules allow, when your default one is not allowed"
+            ],
+            "fr": [
+              "Les runs GitHub Actions s’affichent de nouveau pour les projets qui passent par la GitHub CLI",
+              "La fusion d’une pull request prend une méthode autorisée par le dépôt et les règles de sa branche de base, quand votre méthode par défaut ne l’est pas"
+            ]
+          }
+        },
         {
           "version": "0.1.0",
           "date": "2026-11-18",
@@ -216,6 +230,62 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.1.1",
+          "commit": "76de9b7cff0646b1f553ddd98948f50db4de7198",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.1/github-0.1.1.tar.gz",
+          "sha256": "ced240ba3a8c3a78dd7fd04c6deda3a1970000b916d74f5eb68efd747ee063d7",
+          "squadron": ">=0.53.0",
+          "permissions": {
+            "network": [
+              "api.github.com"
+            ],
+            "exec": [
+              "gh"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.1.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs show again for projects that go through the GitHub CLI",
+                  "Merging a pull request uses a method the repository and its base branch rules allow, when your default one is not allowed"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions s’affichent de nouveau pour les projets qui passent par la GitHub CLI",
+                  "La fusion d’une pull request prend une méthode autorisée par le dépôt et les règles de sa branche de base, quand votre méthode par défaut ne l’est pas"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+                  "GitHub Actions runs of each project, with a notification when one ends",
+                  "Chips for GitHub pull request links in conversations",
+                  "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+                  "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+                  "Des puces pour les liens de pull requests GitHub dans les conversations",
+                  "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.1.0",
           "commit": "cb025b037a052d1a80f4d2f32d8d26647c7b9eec",
