@@ -437,14 +437,14 @@ Every key of a draft is optional:
 | `text` | The first message. |
 | `goal` | Done when. |
 | `context` | Added after the first message when the agent starts, never shown in the window. A `<ticket>` block there shows as a chip in the conversation. |
-| `link` | `{ "key", "title", "url" }`, at the top of the window with the extension's logo. The key opens `url` (`https://` only) in the browser, ✕ unlinks. |
+| `link` | `{ "key", "title", "url" }`, at the top of the window with the extension's logo. The key opens `url` (`https://` only) in the browser, ✕ unlinks. The agent the draft starts keeps the link, unless the user unlinked: its row in the agent list shows the logo and the key, the title on hover, and a click opens `url`. An agent restored from the archive keeps it, a fork does not. Since Squadron 0.55.0. |
 | `choices` | `{ "label", "items": [{ "id", "label", "on" }] }`, checkboxes folded under the link. |
 | `status` | `{ "state": "running" \| "done" \| "error", "text" }`, a band above the first message, with Regenerate once it is not running. |
 
 Labels and texts are strings or `{ "en": "…", "fr": "…" }`. `null` removes the link, the checkboxes or the band.
 
 - One draft at a time: opening another closes the first.
-- `host::update_new_agent` never replaces a name, first message or Done when the user edited; `context`, `link`, `choices` and `status` are always replaced. It does nothing once the window is closed or the user unlinked.
+- `host::update_new_agent` never replaces a name, first message or Done when the user edited; `context`, `link`, `choices` and `status` are always replaced. It does nothing once the window is closed or the user unlinked, so it never changes the link of an agent that already started.
 - Regenerate empties the first message, puts the band back to running and sends `new-agent.regenerate` with the ids that are checked: answer it with `host::update_new_agent`.
 - `new-agent.started` comes with the agent that started, to show it on the ticket; `new-agent.closed` when the user cancels or unlinks.
 - The rest of the window is Squadron's as usual: model, effort, advisor, permission mode, agent type, files.
