@@ -369,11 +369,11 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI0MjkyZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuMjUgNS45NSkgc2NhbGUoLjAzOTMpIiBmaWxsPSIjZmZmIiBkPSJNMjQ0LjggOEMxMDYuMSA4IDAgMTEzLjMgMCAyNTJjMCAxMTAuOSA2OS44IDIwNS44IDE2OS41IDIzOS4yIDEyLjggMi4zIDE3LjMtNS42IDE3LjMtMTIuMSAwLTYuMi0uMy00MC40LS4zLTYxLjQgMCAwLTcwIDE1LTg0LjctMjkuOCAwIDAtMTEuNC0yOS4xLTI3LjgtMzYuNiAwIDAtMjIuOS0xNS43IDEuNi0xNS40IDAgMCAyNC45IDIgMzguNiAyNS44IDIxLjkgMzguNiA1OC42IDI3LjUgNzIuOSAyMC45IDIuMy0xNiA4LjgtMjcuMSAxNi0zMy43LTU1LjktNi4yLTExMi4zLTE0LjMtMTEyLjMtMTEwLjUgMC0yNy41IDcuNi00MS4zIDIzLjYtNTguOS0yLjYtNi41LTExLjEtMzMuMyAyLjYtNjcuOSAyMC45LTYuNSA2OSAyNyA2OSAyNyAyMC01LjYgNDEuNS04LjUgNjIuOC04LjVzNDIuOCAyLjkgNjIuOCA4LjVjMCAwIDQ4LjEtMzMuNiA2OS0yNyAxMy43IDM0LjcgNS4yIDYxLjQgMi42IDY3LjkgMTYgMTcuNyAyNS44IDMxLjUgMjUuOCA1OC45IDAgOTYuNS01OC45IDEwNC4yLTExNC44IDExMC41IDkuMiA3LjkgMTcgMjIuOSAxNyA0Ni40IDAgMzMuNy0uMyA3NS40LS4zIDgzLjYgMCA2LjUgNC42IDE0LjQgMTcuMyAxMi4xQzQyOC4yIDQ1Ny44IDQ5NiAzNjIuOSA0OTYgMjUyIDQ5NiAxMTMuMyAzODMuNSA4IDI0NC44IDh6Ii8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-github",
-      "version": "0.2.0",
-      "commit": "2fa64377cb6c4143e0aaacfffc944fefe463a8b8",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.2.0/github-0.2.0.tar.gz",
-      "sha256": "de942a130ad5956f2b1197d49f307a59ec467437c0ca42d315117bd17c69ffd6",
-      "squadron": ">=0.53.0",
+      "version": "0.3.0",
+      "commit": "98823a3dd3854decf3f7a800f0f0005025442d76",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.3.0/github-0.3.0.tar.gz",
+      "sha256": "ee2d46829322b597604e32dc41ce9b378dade619fb57773829c10859721fc35c",
+      "squadron": ">=0.56.0",
       "permissions": {
         "network": [
           "api.github.com"
@@ -388,6 +388,20 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Merging a pull request uses the method you pick in Squadron, among those the repository and its base branch rules allow",
+              "Squadron tells before a merge whether GitHub will delete the head branch, from the repository's \"Automatically delete head branches\" setting, and when a protected branch is kept"
+            ],
+            "fr": [
+              "La fusion d’une pull request utilise la méthode choisie dans Squadron, parmi celles que le dépôt et les règles de sa branche de base autorisent",
+              "Squadron indique avant une fusion si GitHub supprimera la branche source, d’après le réglage « Automatically delete head branches » du dépôt, et quand une branche protégée est conservée"
+            ]
+          }
+        },
         {
           "version": "0.2.0",
           "date": "2026-11-19",
@@ -436,6 +450,88 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.3.0",
+          "commit": "98823a3dd3854decf3f7a800f0f0005025442d76",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.3.0/github-0.3.0.tar.gz",
+          "sha256": "ee2d46829322b597604e32dc41ce9b378dade619fb57773829c10859721fc35c",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "api.github.com"
+            ],
+            "exec": [
+              "gh"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.3.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merging a pull request uses the method you pick in Squadron, among those the repository and its base branch rules allow",
+                  "Squadron tells before a merge whether GitHub will delete the head branch, from the repository's \"Automatically delete head branches\" setting, and when a protected branch is kept"
+                ],
+                "fr": [
+                  "La fusion d’une pull request utilise la méthode choisie dans Squadron, parmi celles que le dépôt et les règles de sa branche de base autorisent",
+                  "Squadron indique avant une fusion si GitHub supprimera la branche source, d’après le réglage « Automatically delete head branches » du dépôt, et quand une branche protégée est conservée"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs name the pull request they check, so Squadron shows its number and title on the run and files it under PR checks"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions indiquent la pull request qu’ils vérifient : Squadron affiche son numéro et son titre sur le run et le range dans « Checks de PR »"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs show again for projects that go through the GitHub CLI",
+                  "Merging a pull request uses a method the repository and its base branch rules allow, when your default one is not allowed"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions s’affichent de nouveau pour les projets qui passent par la GitHub CLI",
+                  "La fusion d’une pull request prend une méthode autorisée par le dépôt et les règles de sa branche de base, quand votre méthode par défaut ne l’est pas"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+                  "GitHub Actions runs of each project, with a notification when one ends",
+                  "Chips for GitHub pull request links in conversations",
+                  "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+                  "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+                  "Des puces pour les liens de pull requests GitHub dans les conversations",
+                  "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.2.0",
           "commit": "2fa64377cb6c4143e0aaacfffc944fefe463a8b8",
