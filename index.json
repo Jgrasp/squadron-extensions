@@ -164,6 +164,105 @@
       ]
     },
     {
+      "id": "azure",
+      "name": {
+        "en": "Azure DevOps",
+        "fr": "Azure DevOps"
+      },
+      "description": {
+        "en": "Pull requests and pipeline builds of your Azure DevOps projects in Squadron: review, comment, merge",
+        "fr": "Les pull requests et les builds de pipelines de vos projets Azure DevOps dans Squadron : relire, commenter, fusionner"
+      },
+      "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFmOGJmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMCA4Ljg3N0wyLjI0NyA1LjkxbDguNDA1LTMuNDE2Vi4wMjJsNy4zNyA1LjM5M0wyLjk2NiA4LjMzOHY4LjIyNUwwIDE1LjcwN3ptMjQtNC40NXYxNC42NTFsLTUuNzUzIDQuOS05LjMwMy0zLjA1N3YzLjA1NmwtNS45NzgtNy40MTYgMTUuMDU3IDEuNzk4VjUuNDE1eiIvPjwvc3ZnPgo=",
+      "repository": "https://github.com/Jgrasp/squadron-azure",
+      "version": "0.1.0",
+      "commit": "ea8b6b7fbbc529d9b897a871ee25f51cfa76123c",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.1.0/azure-0.1.0.tar.gz",
+      "sha256": "54ea6eefc50fe5897f0264e2beba4408d36792257c309361980472325cf7d8d7",
+      "squadron": ">=0.56.0",
+      "permissions": {
+        "network": [
+          "dev.azure.com"
+        ]
+      },
+      "forge": {
+        "remotes": [
+          "^dev\\.azure\\.com/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$",
+          "^(?:ssh\\.dev\\.azure\\.com|vs-ssh\\.visualstudio\\.com)/v3/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/(?<name>[^/?#]+)$",
+          "^(?<org>[A-Za-z0-9_.-]+)\\.visualstudio\\.com/(?:[^?#]*/)?(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$"
+        ]
+      },
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Pull requests of your Azure DevOps projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+              "Reviews with line comments, a summary and a vote, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+              "Pipeline builds of each project, with a notification when one ends",
+              "Builds run on a pull request show its number and title and are filed under PR checks",
+              "Chips for Azure DevOps pull request links in conversations",
+              "Azure DevOps accounts with an organization and a personal access token checked before it is saved, one per organization"
+            ],
+            "fr": [
+              "Les pull requests de vos projets Azure DevOps dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+              "Des revues avec commentaires de ligne, résumé et vote, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+              "Les builds de pipelines de chaque projet, avec une notification à la fin de chacun",
+              "Les builds lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+              "Des puces pour les liens de pull requests Azure DevOps dans les conversations",
+              "Des comptes Azure DevOps avec une organisation et un jeton d’accès personnel vérifié avant d’être enregistré, un par organisation"
+            ]
+          }
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "commit": "ea8b6b7fbbc529d9b897a871ee25f51cfa76123c",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.1.0/azure-0.1.0.tar.gz",
+          "sha256": "54ea6eefc50fe5897f0264e2beba4408d36792257c309361980472325cf7d8d7",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "dev.azure.com"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^dev\\.azure\\.com/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$",
+              "^(?:ssh\\.dev\\.azure\\.com|vs-ssh\\.visualstudio\\.com)/v3/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/(?<name>[^/?#]+)$",
+              "^(?<org>[A-Za-z0-9_.-]+)\\.visualstudio\\.com/(?:[^?#]*/)?(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.1.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Pull requests of your Azure DevOps projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+                  "Reviews with line comments, a summary and a vote, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipeline builds of each project, with a notification when one ends",
+                  "Builds run on a pull request show its number and title and are filed under PR checks",
+                  "Chips for Azure DevOps pull request links in conversations",
+                  "Azure DevOps accounts with an organization and a personal access token checked before it is saved, one per organization"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets Azure DevOps dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et vote, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les builds de pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les builds lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de pull requests Azure DevOps dans les conversations",
+                  "Des comptes Azure DevOps avec une organisation et un jeton d’accès personnel vérifié avant d’être enregistré, un par organisation"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "bitbucket",
       "name": {
         "en": "Bitbucket",
@@ -506,6 +605,103 @@
       ]
     },
     {
+      "id": "gitlab",
+      "name": {
+        "en": "GitLab",
+        "fr": "GitLab"
+      },
+      "description": {
+        "en": "Merge requests and pipelines of your GitLab projects in Squadron, on gitlab.com or your own server: review, comment, merge",
+        "fr": "Les merge requests et les pipelines de vos projets GitLab dans Squadron, sur gitlab.com ou votre propre serveur : relire, commenter, fusionner"
+      },
+      "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iI2ZjNmQyNiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzYgNS45KSBzY2FsZSguMDQpIiBmaWxsPSIjZmZmIiBkPSJNNTAzLjUgMjA0LjZMNTAyLjggMjAyLjhMNDMzLjEgMjEuMDJDNDMxLjcgMTcuNDUgNDI5LjIgMTQuNDMgNDI1LjkgMTIuMzhDNDIzLjUgMTAuODMgNDIwLjggOS44NjUgNDE3LjkgOS41N0M0MTUgOS4yNzUgNDEyLjIgOS42NTMgNDA5LjUgMTAuNjhDNDA2LjggMTEuNyA0MDQuNCAxMy4zNCA0MDIuNCAxNS40NkM0MDAuNSAxNy41OCAzOTkuMSAyMC4xMyAzOTguMyAyMi45TDM1MS4zIDE2Ni45SDE2MC44TDExMy43IDIyLjlDMTEyLjkgMjAuMTMgMTExLjUgMTcuNTkgMTA5LjYgMTUuNDdDMTA3LjYgMTMuMzUgMTA1LjIgMTEuNzIgMTAyLjUgMTAuN0M5OS44NiA5LjY3NSA5Ni45OCA5LjI5NSA5NC4xMiA5LjU4N0M5MS4yNiA5Ljg3OCA4OC41MSAxMC44MyA4Ni4wOCAxMi4zOEM4Mi44NCAxNC40MyA4MC4zMyAxNy40NSA3OC45MiAyMS4wMkw5LjI2NyAyMDIuOEw4LjU0MyAyMDQuNkMtMS40ODQgMjMwLjgtMi43MiAyNTkuNiA1LjAyMyAyODYuNkMxMi43NyAzMTMuNSAyOS4wNyAzMzcuMyA1MS40NyAzNTQuMkw1MS43NCAzNTQuNEw1Mi4zMyAzNTQuOEwxNTguMyA0MzQuM0wyMTAuOSA0NzRMMjQyLjkgNDk4LjJDMjQ2LjYgNTAwLjEgMjUxLjIgNTAyLjUgMjU1LjkgNTAyLjVDMjYwLjYgNTAyLjUgMjY1LjIgNTAwLjEgMjY4LjkgNDk4LjJMMzAwLjkgNDc0TDM1My41IDQzNC4zTDQ2MC4yIDM1NC40TDQ2MC41IDM1NC4xQzQ4Mi45IDMzNy4yIDQ5OS4yIDMxMy41IDUwNi4xIDI4Ni42QzUxNC43IDI1OS42IDUxMy41IDIzMC44IDUwMy41IDIwNC42eiIvPjwvc3ZnPgo=",
+      "repository": "https://github.com/Jgrasp/squadron-gitlab",
+      "version": "0.1.0",
+      "commit": "142afeae13892644e20186d281f68e7509fe81de",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.1.0/gitlab-0.1.0.tar.gz",
+      "sha256": "45dc7ff1d47749ceb1e1e454c7fcd427575388d3a92f1e2811680c0813e38748",
+      "squadron": ">=0.57.0",
+      "permissions": {
+        "network": [
+          "gitlab.com"
+        ]
+      },
+      "forge": {
+        "remotes": [
+          "^(?<site>gitlab\\.com)/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$",
+          "^(?<site>{account})/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$"
+        ]
+      },
+      "changelog": [
+        {
+          "version": "0.1.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Merge requests of your GitLab projects in Squadron, on gitlab.com or your own server: the merge request of each agent's branch, the ones to review, yours and the others, with their pipeline and reviewers",
+              "Reviews with line comments, a summary and an approval, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+              "Pipelines of each project, with a notification when one ends",
+              "Pipelines run on a merge request show its number and title and are filed under PR checks",
+              "Chips for GitLab merge request links in conversations",
+              "GitLab accounts with a server address and a personal access token checked before it is saved"
+            ],
+            "fr": [
+              "Les merge requests de vos projets GitLab dans Squadron, sur gitlab.com ou votre propre serveur : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leur pipeline et leurs relecteurs",
+              "Des revues avec commentaires de ligne, résumé et approbation, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+              "Les pipelines de chaque projet, avec une notification à la fin de chacun",
+              "Les pipelines lancés sur une merge request affichent son numéro et son titre et sont rangés dans les checks de PR",
+              "Des puces pour les liens de merge requests GitLab dans les conversations",
+              "Des comptes GitLab avec l’adresse du serveur et un jeton d’accès personnel vérifié avant d’être enregistré"
+            ]
+          }
+        }
+      ],
+      "versions": [
+        {
+          "version": "0.1.0",
+          "commit": "142afeae13892644e20186d281f68e7509fe81de",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.1.0/gitlab-0.1.0.tar.gz",
+          "sha256": "45dc7ff1d47749ceb1e1e454c7fcd427575388d3a92f1e2811680c0813e38748",
+          "squadron": ">=0.57.0",
+          "permissions": {
+            "network": [
+              "gitlab.com"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^(?<site>gitlab\\.com)/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$",
+              "^(?<site>{account})/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.1.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merge requests of your GitLab projects in Squadron, on gitlab.com or your own server: the merge request of each agent's branch, the ones to review, yours and the others, with their pipeline and reviewers",
+                  "Reviews with line comments, a summary and an approval, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipelines of each project, with a notification when one ends",
+                  "Pipelines run on a merge request show its number and title and are filed under PR checks",
+                  "Chips for GitLab merge request links in conversations",
+                  "GitLab accounts with a server address and a personal access token checked before it is saved"
+                ],
+                "fr": [
+                  "Les merge requests de vos projets GitLab dans Squadron, sur gitlab.com ou votre propre serveur : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leur pipeline et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et approbation, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les pipelines lancés sur une merge request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de merge requests GitLab dans les conversations",
+                  "Des comptes GitLab avec l’adresse du serveur et un jeton d’accès personnel vérifié avant d’être enregistré"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "google-workspace-share",
       "name": {
         "en": "Artifact share on Google Workspace",
@@ -839,10 +1035,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzE4NjhEQiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMTEuNTcxIDExLjUxM0gwYTUuMjE4IDUuMjE4IDAgMCAwIDUuMjMyIDUuMjE1aDIuMTN2Mi4wNTdBNS4yMTUgNS4yMTUgMCAwIDAgMTIuNTc1IDI0VjEyLjUxOGExLjAwNSAxLjAwNSAwIDAgMC0xLjAwNS0xLjAwNXptNS43MjMtNS43NTZINS43MzZhNS4yMTUgNS4yMTUgMCAwIDAgNS4yMTUgNS4yMTRoMi4xMjl2Mi4wNThhNS4yMTggNS4yMTggMCAwIDAgNS4yMTUgNS4yMTRWNi43NThhMS4wMDEgMS4wMDEgMCAwIDAtMS4wMDEtMS4wMDF6TTIzLjAxMyAwSDExLjQ1NWE1LjIxNSA1LjIxNSAwIDAgMCA1LjIxNSA1LjIxNWgyLjEyOXYyLjA1N0E1LjIxNSA1LjIxNSAwIDAgMCAyNCAxMi40ODNWMS4wMDVBMS4wMDEgMS4wMDEgMCAwIDAgMjMuMDEzIDBaIi8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-jira",
-      "version": "0.4.1",
-      "commit": "cc3689fa637165a06bd97c7043a465188a19dc7d",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.1/jira-0.4.1.tar.gz",
-      "sha256": "7cbde396a2444e6703aabc3cb0ef03fcb33f554286758650ab04b115c87b070c",
+      "version": "0.4.2",
+      "commit": "3cb68a18c6685ef805a0f35c40bcf1e92d3f4754",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.2/jira-0.4.2.tar.gz",
+      "sha256": "a295f68d763b3d043ac18b7ad3424716cf02da0c63e6d6e3c95d0f68bbbd9d1d",
       "squadron": ">=0.49.0",
       "permissions": {
         "exec": [
@@ -854,6 +1050,18 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.4.2",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "The current sprint shows the tickets of projects whose key is a JQL reserved word, such as MAX"
+            ],
+            "fr": [
+              "Le sprint en cours affiche les tickets des projets dont la clé est un mot réservé du JQL, comme MAX"
+            ]
+          }
+        },
         {
           "version": "0.4.1",
           "date": "2026-11-19",
@@ -948,6 +1156,128 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.4.2",
+          "commit": "3cb68a18c6685ef805a0f35c40bcf1e92d3f4754",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.2/jira-0.4.2.tar.gz",
+          "sha256": "a295f68d763b3d043ac18b7ad3424716cf02da0c63e6d6e3c95d0f68bbbd9d1d",
+          "squadron": ">=0.49.0",
+          "permissions": {
+            "exec": [
+              "claude",
+              "git"
+            ],
+            "network": [
+              "api.media.atlassian.com"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.4.2",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "The current sprint shows the tickets of projects whose key is a JQL reserved word, such as MAX"
+                ],
+                "fr": [
+                  "Le sprint en cours affiche les tickets des projets dont la clé est un mot réservé du JQL, comme MAX"
+                ]
+              }
+            },
+            {
+              "version": "0.4.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "The filters of the panel stay as you set them when you switch conversation or reopen the panel"
+                ],
+                "fr": [
+                  "Les filtres du panneau restent tels que vous les avez réglés quand vous changez de conversation ou rouvrez le panneau"
+                ]
+              }
+            },
+            {
+              "version": "0.4.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "Test the connection before saving a Jira site, and see in the list whether each one works: connected as whom and how many projects, or why it fails",
+                  "Scrollbars in the panel take their own space instead of covering the filter counts"
+                ],
+                "fr": [
+                  "Testez la connexion avant d’enregistrer un site Jira, et voyez dans la liste si chacun marche : connecté en tant que qui et combien de projets, ou pourquoi il échoue",
+                  "Les barres de défilement du panneau prennent leur propre place au lieu de couvrir les compteurs des filtres"
+                ]
+              }
+            },
+            {
+              "version": "0.3.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The board and the list follow the columns of your Jira board, in its order, with the statuses each column holds",
+                  "Drag a column header to move it; Jira order puts them back",
+                  "The filters on the left of the board fold away and come back with the button next to the search",
+                  "Launch agent on a card is an outlined button with a sparkle, no longer an arrow"
+                ],
+                "fr": [
+                  "Le tableau et la liste suivent les colonnes de votre board Jira, dans son ordre, avec les statuts que chaque colonne regroupe",
+                  "Glissez l’en-tête d’une colonne pour la déplacer ; Ordre de Jira les remet en place",
+                  "Les filtres à gauche du tableau se replient et reviennent avec le bouton à côté de la recherche",
+                  "Lancer un agent, sur une carte, est un bouton à contour avec une étincelle, plus une flèche"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The Jira logo on the extension and on the Jira button of each agent",
+                  "Board: the open sprint in a column per status, with filters by project, assignee, status, type, priority and epic",
+                  "Launch agent opens the New agent window filled by Haiku from the ticket, with the fields it reads to check or uncheck",
+                  "The ticket shows its fields beside its description when the panel is wide, and its comments can be searched and sorted"
+                ],
+                "fr": [
+                  "Le logo Jira sur l’extension et sur le bouton Jira de chaque agent",
+                  "Tableau : le sprint en cours en une colonne par statut, avec des filtres par projet, assigné, statut, type, priorité et epic",
+                  "Lancer un agent ouvre la fenêtre Nouvel agent remplie par Haiku à partir du ticket, avec les champs qu’il lit à cocher ou décocher",
+                  "Le ticket montre ses champs à côté de sa description quand le panneau est large, et ses commentaires se cherchent et se trient"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The API token field links to the Atlassian page that creates it, and says to pick the token without scopes"
+                ],
+                "fr": [
+                  "Le champ du jeton d’API mène à la page Atlassian qui le crée, et indique de prendre le jeton sans portées"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-13",
+              "notes": {
+                "en": [
+                  "The open sprint of the Jira projects of a Squadron project in a panel next to the agent",
+                  "A ticket goes into your message, or Haiku turns it into an instruction",
+                  "Attachments open in their app",
+                  "Agents get jira_ticket, jira_sprint and jira_search"
+                ],
+                "fr": [
+                  "Le sprint en cours des projets Jira d’un projet Squadron, dans un panneau à côté de l’agent",
+                  "Un ticket va dans votre message, ou Haiku en fait une consigne",
+                  "Les pièces jointes s’ouvrent dans leur application",
+                  "Les agents disposent de jira_ticket, jira_sprint et jira_search"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.4.1",
           "commit": "cc3689fa637165a06bd97c7043a465188a19dc7d",
