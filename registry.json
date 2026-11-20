@@ -17,5 +17,11 @@
   },
   "bitbucket": {
     "repository": "https://github.com/Jgrasp/squadron-bitbucket"
+  },
+  "gitlab": {
+    "repository": "https://github.com/Jgrasp/squadron-gitlab"
+  },
+  "azure": {
+    "repository": "https://github.com/Jgrasp/squadron-azure"
   }
 }
