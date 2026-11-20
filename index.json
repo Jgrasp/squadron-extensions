@@ -175,10 +175,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFmOGJmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMCA4Ljg3N0wyLjI0NyA1LjkxbDguNDA1LTMuNDE2Vi4wMjJsNy4zNyA1LjM5M0wyLjk2NiA4LjMzOHY4LjIyNUwwIDE1LjcwN3ptMjQtNC40NXYxNC42NTFsLTUuNzUzIDQuOS05LjMwMy0zLjA1N3YzLjA1NmwtNS45NzgtNy40MTYgMTUuMDU3IDEuNzk4VjUuNDE1eiIvPjwvc3ZnPgo=",
       "repository": "https://github.com/Jgrasp/squadron-azure",
-      "version": "0.2.0",
-      "commit": "735ed5d044abb7e5c4f1f7e6fb31bc192d6c4b9d",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.2.0/azure-0.2.0.tar.gz",
-      "sha256": "0a3f0f299283a1436fa3bb03f7570f3683f5a31bba0b51eb480651bb4e9655c7",
+      "version": "0.3.0",
+      "commit": "e4ab816d77440f3b8f3ed8eab3e8417c3bae96a8",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
+      "sha256": "feb83db0f2e2b2f063c1e75f983cde3bfc0ebcb5ceb306bf6d222ec149cc8b25",
       "squadron": ">=0.56.0",
       "permissions": {
         "network": [
@@ -193,6 +193,22 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Open a pull request from an agent's pushed branch, as a draft if you like, with Squadron's Open a pull request button",
+              "A description longer than the 4000 characters Azure DevOps takes is cut at 4000",
+              "A branch that already has an active pull request into the same base gets a clear message"
+            ],
+            "fr": [
+              "Ouvrez une pull request depuis la branche poussée d’un agent, en brouillon si vous le souhaitez, avec le bouton Ouvrir une pull request de Squadron",
+              "Une description plus longue que les 4 000 caractères acceptés par Azure DevOps est coupée à 4 000",
+              "Une branche qui a déjà une pull request active vers la même base reçoit un message clair"
+            ]
+          }
+        },
         {
           "version": "0.2.0",
           "date": "2026-11-20",
@@ -231,6 +247,79 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.3.0",
+          "commit": "e4ab816d77440f3b8f3ed8eab3e8417c3bae96a8",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
+          "sha256": "feb83db0f2e2b2f063c1e75f983cde3bfc0ebcb5ceb306bf6d222ec149cc8b25",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "dev.azure.com"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^dev\\.azure\\.com/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$",
+              "^(?:ssh\\.dev\\.azure\\.com|vs-ssh\\.visualstudio\\.com)/v3/(?<org>[A-Za-z0-9_.-]+)/(?<project>[^/?#]+)/(?<name>[^/?#]+)$",
+              "^(?<org>[A-Za-z0-9_.-]+)\\.visualstudio\\.com/(?:[^?#]*/)?(?<project>[^/?#]+)/_git/(?<name>[^/?#]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.3.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Open a pull request from an agent's pushed branch, as a draft if you like, with Squadron's Open a pull request button",
+                  "A description longer than the 4000 characters Azure DevOps takes is cut at 4000",
+                  "A branch that already has an active pull request into the same base gets a clear message"
+                ],
+                "fr": [
+                  "Ouvrez une pull request depuis la branche poussée d’un agent, en brouillon si vous le souhaitez, avec le bouton Ouvrir une pull request de Squadron",
+                  "Une description plus longue que les 4 000 caractères acceptés par Azure DevOps est coupée à 4 000",
+                  "Une branche qui a déjà une pull request active vers la même base reçoit un message clair"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merging a pull request offers the merge types its target branch allows: merge, squash, or rebase and fast-forward",
+                  "Merging can delete the source branch, as the pull request's completion options say, unless branch policies protect it"
+                ],
+                "fr": [
+                  "La fusion d’une pull request propose les types de fusion qu’autorise sa branche cible : merge, squash, ou rebase et fast-forward",
+                  "La fusion peut supprimer la branche source, comme le prévoient les options de complétion de la pull request, sauf si des stratégies de branche la protègent"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Pull requests of your Azure DevOps projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+                  "Reviews with line comments, a summary and a vote, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipeline builds of each project, with a notification when one ends",
+                  "Builds run on a pull request show its number and title and are filed under PR checks",
+                  "Chips for Azure DevOps pull request links in conversations",
+                  "Azure DevOps accounts with an organization and a personal access token checked before it is saved, one per organization"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets Azure DevOps dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et vote, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les builds de pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les builds lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de pull requests Azure DevOps dans les conversations",
+                  "Des comptes Azure DevOps avec une organisation et un jeton d’accès personnel vérifié avant d’être enregistré, un par organisation"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.2.0",
           "commit": "735ed5d044abb7e5c4f1f7e6fb31bc192d6c4b9d",
@@ -345,10 +434,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI2ODRmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzggNS43NCkgc2NhbGUoLjA0KSIgZmlsbD0iI2ZmZiIgZD0iTTIyLjIgMzJBMTYgMTYgMCAwIDAgNiA0Ny44YTI2LjM1IDI2LjM1IDAgMCAwIC4yIDIuOGw2Ny45IDQxMi4xYTIxLjc3IDIxLjc3IDAgMCAwIDIxLjMgMTguMmgzMjUuN2ExNiAxNiAwIDAgMCAxNi0xMy40TDUwNSA1MC43YTE2IDE2IDAgMCAwLTEzLjItMTguMyAyNC41OCAyNC41OCAwIDAgMC0yLjgtLjJMMjIuMiAzMnptMjg1LjkgMjk3LjhoLTEwNGwtMjguMS0xNDdoMTU3LjNsLTI1LjIgMTQ3eiIvPjwvc3ZnPgo=",
       "repository": "https://github.com/Jgrasp/squadron-bitbucket",
-      "version": "0.2.0",
-      "commit": "c8f09bb03a93c7af7c747c863540481a71b9160f",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.2.0/bitbucket-0.2.0.tar.gz",
-      "sha256": "a3ce34a57b14f04ed16ba5adb7dd5561d164dcebf1e68cc58690853cc05d7be5",
+      "version": "0.3.0",
+      "commit": "f5cd0ff3ae4b29a1a84d1c3affc43943cd651d07",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
+      "sha256": "743373ba299d9190cde5aab90274f5c701c7f563cb4c4d39b1fc6e215cd7be58",
       "squadron": ">=0.56.0",
       "permissions": {
         "network": [
@@ -361,6 +450,22 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Open a pull request on Bitbucket from an agent's pushed branch, with its title, description and draft state",
+              "The new pull request gets the repository's default reviewers, as when you open it on Bitbucket",
+              "A clear message when the branch has no changes to merge or already has an open pull request"
+            ],
+            "fr": [
+              "Ouvrez une pull request sur Bitbucket depuis la branche poussée d’un agent, avec son titre, sa description et son état brouillon",
+              "La nouvelle pull request reçoit les relecteurs par défaut du dépôt, comme quand vous l’ouvrez sur Bitbucket",
+              "Un message clair quand la branche n’a aucun changement à fusionner ou a déjà une pull request ouverte"
+            ]
+          }
+        },
         {
           "version": "0.2.0",
           "date": "2026-11-20",
@@ -403,6 +508,81 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.3.0",
+          "commit": "f5cd0ff3ae4b29a1a84d1c3affc43943cd651d07",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
+          "sha256": "743373ba299d9190cde5aab90274f5c701c7f563cb4c4d39b1fc6e215cd7be58",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "api.bitbucket.org"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^(?:ssh\\.)?bitbucket\\.org/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.3.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Open a pull request on Bitbucket from an agent's pushed branch, with its title, description and draft state",
+                  "The new pull request gets the repository's default reviewers, as when you open it on Bitbucket",
+                  "A clear message when the branch has no changes to merge or already has an open pull request"
+                ],
+                "fr": [
+                  "Ouvrez une pull request sur Bitbucket depuis la branche poussée d’un agent, avec son titre, sa description et son état brouillon",
+                  "La nouvelle pull request reçoit les relecteurs par défaut du dépôt, comme quand vous l’ouvrez sur Bitbucket",
+                  "Un message clair quand la branche n’a aucun changement à fusionner ou a déjà une pull request ouverte"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merges use the method set in Squadron's Settings › Pull requests when the destination branch allows it: merge commit, squash, or rebase",
+                  "The merge confirmation starts from the pull request's \"Close source branch\" box, and Bitbucket deletes the source branch, or keeps it, as you choose",
+                  "Merging no longer unticks \"Close source branch\" on a pull request where it was ticked after it was created",
+                  "Requires Squadron 0.56.0 or later"
+                ],
+                "fr": [
+                  "Les fusions utilisent la méthode choisie dans Réglages › Pull requests de Squadron quand la branche de destination l’autorise : commit de fusion, squash ou rebase",
+                  "La confirmation de fusion part de la case « Fermer la branche source » de la pull request, et Bitbucket supprime la branche source, ou la garde, selon votre choix",
+                  "Fusionner ne décoche plus « Fermer la branche source » sur une pull request où elle a été cochée après sa création",
+                  "Nécessite Squadron 0.56.0 ou plus récent"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "Pull requests of your Bitbucket Cloud projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks and reviewers",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipelines runs of each project, with a notification when one ends",
+                  "Pipelines run on a pull request show its number and title and are filed under PR checks",
+                  "Chips for Bitbucket pull request links in conversations",
+                  "Bitbucket accounts with an email and an API token checked before it is saved, one per Atlassian user"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets Bitbucket Cloud dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les runs Pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les pipelines lancés sur une pull request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de pull requests Bitbucket dans les conversations",
+                  "Des comptes Bitbucket avec un e-mail et un jeton d’API vérifié avant d’être enregistré, un par utilisateur Atlassian"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.2.0",
           "commit": "c8f09bb03a93c7af7c747c863540481a71b9160f",
@@ -966,10 +1146,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iI2ZjNmQyNiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzYgNS45KSBzY2FsZSguMDQpIiBmaWxsPSIjZmZmIiBkPSJNNTAzLjUgMjA0LjZMNTAyLjggMjAyLjhMNDMzLjEgMjEuMDJDNDMxLjcgMTcuNDUgNDI5LjIgMTQuNDMgNDI1LjkgMTIuMzhDNDIzLjUgMTAuODMgNDIwLjggOS44NjUgNDE3LjkgOS41N0M0MTUgOS4yNzUgNDEyLjIgOS42NTMgNDA5LjUgMTAuNjhDNDA2LjggMTEuNyA0MDQuNCAxMy4zNCA0MDIuNCAxNS40NkM0MDAuNSAxNy41OCAzOTkuMSAyMC4xMyAzOTguMyAyMi45TDM1MS4zIDE2Ni45SDE2MC44TDExMy43IDIyLjlDMTEyLjkgMjAuMTMgMTExLjUgMTcuNTkgMTA5LjYgMTUuNDdDMTA3LjYgMTMuMzUgMTA1LjIgMTEuNzIgMTAyLjUgMTAuN0M5OS44NiA5LjY3NSA5Ni45OCA5LjI5NSA5NC4xMiA5LjU4N0M5MS4yNiA5Ljg3OCA4OC41MSAxMC44MyA4Ni4wOCAxMi4zOEM4Mi44NCAxNC40MyA4MC4zMyAxNy40NSA3OC45MiAyMS4wMkw5LjI2NyAyMDIuOEw4LjU0MyAyMDQuNkMtMS40ODQgMjMwLjgtMi43MiAyNTkuNiA1LjAyMyAyODYuNkMxMi43NyAzMTMuNSAyOS4wNyAzMzcuMyA1MS40NyAzNTQuMkw1MS43NCAzNTQuNEw1Mi4zMyAzNTQuOEwxNTguMyA0MzQuM0wyMTAuOSA0NzRMMjQyLjkgNDk4LjJDMjQ2LjYgNTAwLjEgMjUxLjIgNTAyLjUgMjU1LjkgNTAyLjVDMjYwLjYgNTAyLjUgMjY1LjIgNTAwLjEgMjY4LjkgNDk4LjJMMzAwLjkgNDc0TDM1My41IDQzNC4zTDQ2MC4yIDM1NC40TDQ2MC41IDM1NC4xQzQ4Mi45IDMzNy4yIDQ5OS4yIDMxMy41IDUwNi4xIDI4Ni42QzUxNC43IDI1OS42IDUxMy41IDIzMC44IDUwMy41IDIwNC42eiIvPjwvc3ZnPgo=",
       "repository": "https://github.com/Jgrasp/squadron-gitlab",
-      "version": "0.2.0",
-      "commit": "330ab139015ddbb80ba8778f8f4fff08f1d59c32",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.2.0/gitlab-0.2.0.tar.gz",
-      "sha256": "d0815f23cb9ee89cde65714570cf19b13479b16f29126148c359fb23f110eb97",
+      "version": "0.3.0",
+      "commit": "c91d796602592c5966d6c7cd9262be93997f1de5",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
+      "sha256": "62f519b95f3e5cdcd4040fb5640e39540fbcbac8772c82df01a75182df582f08",
       "squadron": ">=0.56.0",
       "permissions": {
         "network": [
@@ -983,6 +1163,18 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.3.0",
+          "date": "2026-11-20",
+          "notes": {
+            "en": [
+              "Open a merge request from Squadron once an agent pushed its branch, as a draft if you like"
+            ],
+            "fr": [
+              "Ouvrez une merge request depuis Squadron une fois la branche d’un agent poussée, en brouillon si vous le souhaitez"
+            ]
+          }
+        },
         {
           "version": "0.2.0",
           "date": "2026-11-20",
@@ -1021,6 +1213,74 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.3.0",
+          "commit": "c91d796602592c5966d6c7cd9262be93997f1de5",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
+          "sha256": "62f519b95f3e5cdcd4040fb5640e39540fbcbac8772c82df01a75182df582f08",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "gitlab.com"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^(?<site>gitlab\\.com)/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$",
+              "^(?<site>{account})/(?<path>[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.3.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Open a merge request from Squadron once an agent pushed its branch, as a draft if you like"
+                ],
+                "fr": [
+                  "Ouvrez une merge request depuis Squadron une fois la branche d’un agent poussée, en brouillon si vous le souhaitez"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merging a merge request offers squash or not, as the project allows it, and whether to delete the source branch",
+                  "Merge requests tell whether their source branch is protected, so that GitLab keeps it after the merge"
+                ],
+                "fr": [
+                  "La fusion d’une merge request propose de squasher ou non, selon ce que le projet permet, et de supprimer ou non la branche source",
+                  "Les merge requests indiquent si leur branche source est protégée, et donc gardée par GitLab après la fusion"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merge requests of your GitLab projects in Squadron, on gitlab.com or your own server: the merge request of each agent's branch, the ones to review, yours and the others, with their pipeline and reviewers",
+                  "Reviews with line comments, a summary and an approval, replies to remarks, resolved threads shown and resolved from Squadron, merges, and title and description changes",
+                  "Pipelines of each project, with a notification when one ends",
+                  "Pipelines run on a merge request show its number and title and are filed under PR checks",
+                  "Chips for GitLab merge request links in conversations",
+                  "GitLab accounts with a server address and a personal access token checked before it is saved"
+                ],
+                "fr": [
+                  "Les merge requests de vos projets GitLab dans Squadron, sur gitlab.com ou votre propre serveur : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leur pipeline et leurs relecteurs",
+                  "Des revues avec commentaires de ligne, résumé et approbation, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions, et le changement du titre et de la description",
+                  "Les pipelines de chaque projet, avec une notification à la fin de chacun",
+                  "Les pipelines lancés sur une merge request affichent son numéro et son titre et sont rangés dans les checks de PR",
+                  "Des puces pour les liens de merge requests GitLab dans les conversations",
+                  "Des comptes GitLab avec l’adresse du serveur et un jeton d’accès personnel vérifié avant d’être enregistré"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.2.0",
           "commit": "330ab139015ddbb80ba8778f8f4fff08f1d59c32",
