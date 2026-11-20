@@ -312,6 +312,7 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::state_get(key)`, `host::state_set(key, value)` | The extension's storage, kept across restarts and updates. 1 MB in total. |
 | `host::exec(program, args, dir)` | Runs a program listed in `permissions.exec`, without a shell. `dir` defaults to the home folder. Returns `code`, `stdout` and `stderr`. |
 | `host::fetch(request)` | Sends an HTTPS request to a host listed in `permissions.network`. See [Secrets and network](#secrets-and-network). |
+| `host::fetch_many(&[Request]) -> Vec<Result<Response, String>>` | Sends several requests up to 8 at a time and answers in their order, so that a forge call such as `lists` reads the pull requests within its 150 s. Each request follows the rules of `host::fetch`: `permissions.network` or an account's `host`, `{{…}}` and `{{base64:…}}` in headers, secrets scrubbed from what comes back, redirects, 30 s and 8 MB. A refused or failed request fails alone, the others still answer. A request still waiting when the call's 150 s run out fails, and one already sent stops by then. The answers together go into the instance's 64 MB: split a batch whose bodies could pass that. Since 1.12.0, so declare `"squadron": ">=0.56.0"`: an extension that imports it does not load in an older Squadron. |
 | `host::panel_post(panel, message)` | Sends a JSON message to one of the extension's open panels. |
 | `host::panel_open(panel)` | Opens one of the extension's panels, or brings it to the front when it is already open: a panel with `window` in its own window, another beside the agent on screen. Errors on an unknown panel id, and on a panel without `window` while no agent is on screen. Works from the `started` event at launch: Squadron queues it until its window is ready. Since 1.9.0, so declare `"squadron": ">=0.54.0"`. |
 | `host::agents()` | The agents open in Squadron, with their status, since when, and whether they are pinned, remote, shown or archivable. Needs `agents: ["read"]`. Since 1.1.0. |
@@ -613,7 +614,7 @@ A tool with a `command` receives each secret that is set as an environment varia
 ```
 
 - `exec`: program names that `host::exec` and `host::exec_input` may run, with any arguments. `claude` runs the Claude Code set up in Squadron, not the one on the `PATH`.
-- `network`: exact host names that `host::fetch`, `host::fetch_bytes` and `host::download` may reach. The `host` field of an account needs no entry: the user typed it.
+- `network`: exact host names that `host::fetch`, `host::fetch_many`, `host::fetch_bytes` and `host::download` may reach. The `host` field of an account needs no entry: the user typed it.
 - `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0.
 
 When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
@@ -629,6 +630,7 @@ Allowed commands run with the user's rights. Ask only for what you need, and say
 | State | 1 MB. |
 | `host::exec`, tool commands | 120 s; tool commands return the last 30,000 characters. |
 | `host::fetch`, `host::fetch_bytes` | 30 s, 8 MB of response. |
+| `host::fetch_many` | 8 requests at a time, each 30 s and 8 MB. |
 | `host::download` | 120 s, 200 MB. |
 | Answer to a click, a tool or a forge call | 150 s. |
 | Forge calls at once | 4, each on its own instance with its own 64 MB. |
@@ -652,6 +654,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.9.0 | `>=0.54.0` |
 | 1.10.0 | `>=0.54.0` |
 | 1.11.0 | `>=0.54.0` |
+| 1.12.0 | `>=0.56.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
