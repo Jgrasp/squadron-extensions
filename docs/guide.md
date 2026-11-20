@@ -508,7 +508,7 @@ The types are in `squadron_extension_api::forge`, every field with a default, so
 - `Run.pull`: the number of the pull request the run checks, since API 1.11.0. Squadron shows `#N` and the pull request's title on the run's card and counts the run under "PR checks". Left empty, a run still counts as a check when its `event` is `pull_request`, `pull_request_target`, `merge_request_event`, `pullRequest` or `pullrequest`, or its `branch` is the head of an open pull request. An older Squadron ignores it.
 - Dates in RFC 3339.
 
-An extension built on a crate older than 1.13.0 reads the `merge` args as `NumberArgs` and merges as before; Squadron then offers neither a method nor a branch choice. Since 1.13.0, Squadron no longer deletes the remote branch after a merge: the forge does, as these `Pull` fields tell.
+An extension built on a crate older than 1.13.0 reads the `merge` args as `NumberArgs` and merges as before; Squadron then offers neither a method nor a branch choice. The Squadron that brings API 1.13.0 no longer deletes the remote branch after a merge, whatever crate the extension uses: the forge does, as these `Pull` fields tell.
 
 An error is a plain text, or `forge::failure(code, title, detail)` with texts as strings or `{ "en": "…", "fr": "…" }`. `forge::no_account(title)` (code `account`) leads the user to Settings › Pull requests. `forge::unsupported(call)` (code `unsupported`) hides what needs the call.
 
@@ -659,7 +659,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.10.0 | `>=0.54.0` |
 | 1.11.0 | `>=0.54.0` |
 | 1.12.0 | `>=0.56.0` |
-| 1.13.0 | `>=0.57.0` |
+| 1.13.0 | `>=0.56.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
