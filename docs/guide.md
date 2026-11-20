@@ -209,7 +209,7 @@ Makes the extension the provider of pull requests and pipelines for the projects
 "forge": {
   "remotes": ["^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"],
   "links": ["https?://(?:www\\.)?github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)/pull/(?<number>[0-9]+)"],
-  "calls": ["pull", "numbered", "lists", "remarks", "me", "reply", "resolve", "post", "merge", "update", "runs"],
+  "calls": ["pull", "numbered", "lists", "remarks", "me", "reply", "resolve", "post", "merge", "update", "create", "runs"],
   "verdicts": ["approve", "request_changes", "comment"]
 }
 ```
@@ -492,6 +492,7 @@ impl Extension for GitHub {
 | `post` | `PostArgs` | `Posted`: how many drafts went through, whether the summary did, and why it stopped |
 | `merge` | `MergeArgs` | `null`. `method` is `merge`, `squash` or `rebase`, `None` keeps the repository default. `delete_branch` says whether to delete the source branch where the forge lets you set it per pull request, `None` keeps the forge's own setting. Since 1.13.0; before, `NumberArgs`. |
 | `update` | `UpdateArgs` | `null` |
+| `create` | `CreateArgs` | The `Pull` created. `branch` is already pushed; `base`, `title`, `description` (Markdown) and `draft` describe the pull request to open. `draft` is best effort: the returned `Pull.draft` says what the forge created. Since 1.14.0. |
 | `runs` | `NoArgs` | `Vec<Run>`, newest first, 20 at most |
 
 The types are in `squadron_extension_api::forge`, every field with a default, so an answer built with an older crate still reads. Texts take these values:
@@ -507,6 +508,8 @@ The types are in `squadron_extension_api::forge`, every field with a default, so
 - `Run.status`: `success`, `failure`, `cancelled`, `skipped`, `running`, `queued`.
 - `Run.pull`: the number of the pull request the run checks, since API 1.11.0. Squadron shows `#N` and the pull request's title on the run's card and counts the run under "PR checks". Left empty, a run still counts as a check when its `event` is `pull_request`, `pull_request_target`, `merge_request_event`, `pullRequest` or `pullrequest`, or its `branch` is the head of an open pull request. An older Squadron ignores it.
 - Dates in RFC 3339.
+
+When an agent pushed its branch without a pull request and the project's forge declares `create`, the agent's chip row offers **Open a pull request**. An extension that does not declare `create` shows nothing new.
 
 An extension built on a crate older than 1.13.0 reads the `merge` args as `NumberArgs` and merges as before; Squadron then offers neither a method nor a branch choice. The Squadron that brings API 1.13.0 no longer deletes the remote branch after a merge, whatever crate the extension uses: the forge does, as these `Pull` fields tell.
 
@@ -660,6 +663,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.11.0 | `>=0.54.0` |
 | 1.12.0 | `>=0.56.0` |
 | 1.13.0 | `>=0.56.0` |
+| 1.14.0 | `>=0.56.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
