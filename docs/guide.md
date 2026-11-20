@@ -492,7 +492,7 @@ impl Extension for GitHub {
 | `post` | `PostArgs` | `Posted`: how many drafts went through, whether the summary did, and why it stopped |
 | `merge` | `MergeArgs` | `null`. `method` is `merge`, `squash` or `rebase`, `None` keeps the repository default. `delete_branch` says whether to delete the source branch where the forge lets you set it per pull request, `None` keeps the forge's own setting. Since 1.13.0; before, `NumberArgs`. |
 | `update` | `UpdateArgs` | `null` |
-| `create` | `CreateArgs` | The `Pull` created. `branch` is already pushed, `base` is the target branch, `description` is Markdown. `draft` is best effort: the returned `Pull.draft` says what the forge created. Since 1.14.0. |
+| `create` | `CreateArgs` | The `Pull` created. `branch` is already pushed; `base`, `title`, `description` (Markdown) and `draft` describe the pull request to open. `draft` is best effort: the returned `Pull.draft` says what the forge created. Since 1.14.0. |
 | `runs` | `NoArgs` | `Vec<Run>`, newest first, 20 at most |
 
 The types are in `squadron_extension_api::forge`, every field with a default, so an answer built with an older crate still reads. Texts take these values:
