@@ -697,10 +697,10 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI0MjkyZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuMjUgNS45NSkgc2NhbGUoLjAzOTMpIiBmaWxsPSIjZmZmIiBkPSJNMjQ0LjggOEMxMDYuMSA4IDAgMTEzLjMgMCAyNTJjMCAxMTAuOSA2OS44IDIwNS44IDE2OS41IDIzOS4yIDEyLjggMi4zIDE3LjMtNS42IDE3LjMtMTIuMSAwLTYuMi0uMy00MC40LS4zLTYxLjQgMCAwLTcwIDE1LTg0LjctMjkuOCAwIDAtMTEuNC0yOS4xLTI3LjgtMzYuNiAwIDAtMjIuOS0xNS43IDEuNi0xNS40IDAgMCAyNC45IDIgMzguNiAyNS44IDIxLjkgMzguNiA1OC42IDI3LjUgNzIuOSAyMC45IDIuMy0xNiA4LjgtMjcuMSAxNi0zMy43LTU1LjktNi4yLTExMi4zLTE0LjMtMTEyLjMtMTEwLjUgMC0yNy41IDcuNi00MS4zIDIzLjYtNTguOS0yLjYtNi41LTExLjEtMzMuMyAyLjYtNjcuOSAyMC45LTYuNSA2OSAyNyA2OSAyNyAyMC01LjYgNDEuNS04LjUgNjIuOC04LjVzNDIuOCAyLjkgNjIuOCA4LjVjMCAwIDQ4LjEtMzMuNiA2OS0yNyAxMy43IDM0LjcgNS4yIDYxLjQgMi42IDY3LjkgMTYgMTcuNyAyNS44IDMxLjUgMjUuOCA1OC45IDAgOTYuNS01OC45IDEwNC4yLTExNC44IDExMC41IDkuMiA3LjkgMTcgMjIuOSAxNyA0Ni40IDAgMzMuNy0uMyA3NS40LS4zIDgzLjYgMCA2LjUgNC42IDE0LjQgMTcuMyAxMi4xQzQyOC4yIDQ1Ny44IDQ5NiAzNjIuOSA0OTYgMjUyIDQ5NiAxMTMuMyAzODMuNSA4IDI0NC44IDh6Ii8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-github",
-      "version": "0.4.0",
-      "commit": "d2ac59820d0ed53886a570eca7b57d3028c36ffc",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.0/github-0.4.0.tar.gz",
-      "sha256": "899e9799e01986e922579b0e8747370740d3284fce42a92abcdbd702cb5703bf",
+      "version": "0.4.1",
+      "commit": "227b040dc7af166da1780660043b0cf391415fa8",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
+      "sha256": "eb765146cdfd65db083d27daf6223b2e79533b2abb7c1186210fc783675f03b4",
       "squadron": ">=0.56.0",
       "permissions": {
         "network": [
@@ -716,6 +716,18 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.4.1",
+          "date": "2026-11-23",
+          "notes": {
+            "en": [
+              "A pull request you already reviewed keeps your verdict in the list to review, instead of showing as waiting for you while GitHub's search still lists you as requested"
+            ],
+            "fr": [
+              "Une pull request que vous avez déjà relue garde votre verdict dans la liste à relire, au lieu d’apparaître comme en attente de vous tant que la recherche de GitHub vous compte encore parmi les relecteurs demandés"
+            ]
+          }
+        },
         {
           "version": "0.4.0",
           "date": "2026-11-20",
@@ -790,6 +802,112 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.4.1",
+          "commit": "227b040dc7af166da1780660043b0cf391415fa8",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
+          "sha256": "eb765146cdfd65db083d27daf6223b2e79533b2abb7c1186210fc783675f03b4",
+          "squadron": ">=0.56.0",
+          "permissions": {
+            "network": [
+              "api.github.com"
+            ],
+            "exec": [
+              "gh"
+            ]
+          },
+          "forge": {
+            "remotes": [
+              "^github\\.com/(?<owner>[A-Za-z0-9_.-]+)/(?<name>[A-Za-z0-9_.-]+)$"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.4.1",
+              "date": "2026-11-23",
+              "notes": {
+                "en": [
+                  "A pull request you already reviewed keeps your verdict in the list to review, instead of showing as waiting for you while GitHub's search still lists you as requested"
+                ],
+                "fr": [
+                  "Une pull request que vous avez déjà relue garde votre verdict dans la liste à relire, au lieu d’apparaître comme en attente de vous tant que la recherche de GitHub vous compte encore parmi les relecteurs demandés"
+                ]
+              }
+            },
+            {
+              "version": "0.4.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Open a pull request from Squadron for an agent's pushed branch, as a draft where the repository allows drafts, with a clear message when one is already open or the branch has no new commit"
+                ],
+                "fr": [
+                  "Ouvrir depuis Squadron une pull request pour la branche poussée d’un agent, en brouillon quand le dépôt le permet, avec un message clair quand une pull request est déjà ouverte ou que la branche n’a aucun nouveau commit"
+                ]
+              }
+            },
+            {
+              "version": "0.3.0",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "Merging a pull request uses the method you pick in Squadron, among those the repository and its base branch rules allow",
+                  "Squadron tells before a merge whether GitHub will delete the head branch, from the repository's \"Automatically delete head branches\" setting, and when a protected branch is kept"
+                ],
+                "fr": [
+                  "La fusion d’une pull request utilise la méthode choisie dans Squadron, parmi celles que le dépôt et les règles de sa branche de base autorisent",
+                  "Squadron indique avant une fusion si GitHub supprimera la branche source, d’après le réglage « Automatically delete head branches » du dépôt, et quand une branche protégée est conservée"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs name the pull request they check, so Squadron shows its number and title on the run and files it under PR checks"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions indiquent la pull request qu’ils vérifient : Squadron affiche son numéro et son titre sur le run et le range dans « Checks de PR »"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "GitHub Actions runs show again for projects that go through the GitHub CLI",
+                  "Merging a pull request uses a method the repository and its base branch rules allow, when your default one is not allowed"
+                ],
+                "fr": [
+                  "Les runs GitHub Actions s’affichent de nouveau pour les projets qui passent par la GitHub CLI",
+                  "La fusion d’une pull request prend une méthode autorisée par le dépôt et les règles de sa branche de base, quand votre méthode par défaut ne l’est pas"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-18",
+              "notes": {
+                "en": [
+                  "Pull requests of your GitHub projects in Squadron: the pull request of each agent's branch, the ones to review, yours and the others, with their checks, reviewers and conflicts",
+                  "Reviews with line comments, a summary and a verdict, replies to remarks, resolved threads shown and resolved from Squadron, merges with the repository's default method, and title and description changes",
+                  "GitHub Actions runs of each project, with a notification when one ends",
+                  "Chips for GitHub pull request links in conversations",
+                  "One GitHub account per owner, with a fine-grained token checked before it is saved; without one, the GitHub CLI is used"
+                ],
+                "fr": [
+                  "Les pull requests de vos projets GitHub dans Squadron : celle de la branche de chaque agent, celles à relire, les vôtres et les autres, avec leurs checks, leurs relecteurs et leurs conflits",
+                  "Des revues avec commentaires de ligne, résumé et verdict, des réponses aux remarques, des fils résolus affichés et résolus depuis Squadron, des fusions avec la méthode par défaut du dépôt, et le changement du titre et de la description",
+                  "Les runs GitHub Actions de chaque projet, avec une notification à la fin de chacun",
+                  "Des puces pour les liens de pull requests GitHub dans les conversations",
+                  "Un compte GitHub par propriétaire, avec un jeton à granularité fine vérifié avant d’être enregistré ; sans compte, la GitHub CLI prend le relais"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.4.0",
           "commit": "d2ac59820d0ed53886a570eca7b57d3028c36ffc",
