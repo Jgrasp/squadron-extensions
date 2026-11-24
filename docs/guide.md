@@ -346,6 +346,7 @@ The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]`
 | `host::unread_agents()` | The ids of the live agents the user has not read since their last turn, as the dot of the agent list shows them. Needs `agents: ["activity"]`. Since 1.8.0. |
 | `host::usage()` | Claude's 5-hour and weekly limits, each a `utilization` from 0 to 1 and `resets_at`, none until Squadron has read them, and the state of its API: `ok`, `overloaded` (with the `retries` Claude Code made so far), `outage`, `offline` or `signed_out`, and `since`, when `api` last changed. Fails while Squadron does not know them yet. Needs `usage: ["read"]`. Since 1.7.0. |
 | `host::show_agent(agent)` | Brings an agent to the front in Squadron; an archived one opens read only in the archive of its project. Works only within 2 s of a `squadron.send` from one of the extension's panels, while that panel is on screen, holds the focus and has the pointer over it; from a panel window, it brings Squadron's window to the front. Once a second at most, otherwise it fails with "show-agent waits a second between two calls.". It never acts on the agent. Needs `agents: ["show"]`. Since 1.7.0. |
+| `host::set_agent_chips(&agent_id, json)` | Puts the extension's chips on the row of an agent in the agent list, in place of those it put before; `[]` removes them. `json` is a list of 8 at most, each `{ "key", "title" }` with optional `url` (`https://` only, opened on click), `tone` (`ok`, `err` or `info`, a coloured dot before the key) and `logo` (`false` leaves the extension's logo out, decided chip by chip). The key is trimmed and cut at 40 characters, the title at 200. No permission needed; an extension only touches its own chips, and they stay with the agent across restarts. A call with bad JSON, more than 8 chips, a chip without `key` or `title`, or an unknown agent is dropped, with a warning in the main window's console. The row shows one chip at a time, then `+N` listing them all; the chips of every extension take turns, the draft `link` first, and a chip with `tone` `err` stops the turn on itself. The user sets the transition, the interval and whether every row turns in Settings › Preferences › Agent list. Since 1.15.0. |
 
 `host::projects`, `host::groups` and `host::all_agents` give a project's `id`, a group's `id` and `parent`, and an agent's `project` as opaque ids: the same across restarts, different for each extension, never the folder. An `Agent` that an event, an action or a tool receives with `exec` or `agents: ["read"]` carries the folder as `project` instead. Agent ids are the same everywhere.
 
@@ -458,7 +459,7 @@ Every key of a draft is optional:
 | `text` | The first message. |
 | `goal` | Done when. |
 | `context` | Added after the first message when the agent starts, never shown in the window. A `<ticket>` block there shows as a chip in the conversation. |
-| `link` | `{ "key", "title", "url" }`, at the top of the window with the extension's logo. The key opens `url` (`https://` only) in the browser, ✕ unlinks. The agent the draft starts keeps the link, unless the user unlinked: its row in the agent list shows the logo and the key, the title on hover, and a click opens `url`. An agent restored from the archive keeps it, a fork does not. Since Squadron 0.55.0. |
+| `link` | `{ "key", "title", "url" }`, at the top of the window with the extension's logo. The key opens `url` (`https://` only) in the browser, ✕ unlinks. The agent the draft starts keeps the link, unless the user unlinked: its row in the agent list shows the logo and the key, the title on hover, and a click opens `url`. An agent restored from the archive keeps it, a fork does not. Since Squadron 0.55.0. Since 1.15.0 it also takes `tone` and `logo` as `host::set_agent_chips` does, and becomes the agent's first chip. |
 | `choices` | `{ "label", "items": [{ "id", "label", "on" }] }`, checkboxes folded under the link. |
 | `status` | `{ "state": "running" \| "done" \| "error", "text" }`, a band above the first message, with Regenerate once it is not running. |
 
@@ -686,6 +687,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.12.0 | `>=0.56.0` |
 | 1.13.0 | `>=0.56.0` |
 | 1.14.0 | `>=0.56.0` |
+| 1.15.0 | `>=0.59.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
