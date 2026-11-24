@@ -278,6 +278,8 @@ squadron_extension!(Hello);
 
 An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in (its worktree, or its project). An error returned by `run` shows to the user; an error returned by `call_tool` goes back to the agent.
 
+Without `exec` nor `agents: ["read"]` in `permissions`, the `Agent` that events, actions and tools receive has an empty `dir`, and its `project` is the project's opaque id, the one `host::projects` gives, instead of its folder. Since 1.7.0.
+
 `check_account` tests an account the user adds or saved: see [Testing an account](#testing-an-account). Since 1.6.0.
 
 `forge` answers Squadron's pull request and pipeline calls: see [Forge providers](#forge-providers). Since 1.8.0.
@@ -290,7 +292,7 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | --- | --- | --- |
 | `started` | none | `{}`. Sent once the extension is loaded, also after a reload. |
 | `agent.done` | yes | `{}`. The agent finished its turn. |
-| `agent.waiting` | yes | `{ "waiting": … }`. The agent waits for the user. |
+| `agent.waiting` | yes | `{ "waiting": …, "kind": … }`. The agent waits for the user; `kind` is `permission`, `question`, or `null` when Squadron cannot tell. Without `exec` nor `agents: ["read"]`, only `{ "kind": "permission" }` or `{ "kind": "question" }`, `{}` otherwise. |
 | `timer` | none | `{}`. The delay of `host::set_timer` is over. Since 1.1.0. |
 | `panel.message` | the agent of the panel | `{ "panel": "<id>", "message": … }`. A panel called `squadron.send`. |
 | `accounts.changed` | none | `{}`. The user added, edited or removed one of the extension's accounts. Since 1.3.0. |
@@ -299,6 +301,16 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `new-agent.regenerate` | none | `{ "draft": "<id>", "choices": ["<id>", …] }`. The user clicked Regenerate, or changed the checkboxes of a draft without touching its first message. See [Opening New agent](#opening-new-agent). Since 1.5.0. |
 | `new-agent.started` | the agent that started | `{ "draft": "<id>" }`. The user started the agent of a draft. Since 1.5.0. |
 | `new-agent.closed` | none | `{ "draft": "<id>" }`. The window closed without starting an agent, or the user unlinked it. Since 1.5.0. |
+| `panel.closed` | none | `{ "panel": "<id>" }`. One of the extension's panels closed. Since 1.7.0. |
+| `agent.status` | none | The `AgentActivity` of an agent that changed, as `host::all_agents` gives it, with `unread` since 1.8.0. Needs `agents: ["activity"]`. Since 1.7.0. |
+| `agent.started` | none | The `AgentActivity` of an agent that started; `by` is the agent that started it, none when the user did. Needs `agents: ["activity"]`. Since 1.7.0. |
+| `agent.archived` | none | The `AgentActivity` of an agent that was archived. Needs `agents: ["activity"]`. Since 1.7.0. |
+| `agent.message` | none | `{ "from": "<id>", "to": "<id>", "count": 1 }`. An agent sent messages to another; `count` is how many since the last event. Needs `agents: ["activity"]`. Since 1.7.0. |
+| `project.added`, `project.changed`, `project.archived` | none | The `Project`, as `host::projects` gives it. Needs `projects: ["read"]`. Since 1.7.0. |
+| `groups.changed` | none | `{ "groups": [ … ] }`, every `Group` as `host::groups` gives it. Needs `projects: ["read"]`. Since 1.7.0. |
+| `usage` | none | The `ClaudeUsage`, as `host::usage` gives it. Needs `usage: ["read"]`. Since 1.7.0. |
+
+The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]` come at most once a second, with the latest state of each agent or project only. Their `data` is JSON with the field names in snake case: `week_agents`, `five_hour`, `seven_day`, `resets_at`. In them, an agent's `project`, a project's `id` and `group`, and a group's `id` and `parent` are opaque ids, whatever the permissions.
 
 ### Host functions
 
@@ -328,6 +340,14 @@ An `Agent` has `id`, `name`, `project` and `dir`, the folder the agent works in 
 | `host::settings_post(message)` | Sends a JSON message to the extension's settings page while it is open. Since 1.4.0. |
 | `host::open_new_agent(agent, draft)` | Opens the New agent window in the project of `agent`, filled from `draft`, and returns the id of the draft. See [Opening New agent](#opening-new-agent). Since 1.5.0. |
 | `host::update_new_agent(id, draft)` | Fills the open draft `id`, leaving the name, first message and Done when the user edited. Since 1.5.0. |
+| `host::projects()` | The projects of Squadron, archived ones included, without their folder: `id`, `name`, `color` (`#rrggbb`, when the user gave one), `group`, `archived`, `active` (when one of its agents last changed, 0 without agents), `week_agents` (distinct agents that changed over the last 7 days) and `agents` (all its agents, archived ones included). Needs `projects: ["read"]`. Since 1.7.0. |
+| `host::groups()` | The groups of projects: `id`, `name` and `parent`, the group it is nested in. Needs `projects: ["read"]`. Since 1.7.0. |
+| `host::all_agents()` | Every agent, archived ones included, and what it is doing: `id`, `project`, `name` (empty until Squadron names it; text anyone can set, so show it as text), `status`, `waiting` (`permission` or `question`), `tool` (the name of the tool it runs, never its input), `error` (`crash` or `api` while `error`, `mcp` when one of its MCP servers failed to connect), `by` (the agent that started it, none when the user did), `archived` and `since`. Never its folder, conversation, prompts, tool inputs or outputs, or costs. Needs `agents: ["activity"]`. Since 1.7.0. |
+| `host::unread_agents()` | The ids of the live agents the user has not read since their last turn, as the dot of the agent list shows them. Needs `agents: ["activity"]`. Since 1.8.0. |
+| `host::usage()` | Claude's 5-hour and weekly limits, each a `utilization` from 0 to 1 and `resets_at`, none until Squadron has read them, and the state of its API: `ok`, `overloaded` (with the `retries` Claude Code made so far), `outage`, `offline` or `signed_out`, and `since`, when `api` last changed. Fails while Squadron does not know them yet. Needs `usage: ["read"]`. Since 1.7.0. |
+| `host::show_agent(agent)` | Brings an agent to the front in Squadron; an archived one opens read only in the archive of its project. Works only within 2 s of a `squadron.send` from one of the extension's panels, while that panel is on screen, holds the focus and has the pointer over it; from a panel window, it brings Squadron's window to the front. Once a second at most, otherwise it fails with "show-agent waits a second between two calls.". It never acts on the agent. Needs `agents: ["show"]`. Since 1.7.0. |
+
+`host::projects`, `host::groups` and `host::all_agents` give a project's `id`, a group's `id` and `parent`, and an agent's `project` as opaque ids: the same across restarts, different for each extension, never the folder. An `Agent` that an event, an action or a tool receives with `exec` or `agents: ["read"]` carries the folder as `project` instead. Agent ids are the same everywhere.
 
 The WebAssembly has no access to files, the network or environment variables other than through these functions.
 
@@ -622,7 +642,9 @@ A tool with a `command` receives each secret that is set as an environment varia
 
 - `exec`: program names that `host::exec` and `host::exec_input` may run, with any arguments. `claude` runs the Claude Code set up in Squadron, not the one on the `PATH`.
 - `network`: exact host names that `host::fetch`, `host::fetch_many`, `host::fetch_bytes` and `host::download` may reach. The `host` field of an account needs no entry: the user typed it.
-- `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0.
+- `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0. `activity` for `host::all_agents`, `host::unread_agents` and the `agent.status`, `agent.started`, `agent.archived` and `agent.message` events; `show` for `host::show_agent`. Since 1.7.0. `read` also gives the `Agent` of events, actions and tools its folder as `dir` and `project`, as `exec` does.
+- `projects`: `read` for `host::projects`, `host::groups` and the `project.added`, `project.changed`, `project.archived` and `groups.changed` events. Since 1.7.0.
+- `usage`: `read` for `host::usage` and the `usage` event. Since 1.7.0.
 
 When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
 
