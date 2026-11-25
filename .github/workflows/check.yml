@@ -1,0 +1,35 @@
+name: Check
+
+on:
+  pull_request:
+    paths: ['api/**', 'scripts/**', 'examples/**', '.github/workflows/**']
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - run: rustup target add wasm32-wasip2
+      - name: Build the API
+        run: cargo build --locked --target wasm32-wasip2
+        working-directory: api
+      - name: Pack hello
+        run: ID=hello VERSION=$(jq -r .version examples/hello/extension.json) SOURCE=. SUBDIR=examples/hello node scripts/pack.mjs
+      - name: Pack rules
+        run: |
+          mkdir -p "$RUNNER_TEMP/x" && cd "$RUNNER_TEMP/x" && git init -q
+          printf '## 1.0.0 · 2026-01-01\n\n- First.\n' > CHANGELOG.md
+          pack() {
+            echo "{\"id\":\"x\",\"version\":\"1.0.0\",\"api\":1,\"name\":{\"en\":\"X\"},$1\"permissions\":{\"exec\":$2}}" > extension.json
+            git add -A
+            ID=x VERSION=1.0.0 SOURCE="$RUNNER_TEMP/x" SUBDIR=. node "$GITHUB_WORKSPACE/scripts/pack.mjs" > /dev/null
+          }
+          if pack '' '[{"program":"java","secrets":true}]'; then exit 1; fi
+          if pack '"squadron":">=0.63.0",' '[{"program":"java","secrets":true}]'; then exit 1; fi
+          pack '"squadron":">=0.64.0",' '["git",{"program":"java","secrets":true}]'
+          pack '' '["git"]'
