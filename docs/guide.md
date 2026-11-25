@@ -754,6 +754,8 @@ Run it from the Actions tab with a `tag` to release a tag your repository alread
 
 The release holds `<id>-<version>.tar.gz` and `catalog.json`, and is marked latest. An extension in a folder of a larger repository (`path` in `registry.json`, tags `<id>/v*`), like `hello` here, has no release of its own to read: it keeps going through the hourly run and `index.json`.
 
+An extension hosted on GitLab or Bitbucket can't use that workflow, which runs on GitHub Actions only. Its own CI publishes the same two files, `<id>-<version>.tar.gz` and `catalog.json` (the shape of an `index.json` entry), at the URLs Squadron reads: `<repo>/-/releases/permalink/latest/downloads/catalog.json` on GitLab, `<repo>/downloads/catalog.json` on Bitbucket. The `archive` in `catalog.json` must sit under the repository: `<repo>/-/releases/<tag>/downloads/<file>` on GitLab (not a `/api/v4/.../packages/generic/...` URL), `<repo>/downloads/<file>` on Bitbucket. Users add it with **From a repository**; the official registry lists GitHub repositories only.
+
 ### Changelog
 
 Squadron shows what changed in a version in **What's new**, on its update window, from a `CHANGELOG.md` next to `extension.json`.
@@ -779,4 +781,6 @@ CI copies the 20 newest sections into `index.json`, as `changelog: [{ "version",
 
 ### Your own source
 
-Users can add other sources than the official one, in **Settings › Extensions › Discover › Add a marketplace**. A source is a GitHub repository organized like this one: fork it, enable GitHub Actions in the fork, empty `registry.json`, `rejected.json` (`{}`) and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `index.json` from the `main` branch and downloads archives only from the releases of that repository. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.
+Users can add other sources than the official one, in **Settings › Extensions**, tab **All extensions**: the **Marketplaces** button adds a marketplace, **From a repository** adds a single extension. A source is the https URL of a GitHub, GitLab (gitlab.com or self-hosted, subgroups included) or Bitbucket repository, a GitHub `owner/repo`, or the https URL of a `.json` file (`registry.json`, `index.json` or `catalog.json`).
+
+A marketplace is a repository organized like this one: on GitHub, fork it, enable GitHub Actions in the fork, empty `registry.json`, `rejected.json` (`{}`) and `index.json` (`{ "api": 1, "extensions": [] }`), and publish your extensions the same way. Squadron reads `registry.json` (or `index.json`) on the default branch, then the `catalog.json` of the latest release of each repository `registry.json` lists, except entries with `path`; a repository without one falls back to its `index.json` entry. Archives are downloaded only from the source's repository, or from the repository its `registry.json` lists for that id. Its extensions show as **Imported** and are not reviewed for Squadron; an extension updates only from the source it was installed from.
