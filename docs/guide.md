@@ -553,7 +553,7 @@ Calls run on up to 4 instances of the extension at once, so that the pull reques
 - in a form body (`application/x-www-form-urlencoded`), since 1.16.0;
 - on the standard input of a program declared with `"secrets": true`, since 1.16.0.
 
-Never ask for a secret in a panel, never keep one with `host::state_set`, never write a pgpass, `.netrc` or config file holding one, never pass one in `args` or `env`: they are readable by every process of the user, and the WebAssembly and panels can leak what they hold. Neither the WebAssembly nor a panel can read a secret.
+Never ask for a secret in a panel, never keep one with `host::state_set`, never write a pgpass, `.netrc` or config file holding one, never pass one in `args` or `env`: they are readable by every process of the user, and the WebAssembly and panels can leak what they hold. Neither the WebAssembly nor a panel can read a secret. Two exceptions remain, both outside the extension's own keeping: the single-use OAuth authorization code goes from a panel to the WebAssembly (see [Tokens from a service](#tokens-from-a-service)), and a tool `command` gets the secrets of `contributes.secrets` in its environment (see [Files and images](#files-and-images)), which new code should not use.
 
 Declare the secrets in `contributes.secrets`. The user fills them in the extension's details in Settings › Extensions, and Squadron keeps them in the system keyring.
 
@@ -709,7 +709,7 @@ A token that a service hands back, such as an OAuth refresh token, goes straight
 No `host` field here: an account with one captures only from that host, and its fields go only there.
 
 1. **The account first.** `host::fetch_capture` needs a saved account: open the form with `host::open_account` (see [Opening the account form](#opening-the-account-form)) and keep the id that `account.form` gives. An account id is not a secret, it can go in the state.
-2. **The authorization code.** The user signs in on the provider's consent page, from an item with `url.open` for instance, and pastes the code it shows into a panel, which sends it with `squadron.send`. The code is single use and short lived, and nothing without the client secret, which stays in the keyring.
+2. **The authorization code.** The user signs in on the provider's consent page, from an item with `url.open` for instance. Squadron does not receive the redirect, and Google no longer shows the code on its own page: the user copies `code` from the address the provider redirects to, a page you host that shows it, or the address bar of a loopback redirect that nothing answers. They paste it into a panel, which sends it with `squadron.send`. The code is single use and short lived, and nothing without the client secret, which stays in the keyring.
 3. **The exchange**, with a form body and `host::fetch_capture`:
 
    ```rust
@@ -774,6 +774,7 @@ No `host` field here: an account with one captures only from that host, and its 
 - Only a 2xx answer whose body is a JSON object is captured, each listed key that holds a non-empty string. The answer the WebAssembly gets has `[secret]` there, and wherever else the value appears, headers included.
 - The form shows a `captured` field as received or not yet; the user never types it, and saving the form keeps it. Removing the account removes it.
 - Never keep a token in the state, a file or a panel, and never send one to the WebAssembly in a `panel.message`.
+- `host::accounts()` does not tell whether a `captured` field is set: a request that uses it fails until it is, with "The field … is not set." on a saved account and "The account … has no field …" on one not saved yet. With `"check": true`, an account is tested before it is saved, so before any capture: let `check_account` answer `Ok` ("Sign in after saving") on that error, or the form never saves.
 
 ### Opening the account form
 
@@ -788,15 +789,25 @@ fn run(action: String, _agent: Option<Agent>) -> Result<(), String> {
 }
 
 fn on_event(name: String, _agent: Option<Agent>, data: String) {
-    if name == "account.form" {
-        let data: serde_json::Value = serde_json::from_str(&data).unwrap_or_default();
-        if let Some(account) = data["account"].as_str() {
-            host::state_set("signing-in", Some(account));
-            host::panel_post("main", r#"{"type":"paste-code"}"#);
+    let data: serde_json::Value = serde_json::from_str(&data).unwrap_or_default();
+    match name.as_str() {
+        "account.form" => {
+            if let Some(account) = data["account"].as_str() {
+                host::state_set("signing-in", Some(account));
+                let _ = host::panel_open("main");
+            }
         }
+        "panel.message" if data["message"]["type"] == "ready" => {
+            if host::state_get("signing-in").is_some() {
+                host::panel_post("main", r#"{"type":"paste-code"}"#);
+            }
+        }
+        _ => {}
     }
 }
 ```
+
+The form is in Settings when it closes: open the panel, and let it ask once it is loaded, as in [Panels](#panels).
 
 - `account`: `None` to add an account, `Some(id)` to edit that one. An unknown id fails.
 - `values`: a JSON object of `text` and `host` fields to prefill. A `secret` or `captured` field fails: the user types secrets, the service sends captured ones.
