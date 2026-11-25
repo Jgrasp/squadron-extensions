@@ -164,7 +164,7 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].label` | A text, shown as the field's placeholder. |
 | `fields[].hint` | Optional text, shown under the field. |
 | `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
-| `fields[].kind` | `text` (the default), `host`, `secret` or `captured`. One `host` field at most. `captured` is a secret the user never types: the extension fills it from a service's answer with `host::fetch_capture`, such as an OAuth refresh token. Since 1.16.0. |
+| `fields[].kind` | `text` (the default), `host`, `secret` or `captured`. One `host` field at most. `captured` is a secret the user never types: the extension fills it from a service's answer with `host::fetch_capture`, such as an OAuth refresh token, or Squadron fills it with the code of `host::authorize` since 1.18.0. Since 1.16.0. |
 | `fields[].copy` | Optional list of one-line strings, each once, such as the scopes a token needs. Squadron shows each as a button under the field's hint; a click copies it and the button reads "Copied" for 1.5 s. Plain strings, not texts. Since Squadron 0.54.0. |
 | `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.49.0. See [Testing an account](#testing-an-account). |
 
@@ -303,6 +303,7 @@ Without `exec` nor `agents: ["read"]` in `permissions`, the `Agent` that events,
 | `new-agent.closed` | none | `{ "draft": "<id>" }`. The window closed without starting an agent, or the user unlinked it. Since 1.5.0. |
 | `panel.closed` | none | `{ "panel": "<id>" }`. One of the extension's panels closed. Since 1.7.0. |
 | `account.form` | none | `{ "form": "<id>", "account": "<id>" }` once the user saved the form of `host::open_account`, or `{ "form": "<id>", "error": "…" }` once they cancelled it, closed Settings, or another `host::open_account` of the extension replaced it. Since 1.16.0. |
+| `account.authorized` | none | `{ "account": "<id>", "field": "<id>" }` once the browser came back from `host::authorize` with the code, or the same with `"error": "…"` when the service refused, after 5 minutes without answer, or when another `host::authorize` of the extension replaced it. Since 1.18.0. |
 | `agent.status` | none | The `AgentActivity` of an agent that changed, as `host::all_agents` gives it, with `unread` since 1.8.0. Needs `agents: ["activity"]`. Since 1.7.0. |
 | `agent.started` | none | The `AgentActivity` of an agent that started; `by` is the agent that started it, none when the user did. Needs `agents: ["activity"]`. Since 1.7.0. |
 | `agent.archived` | none | The `AgentActivity` of an agent that was archived. Needs `agents: ["activity"]`. Since 1.7.0. |
@@ -351,6 +352,7 @@ The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]`
 | `host::fetch_capture(request, account, fields)` | Like `host::fetch`, and on a 2xx answer whose body is a JSON object, saves the string at each top-level key of `fields` in the system keyring as a `captured` field of `account`, and gives the WebAssembly `[secret]` in its place. `fields` pairs a JSON key with a field id: `[("refresh_token", "refresh-token")]`. See [Tokens from a service](#tokens-from-a-service). Since 1.16.0. |
 | `host::open_account(account, values)` | Opens Settings on the extension's page with its account form unfolded: `None` to add an account, `Some(id)` to edit one. `values` is a JSON object of `text` and `host` fields to prefill, `{}` for none. Returns the form's id at once; the event `account.form` tells how it ended. See [Opening the account form](#opening-the-account-form). Since 1.16.0. |
 | `host::forget(account, field)` | Removes a `captured` field from `account` and from the system keyring, for example once the service revoked a refresh token, so the user signs in again. A field of another kind fails. See [Tokens from a service](#tokens-from-a-service). Since 1.17.0. |
+| `host::authorize(account, url, field)` | Runs an OAuth sign-in in the user's browser. Squadron listens on a free port of `127.0.0.1`, replaces `{{redirect}}` in `url` by that address and `{{state}}` by a value it checks on the way back, both URL-encoded, opens `url` and returns the redirect address at once. `url` is `https://`, to the account's `host` or a host of `permissions.network`. The code the service sends back goes into the `captured` field `field` of `account`, never to the WebAssembly; the event `account.authorized` tells how it ended. See [Tokens from a service](#tokens-from-a-service). Since 1.18.0. |
 | `host::account_secrets(account)` | The ids of the `secret` and `captured` fields that are set on `account`, never their values, to know a captured token is there before using it. Inside `check_account`, it answers for the account being tested, saved or not. Since 1.17.0. |
 
 `host::projects`, `host::groups` and `host::all_agents` give a project's `id`, a group's `id` and `parent`, and an agent's `project` as opaque ids: the same across restarts, different for each extension, never the folder. An `Agent` that an event, an action or a tool receives with `exec` or `agents: ["read"]` carries the folder as `project` instead. Agent ids are the same everywhere.
@@ -555,7 +557,7 @@ Calls run on up to 4 instances of the extension at once, so that the pull reques
 - in a form body (`application/x-www-form-urlencoded`), since 1.16.0;
 - on the standard input of a program declared with `"secrets": true`, since 1.16.0.
 
-Never ask for a secret in a panel, never keep one with `host::state_set`, never write a pgpass, `.netrc` or config file holding one, never pass one in `args` or `env`: they are readable by every process of the user, and the WebAssembly and panels can leak what they hold. Neither the WebAssembly nor a panel can read a secret. One exception remains, outside the extension's own keeping: the single-use OAuth authorization code goes from a panel to the WebAssembly (see [Tokens from a service](#tokens-from-a-service)). Since 1.17.0, a tool `command` no longer gets any secret (see [Files and images](#files-and-images)).
+Never ask for a secret in a panel, never keep one with `host::state_set`, never write a pgpass, `.netrc` or config file holding one, never pass one in `args` or `env`: they are readable by every process of the user, and the WebAssembly and panels can leak what they hold. Neither the WebAssembly nor a panel can read a secret. Since 1.18.0, `host::authorize` keeps the OAuth authorization code in the keyring too. One exception remains, for a service `host::authorize` cannot serve: the single-use code pasted by the user goes from a panel to the WebAssembly (see [Pasting the code](#pasting-the-code)). Since 1.17.0, a tool `command` no longer gets any secret (see [Files and images](#files-and-images)).
 
 Declare the secrets in `contributes.secrets`. The user fills them in the extension's details in Settings › Extensions, and Squadron keeps them in the system keyring.
 
@@ -703,30 +705,59 @@ A token that a service hands back, such as an OAuth refresh token, goes straight
   "label": { "en": "Calendars", "fr": "Agendas" },
   "fields": [
     { "id": "email", "label": { "en": "Email" } },
+    { "id": "code", "label": { "en": "Sign-in", "fr": "Connexion" }, "kind": "captured" },
     { "id": "refresh-token", "label": { "en": "Google access", "fr": "Accès Google" }, "kind": "captured" },
     { "id": "access-token", "label": { "en": "Session", "fr": "Session" }, "kind": "captured" }
   ]
 },
-"permissions": { "network": ["oauth2.googleapis.com", "www.googleapis.com"] }
+"permissions": { "network": ["accounts.google.com", "oauth2.googleapis.com", "www.googleapis.com"] }
 ```
 
 No `host` field here: an account with one captures only from that host, and its fields go only there.
 
 1. **The account first.** `host::fetch_capture` needs a saved account: open the form with `host::open_account` (see [Opening the account form](#opening-the-account-form)) and keep the id that `account.form` gives. An account id is not a secret, it can go in the state.
-2. **The authorization code.** The user signs in on the provider's consent page, from an item with `url.open` for instance. Squadron does not receive the redirect, and Google no longer shows the code on its own page: the user copies `code` from the address the provider redirects to, a page you host that shows it, or the address bar of a loopback redirect that nothing answers. They paste it into a panel, which sends it with `squadron.send`. The code is single use and short lived, and nothing without the client secret, which stays in the keyring.
-3. **The exchange**, with a form body and `host::fetch_capture`:
+2. **The sign-in**, with `host::authorize`, once the account is saved. Squadron opens the consent page in the browser, receives the redirect on `127.0.0.1` and keeps `code` in the `captured` field `code`: the WebAssembly never sees it. Since API 1.18.0.
 
    ```rust
-   use squadron_extension_api::{Request, host};
+   use squadron_extension_api::{Agent, Request, host};
 
-   fn exchange(account: &str, code: &str) -> Result<(), String> {
-       let code: String = form_urlencoded::byte_serialize(code.as_bytes()).collect();
+   fn sign_in(account: &str) -> Result<(), String> {
+       let url = format!(
+           "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id={CLIENT_ID}&scope={SCOPE}&access_type=offline&prompt=consent&redirect_uri={{{{redirect}}}}&state={{{{state}}}}"
+       );
+       let redirect = host::authorize(account, &url, "code")?;
+       host::state_set("redirect", Some(&redirect));
+       Ok(())
+   }
+
+   fn on_event(name: String, _agent: Option<Agent>, data: String) {
+       let data: serde_json::Value = serde_json::from_str(&data).unwrap_or_default();
+       if name == "account.authorized" && data["error"].is_null() {
+           if let (Some(account), Some(redirect)) = (data["account"].as_str(), host::state_get("redirect")) {
+               if let Err(e) = exchange(account, &redirect) {
+                   host::notify("Google", &e);
+               }
+           }
+       }
+   }
+   ```
+
+   - `{{redirect}}` becomes `http://127.0.0.1:<port>/` and `{{state}}` a value Squadron checks when the browser comes back, both URL-encoded. A wrong `state` gets an error page and the wait goes on.
+   - `url` is `https://`, to the account's `host` or a host of `permissions.network`, here `accounts.google.com`. The account must exist and `field` must be `captured`.
+   - The call returns the redirect address at once: keep it for the exchange, whose `redirect_uri` must match. `account.authorized` comes once the browser is back, or with `error` when the service refused, after 5 minutes without answer, or when another `host::authorize` of the extension replaced this one.
+   - PKCE stays in the extension: put `code_challenge` in `url` and keep the verifier in the state.
+   - The service must accept a loopback redirect on any port, as Google's desktop clients do. A service that needs an exact registered redirect, port included, cannot use it: see [Pasting the code](#pasting-the-code).
+3. **The exchange**, with a form body and `host::fetch_capture`, the code as `{{<account>.code}}`:
+
+   ```rust
+   fn exchange(account: &str, redirect: &str) -> Result<(), String> {
+       let redirect: String = form_urlencoded::byte_serialize(redirect.as_bytes()).collect();
        let request = Request {
            method: "POST".into(),
            url: "https://oauth2.googleapis.com/token".into(),
            headers: vec![("Content-Type".into(), "application/x-www-form-urlencoded".into())],
            body: Some(format!(
-               "grant_type=authorization_code&code={code}&client_id={CLIENT_ID}&client_secret={{{{client-secret}}}}&redirect_uri={REDIRECT}"
+               "grant_type=authorization_code&code={{{{{account}.code}}}}&client_id={CLIENT_ID}&client_secret={{{{client-secret}}}}&redirect_uri={redirect}"
            )),
        };
        let answer = host::fetch_capture(
@@ -737,6 +768,7 @@ No `host` field here: an account with one captures only from that host, and its 
                ("access_token".into(), "access-token".into()),
            ],
        )?;
+       host::forget(account, "code")?;
        match answer.status {
            200 => Ok(()),
            status => Err(format!("Google answered {status}.")),
@@ -744,7 +776,7 @@ No `host` field here: an account with one captures only from that host, and its 
    }
    ```
 
-   Squadron percent-encodes the values it puts in a form body, not the rest: encode what the WebAssembly writes there itself, such as `code`, here with the `form_urlencoded` crate.
+   Squadron percent-encodes the values it puts in a form body, not the rest: encode what the WebAssembly writes there itself, such as `redirect_uri`, here with the `form_urlencoded` crate. The code is single use: `host::forget` drops it once exchanged.
 4. **The refresh**, the same way. Capture `access_token` again, or the new one would reach the WebAssembly in clear: a plain `host::fetch` only hides the secrets it sent. Capture `refresh_token` too, for a provider that rotates it; a key missing from the answer leaves the field as it was.
 
    ```rust
@@ -788,6 +820,10 @@ No `host` field here: an account with one captures only from that host, and its 
 - With `"check": true`, an account is tested before it is saved, so before any capture. Inside `check_account`, `host::account_secrets(&account.id)` answers for that account, saved or not: answer `Ok` ("Sign in after saving") when the token is not there yet, instead of sending a request and swallowing its error, or the form never saves.
 - `host::forget(account, field)` removes a `captured` field only; a field of another kind fails. Since 1.17.0.
 
+### Pasting the code
+
+For a service that only accepts the exact redirect it has registered, port included, `host::authorize` cannot receive the code. The user signs in from an item with `url.open`, copies `code` from the address the provider redirects to, a page you host that shows it, or the address bar of a loopback redirect that nothing answers, and pastes it into a panel, which sends it with `squadron.send`. This is the one exception to the rule on secrets: the code is single use and short lived, and nothing without the client secret, which stays in the keyring. The exchange is step 3 with `code={code}`, the pasted code percent-encoded by the WebAssembly, and no `host::forget`.
+
 ### Opening the account form
 
 `host::open_account` opens Settings on the extension's page with its account form unfolded, so a panel or a button can lead the user to add an account, or fix the one that failed. Since API 1.16.0, so declare `"squadron": ">=0.64.0"`.
@@ -805,13 +841,9 @@ fn on_event(name: String, _agent: Option<Agent>, data: String) {
     match name.as_str() {
         "account.form" => {
             if let Some(account) = data["account"].as_str() {
-                host::state_set("signing-in", Some(account));
-                let _ = host::panel_open("main");
-            }
-        }
-        "panel.message" if data["message"]["type"] == "ready" => {
-            if host::state_get("signing-in").is_some() {
-                host::panel_post("main", r#"{"type":"paste-code"}"#);
+                if let Err(e) = sign_in(account) {
+                    host::notify("Google", &e);
+                }
             }
         }
         _ => {}
@@ -819,7 +851,7 @@ fn on_event(name: String, _agent: Option<Agent>, data: String) {
 }
 ```
 
-The form is in Settings when it closes: open the panel, and let it ask once it is loaded, as in [Panels](#panels).
+Once the account is saved, `sign_in` opens the consent page with `host::authorize`, as in [Tokens from a service](#tokens-from-a-service). To ask something in a panel instead, open it and let it speak first, as in [Panels](#panels): the form is in Settings when it closes.
 
 - `account`: `None` to add an account, `Some(id)` to edit that one. An unknown id fails.
 - `values`: a JSON object of `text` and `host` fields to prefill. A `secret` or `captured` field fails: the user types secrets, the service sends captured ones.
@@ -887,6 +919,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.15.0 | `>=0.59.0` |
 | 1.16.0 | `>=0.64.0` |
 | 1.17.0 | `>=0.64.0` |
+| 1.18.0 | `>=0.64.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
