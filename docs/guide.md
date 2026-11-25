@@ -164,11 +164,11 @@ For a service whose address depends on the user, such as Jira or a self-hosted G
 | `fields[].label` | A text, shown as the field's placeholder. |
 | `fields[].hint` | Optional text, shown under the field. |
 | `fields[].url` | Optional `https://` link, such as the page that creates the token: the `hint` becomes the link, or "Create one" without a `hint`. Opens in the browser. Since Squadron 0.46.2. |
-| `fields[].kind` | `text` (the default), `host` or `secret`. One `host` field at most. |
+| `fields[].kind` | `text` (the default), `host`, `secret` or `captured`. One `host` field at most. `captured` is a secret the user never types: the extension fills it from a service's answer with `host::fetch_capture`, such as an OAuth refresh token. Since 1.16.0. |
 | `fields[].copy` | Optional list of one-line strings, each once, such as the scopes a token needs. Squadron shows each as a button under the field's hint; a click copies it and the button reads "Copied" for 1.5 s. Plain strings, not texts. Since Squadron 0.54.0. |
 | `check` | Optional, `true` to test accounts before they are saved and show in the list whether each one works. Needs `wasm` and `check_account`. Since Squadron 0.49.0. See [Testing an account](#testing-an-account). |
 
-The user adds, edits and removes accounts in the extension's details. Every field is required. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. Uninstalling the extension removes its accounts and their secrets.
+The user adds, edits and removes accounts in the extension's details, or in the form `host::open_account` opens. Every field is required but `captured` ones. A `host` field takes what the user types, such as `https://acme.atlassian.net/jira`, and keeps `acme.atlassian.net`. `secret` fields go to the system keyring; leaving one empty while editing keeps the saved value. A `captured` field shows as a status line, "Received from the service and saved in the system keyring" or "Filled in by the extension after you sign in"; saving the form keeps it. Removing an account removes its secrets, captured ones included; uninstalling the extension removes its accounts and their secrets.
 
 See [Accounts](#accounts).
 
@@ -302,6 +302,7 @@ Without `exec` nor `agents: ["read"]` in `permissions`, the `Agent` that events,
 | `new-agent.started` | the agent that started | `{ "draft": "<id>" }`. The user started the agent of a draft. Since 1.5.0. |
 | `new-agent.closed` | none | `{ "draft": "<id>" }`. The window closed without starting an agent, or the user unlinked it. Since 1.5.0. |
 | `panel.closed` | none | `{ "panel": "<id>" }`. One of the extension's panels closed. Since 1.7.0. |
+| `account.form` | none | `{ "form": "<id>", "account": "<id>" }` once the user saved the form of `host::open_account`, or `{ "form": "<id>", "error": "…" }` once they cancelled it, closed Settings, or another `host::open_account` of the extension replaced it. Since 1.16.0. |
 | `agent.status` | none | The `AgentActivity` of an agent that changed, as `host::all_agents` gives it, with `unread` since 1.8.0. Needs `agents: ["activity"]`. Since 1.7.0. |
 | `agent.started` | none | The `AgentActivity` of an agent that started; `by` is the agent that started it, none when the user did. Needs `agents: ["activity"]`. Since 1.7.0. |
 | `agent.archived` | none | The `AgentActivity` of an agent that was archived. Needs `agents: ["activity"]`. Since 1.7.0. |
@@ -335,7 +336,7 @@ The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]`
 | `host::fetch_bytes(request)` | Like `host::fetch`, with the body as bytes, for images and files. Since 1.3.0. |
 | `host::download(request, name)` | Like `host::fetch`, writing the body to `name` in the data folder. `name` is a relative path of plain names, with no `..` and no hidden name. Returns `status`, `headers`, `path` and `size`. Since 1.3.0. |
 | `host::open_file(path)` | Opens a document or an image of the data folder in the user's app for it. Programs and files outside the data folder are refused. Since 1.3.0. |
-| `host::exec_input(program, args, dir, input)` | Like `host::exec`, writing `input` to the program's standard input. Since 1.3.0. |
+| `host::exec_input(program, args, dir, input)` | Like `host::exec`, writing `input` to the program's standard input. Since 1.3.0. Since 1.16.0, a program declared with `"secrets": true` gets `{{…}}` resolved in `input`, and only there. See [Secrets for a program](#secrets-for-a-program). |
 | `host::options()` | The values of the options of `contributes.settings`, as a JSON object by id, defaults included. Since 1.4.0. |
 | `host::settings_post(message)` | Sends a JSON message to the extension's settings page while it is open. Since 1.4.0. |
 | `host::open_new_agent(agent, draft)` | Opens the New agent window in the project of `agent`, filled from `draft`, and returns the id of the draft. See [Opening New agent](#opening-new-agent). Since 1.5.0. |
@@ -347,6 +348,8 @@ The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]`
 | `host::usage()` | Claude's 5-hour and weekly limits, each a `utilization` from 0 to 1 and `resets_at`, none until Squadron has read them, and the state of its API: `ok`, `overloaded` (with the `retries` Claude Code made so far), `outage`, `offline` or `signed_out`, and `since`, when `api` last changed. Fails while Squadron does not know them yet. Needs `usage: ["read"]`. Since 1.7.0. |
 | `host::show_agent(agent)` | Brings an agent to the front in Squadron; an archived one opens read only in the archive of its project. Works only within 2 s of a `squadron.send` from one of the extension's panels, while that panel is on screen, holds the focus and has the pointer over it; from a panel window, it brings Squadron's window to the front. Once a second at most, otherwise it fails with "show-agent waits a second between two calls.". It never acts on the agent. Needs `agents: ["show"]`. Since 1.7.0. |
 | `host::set_agent_chips(&agent_id, json)` | Puts the extension's chips on the row of an agent in the agent list, in place of those it put before; `[]` removes them. `json` is a list of 8 at most, each `{ "key", "title" }` with optional `url` (`https://` only, opened on click), `tone` (`ok`, `err` or `info`, a coloured dot before the key) and `logo` (`false` leaves the extension's logo out, decided chip by chip). The key is trimmed and cut at 40 characters, the title at 200. No permission needed; an extension only touches its own chips, and they stay with the agent across restarts. A call with bad JSON, more than 8 chips, a chip without `key` or `title`, or an unknown agent is dropped, with a warning in the main window's console. The row shows one chip at a time, then `+N` listing them all; the chips of every extension take turns, the draft `link` first, and a chip with `tone` `err` stops the turn on itself. The user sets the transition, the interval and whether every row turns in Settings › Preferences › Agent list. Since 1.15.0. |
+| `host::fetch_capture(request, account, fields)` | Like `host::fetch`, and on a 2xx answer whose body is a JSON object, saves the string at each top-level key of `fields` in the system keyring as a `captured` field of `account`, and gives the WebAssembly `[secret]` in its place. `fields` pairs a JSON key with a field id: `[("refresh_token", "refresh-token")]`. See [Tokens from a service](#tokens-from-a-service). Since 1.16.0. |
+| `host::open_account(account, values)` | Opens Settings on the extension's page with its account form unfolded: `None` to add an account, `Some(id)` to edit one. `values` is a JSON object of `text` and `host` fields to prefill, `{}` for none. Returns the form's id at once; the event `account.form` tells how it ended. See [Opening the account form](#opening-the-account-form). Since 1.16.0. |
 
 `host::projects`, `host::groups` and `host::all_agents` give a project's `id`, a group's `id` and `parent`, and an agent's `project` as opaque ids: the same across restarts, different for each extension, never the folder. An `Agent` that an event, an action or a tool receives with `exec` or `agents: ["read"]` carries the folder as `project` instead. Agent ids are the same everywhere.
 
@@ -544,7 +547,15 @@ Calls run on up to 4 instances of the extension at once, so that the pull reques
 
 ## Secrets and network
 
-Declare the secrets in `contributes.secrets`. The user fills them in the extension's details in Settings › Extensions, and Squadron keeps them in the system keyring. Neither the WebAssembly nor the panel can read them.
+**The rule: a secret never goes through the WebAssembly, a panel, the extension's state, a file, the arguments or the environment of a program.** Passwords, API tokens, OAuth refresh and access tokens and client secrets live in the system keyring, as a secret of `contributes.secrets` or a `secret` or `captured` field of an account. The extension writes a placeholder, `{{id}}` or `{{<account>.<field>}}`, where the value has to go, and Squadron puts it there at the last moment:
+
+- in a header of `host::fetch` and its siblings;
+- in a form body (`application/x-www-form-urlencoded`), since 1.16.0;
+- on the standard input of a program declared with `"secrets": true`, since 1.16.0.
+
+Never ask for a secret in a panel, never keep one with `host::state_set`, never write a pgpass, `.netrc` or config file holding one, never pass one in `args` or `env`: they are readable by every process of the user, and the WebAssembly and panels can leak what they hold. Neither the WebAssembly nor a panel can read a secret. Two exceptions remain, both outside the extension's own keeping: the single-use OAuth authorization code goes from a panel to the WebAssembly (see [Tokens from a service](#tokens-from-a-service)), and a tool `command` gets the secrets of `contributes.secrets` in its environment (see [Files and images](#files-and-images)), which new code should not use.
+
+Declare the secrets in `contributes.secrets`. The user fills them in the extension's details in Settings › Extensions, and Squadron keeps them in the system keyring.
 
 To use a secret in a request, write `{{id}}` in a header value. Squadron replaces it, and replaces the secret with `[secret]` if it comes back in the response:
 
@@ -566,12 +577,12 @@ let answer = host::fetch(&Request {
 
 - only `https://`, only to a host listed in `permissions.network` or the `host` field of one of the extension's accounts;
 - redirects to a host that is not allowed are not followed: you get the 3xx answer. A redirect to another host drops the `Authorization` header;
-- `{{id}}` only works in header values, not in the URL or the body;
+- `{{id}}` works in header values, and since 1.16.0 in a body sent with `Content-Type: application/x-www-form-urlencoded` (any case, `; charset=…` allowed), where the value is percent-encoded. Never in the URL, nor in another body, which goes as it is;
 - an unset secret makes the request fail with a message asking the user to set it.
 
 ### Accounts
 
-`{{<account>.<field>}}` in a header value gives a field of one of the extension's accounts, secret or not, `<account>` being the `id` that `host::accounts` returns. The fields of an account that has a `host` field only go to that host: a request elsewhere fails.
+`{{<account>.<field>}}` in a header value or a form body gives a field of one of the extension's accounts, secret or not, `<account>` being the `id` that `host::accounts` returns. The fields of an account that has a `host` field only go to that host: a request elsewhere fails.
 
 `{{base64:<a>:<b>}}` gives the base64 of the values of `a` and `b` joined by `:`, which HTTP Basic auth wants. Each part is a secret id or an account field:
 
@@ -592,7 +603,7 @@ for account in host::accounts() {
 }
 ```
 
-Secrets, alone or encoded, become `[secret]` if they come back in a response; the other fields, such as the email, stay as they are.
+Secrets, alone, in base64 or percent-encoded, become `[secret]` if they come back in a response; the other fields, such as the email, stay as they are.
 
 ### Testing an account
 
@@ -629,11 +640,185 @@ impl Extension for Jira {
 
 The Hello example tests its GitHub accounts.
 
+### Secrets for a program
+
+A program that needs a password, such as a database client, gets it on its standard input, never in its arguments, its environment or a file. Since API 1.16.0, so declare `"squadron": ">=0.64.0"`.
+
+1. Keep each connection as an account, the password as a `secret` field. The server is a `text` field, not `host`: the fields of an account with a `host` field only go to HTTPS requests to that host, never to a program.
+
+   ```json
+   "accounts": {
+     "label": { "en": "Databases", "fr": "Bases de données" },
+     "fields": [
+       { "id": "server", "label": { "en": "Server" }, "hint": { "en": "db.example.com:5432" } },
+       { "id": "database", "label": { "en": "Database" } },
+       { "id": "user", "label": { "en": "User" } },
+       { "id": "password", "label": { "en": "Password" }, "kind": "secret" }
+     ]
+   }
+   ```
+
+2. Declare the program with `"secrets": true` in `permissions.exec`:
+
+   ```json
+   "permissions": { "exec": [{ "program": "java", "secrets": true }] }
+   ```
+
+3. Write the placeholders in `input`. Squadron resolves `{{<account>.<field>}}` and `{{id}}` there, and nowhere else:
+
+   ```rust
+   use serde_json::json;
+   use squadron_extension_api::host;
+
+   let field = |name: &str| account.fields.iter().find(|(k, _)| k == name).map(|(_, v)| v.clone()).unwrap_or_default();
+   let input = json!({
+       "server": field("server"),
+       "database": field("database"),
+       "user": field("user"),
+       "password_base64": format!("{{{{base64:{}.password}}}}", account.id),
+       "query": "select count(*) from orders",
+   })
+   .to_string();
+   let out = host::exec_input("java", &["-jar".into(), "query.jar".into()], Some(&host::data_dir()), &input)?;
+   ```
+
+   The program reads the JSON from its standard input and decodes `password_base64`. Squadron writes the value as it is, without JSON escaping: a password holding `"`, `\` or a line break would break the JSON, so pass it through `{{base64:…}}`, which takes a single part too.
+
+- Every secret value used, raw or in base64, comes back as `[secret]` in `stdout` and `stderr`. Text fields, such as `user`, come back as they are.
+- In the input of such a program, every `{{…}}` must name a secret or a field of an account, or the call fails. A field of an account with a `host` field fails it too.
+- A program declared without `"secrets": true` gets `input` as it is, and the call fails as soon as a `{{…}}` in it names a secret or a field.
+- `args` and `env` are never resolved. A client that only takes its password from an argument, an environment variable such as `PGPASSWORD`, or a file such as `~/.pgpass` cannot be used: run a program that reads it from its standard input instead.
+
+### Tokens from a service
+
+A token that a service hands back, such as an OAuth refresh token, goes straight to the system keyring as a `captured` field of an account: the WebAssembly only ever sees `[secret]`, and uses it later as `{{<account>.<field>}}`. Since API 1.16.0, so declare `"squadron": ">=0.64.0"`.
+
+```json
+"secrets": [{ "id": "client-secret", "label": { "en": "OAuth client secret" } }],
+"accounts": {
+  "label": { "en": "Calendars", "fr": "Agendas" },
+  "fields": [
+    { "id": "email", "label": { "en": "Email" } },
+    { "id": "refresh-token", "label": { "en": "Google access", "fr": "Accès Google" }, "kind": "captured" },
+    { "id": "access-token", "label": { "en": "Session", "fr": "Session" }, "kind": "captured" }
+  ]
+},
+"permissions": { "network": ["oauth2.googleapis.com", "www.googleapis.com"] }
+```
+
+No `host` field here: an account with one captures only from that host, and its fields go only there.
+
+1. **The account first.** `host::fetch_capture` needs a saved account: open the form with `host::open_account` (see [Opening the account form](#opening-the-account-form)) and keep the id that `account.form` gives. An account id is not a secret, it can go in the state.
+2. **The authorization code.** The user signs in on the provider's consent page, from an item with `url.open` for instance. Squadron does not receive the redirect, and Google no longer shows the code on its own page: the user copies `code` from the address the provider redirects to, a page you host that shows it, or the address bar of a loopback redirect that nothing answers. They paste it into a panel, which sends it with `squadron.send`. The code is single use and short lived, and nothing without the client secret, which stays in the keyring.
+3. **The exchange**, with a form body and `host::fetch_capture`:
+
+   ```rust
+   use squadron_extension_api::{Request, host};
+
+   fn exchange(account: &str, code: &str) -> Result<(), String> {
+       let code: String = form_urlencoded::byte_serialize(code.as_bytes()).collect();
+       let request = Request {
+           method: "POST".into(),
+           url: "https://oauth2.googleapis.com/token".into(),
+           headers: vec![("Content-Type".into(), "application/x-www-form-urlencoded".into())],
+           body: Some(format!(
+               "grant_type=authorization_code&code={code}&client_id={CLIENT_ID}&client_secret={{{{client-secret}}}}&redirect_uri={REDIRECT}"
+           )),
+       };
+       let answer = host::fetch_capture(
+           &request,
+           account,
+           &[
+               ("refresh_token".into(), "refresh-token".into()),
+               ("access_token".into(), "access-token".into()),
+           ],
+       )?;
+       match answer.status {
+           200 => Ok(()),
+           status => Err(format!("Google answered {status}.")),
+       }
+   }
+   ```
+
+   Squadron percent-encodes the values it puts in a form body, not the rest: encode what the WebAssembly writes there itself, such as `code`, here with the `form_urlencoded` crate.
+4. **The refresh**, the same way. Capture `access_token` again, or the new one would reach the WebAssembly in clear: a plain `host::fetch` only hides the secrets it sent. Capture `refresh_token` too, for a provider that rotates it; a key missing from the answer leaves the field as it was.
+
+   ```rust
+   fn refresh(account: &str) -> Result<(), String> {
+       let request = Request {
+           method: "POST".into(),
+           url: "https://oauth2.googleapis.com/token".into(),
+           headers: vec![("Content-Type".into(), "application/x-www-form-urlencoded".into())],
+           body: Some(format!(
+               "grant_type=refresh_token&refresh_token={{{{{account}.refresh-token}}}}&client_id={CLIENT_ID}&client_secret={{{{client-secret}}}}"
+           )),
+       };
+       let answer = host::fetch_capture(
+           &request,
+           account,
+           &[
+               ("access_token".into(), "access-token".into()),
+               ("refresh_token".into(), "refresh-token".into()),
+           ],
+       )?;
+       match answer.status {
+           200 => Ok(()),
+           status => Err(format!("Google answered {status}: sign in again.")),
+       }
+   }
+   ```
+
+5. **The calls**: `("Authorization".into(), format!("Bearer {{{{{account}.access-token}}}}"))`. On a 401, call `refresh` and send again.
+
+- `fields` pairs a top-level key of the JSON answer with a field id. Each field must be of kind `captured`, and the account must exist; otherwise the call fails before sending.
+- Only a 2xx answer whose body is a JSON object is captured, each listed key that holds a non-empty string. The answer the WebAssembly gets has `[secret]` there, and wherever else the value appears, headers included.
+- The form shows a `captured` field as received or not yet; the user never types it, and saving the form keeps it. Removing the account removes it.
+- Never keep a token in the state, a file or a panel, and never send one to the WebAssembly in a `panel.message`.
+- `host::accounts()` does not tell whether a `captured` field is set: a request that uses it fails until it is, with "The field … is not set." on a saved account and "The account … has no field …" on one not saved yet. With `"check": true`, an account is tested before it is saved, so before any capture: let `check_account` answer `Ok` ("Sign in after saving") on that error, or the form never saves.
+
+### Opening the account form
+
+`host::open_account` opens Settings on the extension's page with its account form unfolded, so a panel or a button can lead the user to add an account, or fix the one that failed. Since API 1.16.0, so declare `"squadron": ">=0.64.0"`.
+
+```rust
+fn run(action: String, _agent: Option<Agent>) -> Result<(), String> {
+    match action.as_str() {
+        "sign-in" => host::open_account(None, r#"{"email": "ada@example.com"}"#).map(|_| ()),
+        _ => Err(format!("Unknown action {action}.")),
+    }
+}
+
+fn on_event(name: String, _agent: Option<Agent>, data: String) {
+    let data: serde_json::Value = serde_json::from_str(&data).unwrap_or_default();
+    match name.as_str() {
+        "account.form" => {
+            if let Some(account) = data["account"].as_str() {
+                host::state_set("signing-in", Some(account));
+                let _ = host::panel_open("main");
+            }
+        }
+        "panel.message" if data["message"]["type"] == "ready" => {
+            if host::state_get("signing-in").is_some() {
+                host::panel_post("main", r#"{"type":"paste-code"}"#);
+            }
+        }
+        _ => {}
+    }
+}
+```
+
+The form is in Settings when it closes: open the panel, and let it ask once it is loaded, as in [Panels](#panels).
+
+- `account`: `None` to add an account, `Some(id)` to edit that one. An unknown id fails.
+- `values`: a JSON object of `text` and `host` fields to prefill. A `secret` or `captured` field fails: the user types secrets, the service sends captured ones.
+- The call answers at once with the form's id. The answer comes later in `account.form`: `{ "form", "account" }` once saved, `{ "form", "error" }` once the user cancelled, closed Settings, or another `host::open_account` of the extension replaced the form. The extension keeps serving its events, tools and panels meanwhile; never wait for the answer in a loop.
+- An extension without `contributes.accounts` gets an error.
+
 ### Files and images
 
 `host::fetch_bytes` keeps the body as bytes: send an image to a panel as a `data:` URL, which the panel's policy allows. `host::download` writes a larger file, 200 MB at most, to the data folder, and `host::open_file` opens it for the user.
 
-A tool with a `command` receives each secret that is set as an environment variable `SQUADRON_<ID>`, uppercase with dashes turned into underscores: `SQUADRON_TOKEN` for `token`, `SQUADRON_API_KEY` for `api-key`. `host::exec` and `terminal.run` never receive secrets.
+A tool with a `command` receives each secret of `contributes.secrets` that is set as an environment variable `SQUADRON_<ID>`, uppercase with dashes turned into underscores: `SQUADRON_TOKEN` for `token`, `SQUADRON_API_KEY` for `api-key`. That is the one place a secret still goes through an environment, and the command's output goes to the agent as it is: do not use it for new code, write the tool in the WebAssembly with `host::fetch` or `host::exec_input`. `host::exec` and `terminal.run` never receive secrets; `host::exec_input` receives them on the standard input only, see [Secrets for a program](#secrets-for-a-program).
 
 ## Permissions and approval
 
@@ -641,13 +826,13 @@ A tool with a `command` receives each secret that is set as an environment varia
 "permissions": { "exec": ["git"], "network": ["api.github.com"] }
 ```
 
-- `exec`: program names that `host::exec` and `host::exec_input` may run, with any arguments. `claude` runs the Claude Code set up in Squadron, not the one on the `PATH`.
+- `exec`: program names that `host::exec` and `host::exec_input` may run, with any arguments. `claude` runs the Claude Code set up in Squadron, not the one on the `PATH`. Since 1.16.0, an entry can be `{ "program": "java", "secrets": true }`: the program may also receive secrets on its standard input through `host::exec_input`. Plain names and objects mix in the list; a Squadron older than 0.64.0 refuses the object form.
 - `network`: exact host names that `host::fetch`, `host::fetch_many`, `host::fetch_bytes` and `host::download` may reach. The `host` field of an account needs no entry: the user typed it.
 - `agents`: `read` for `host::agents`, `archive` for `host::archive_agent`. Since 1.1.0. `activity` for `host::all_agents`, `host::unread_agents` and the `agent.status`, `agent.started`, `agent.archived` and `agent.message` events; `show` for `host::show_agent`. Since 1.7.0. `read` also gives the `Agent` of events, actions and tools its folder as `dir` and `project`, as `exec` does.
 - `projects`: `read` for `host::projects`, `host::groups` and the `project.added`, `project.changed`, `project.archived` and `groups.changed` events. Since 1.7.0.
 - `usage`: `read` for `host::usage` and the `usage` event. Since 1.7.0.
 
-When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
+When an extension arrives or changes, Squadron shows the user what it asks for: the programs of `exec`, and for those with `"secrets": true` that they receive secrets on their standard input, the hosts of `network`, the access to agents, every `terminal.run` command, every tool `command` and the skills of `contributes.skills`. Until the user allows them, its buttons ask first, its tools stay hidden from agents, `host::exec` and `host::fetch` fail. Any new or changed command or host asks again.
 
 Allowed commands run with the user's rights. Ask only for what you need, and say why in your description.
 
@@ -688,6 +873,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.13.0 | `>=0.56.0` |
 | 1.14.0 | `>=0.56.0` |
 | 1.15.0 | `>=0.59.0` |
+| 1.16.0 | `>=0.64.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
