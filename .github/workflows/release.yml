@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  workflow_call:
+    inputs:
+      scripts-repository:
+        type: string
+        default: Jgrasp/squadron-extensions
+      scripts-ref:
+        type: string
+        default: main
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: squadron-release-${{ github.repository }}
+      cancel-in-progress: false
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          repository: ${{ inputs.scripts-repository }}
+          ref: ${{ inputs.scripts-ref }}
+          path: registry
+          persist-credentials: false
+      - uses: actions/checkout@v5
+        with:
+          ref: refs/tags/${{ env.TAG }}
+          path: source
+          persist-credentials: false
+      - name: Resolve the id and the commit
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::the tag must look like v1.2.3, not $TAG"; exit 1; }
+          ID=$(jq -r --arg r "https://github.com/$GITHUB_REPOSITORY" 'to_entries[] | select((.value.repository | ascii_downcase) == ($r | ascii_downcase) and .value.path == null) | .key' registry/registry.json | head -n 1)
+          if [ -z "$ID" ]; then
+            ID=$(jq -r .id source/extension.json)
+            echo "::warning::$GITHUB_REPOSITORY is not in registry.json, the id $ID is not checked against it"
+          fi
+          {
+            echo "ID=$ID"
+            echo "VERSION=${TAG#v}"
+            echo "COMMIT=$(git -C source rev-parse HEAD)"
+            echo "SOURCE=source"
+            echo "SUBDIR=."
+          } >> "$GITHUB_ENV"
+      - run: rustup target add wasm32-wasip2
+      - name: Build and pack
+        run: node registry/scripts/pack.mjs
+      - name: Release
+        run: node registry/scripts/release.mjs
