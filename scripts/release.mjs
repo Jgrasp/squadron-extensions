@@ -51,3 +51,16 @@ const notes = (meta.changelog?.find((c) => c.version === version)?.notes?.en ?? 
 if (exists) gh('release', 'upload', tag, path, 'out/catalog.json', '--clobber')
 else gh('release', 'create', tag, path, 'out/catalog.json', '--draft', '--verify-tag', '--title', `${manifest.name?.en ?? id} ${version}`, '--notes', notes)
 gh('release', 'edit', tag, '--draft=false', '--latest')
+
+for (let attempt = 1; ; attempt++) {
+  try {
+    const live = await (await fetch(`${repository}/releases/latest/download/catalog.json`)).json()
+    const bytes = Buffer.from(await (await fetch(live.archive)).arrayBuffer())
+    if (live.sha256 === sha256 && createHash('sha256').update(bytes).digest('hex') === sha256) break
+    throw new Error('the published files do not match yet')
+  } catch (e) {
+    if (attempt === 12) throw e
+    await new Promise((r) => setTimeout(r, 10_000))
+  }
+}
+console.log(`${tag} is live: ${repository}/releases/latest/download/catalog.json`)
