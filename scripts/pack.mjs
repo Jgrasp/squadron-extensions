@@ -1,6 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { newer } from './catalog.mjs'
 import { read } from './changelog.mjs'
 
 const { ID: id, VERSION: version, COMMIT: commit, SOURCE: source, SUBDIR: subdir, KEEP_GOING: keepGoing } = process.env
@@ -23,6 +24,9 @@ function pack() {
   if (manifest.id !== id) throw new Error(`extension.json says id ${manifest.id}, the registry says ${id}`)
   if (manifest.version !== version) throw new Error(`extension.json says version ${manifest.version}, the tag says ${version}`)
   if (manifest.squadron !== undefined && !RANGE.test(manifest.squadron)) throw new Error(`squadron must look like ">=0.45.0" or ">=0.45.0 <0.50.0", not ${JSON.stringify(manifest.squadron)}`)
+  const exec = manifest.permissions?.exec
+  const min = /^>=(\S+)/.exec(manifest.squadron ?? '')?.[1]
+  if (Array.isArray(exec) && exec.some((e) => typeof e === 'object' && e !== null) && (!min || newer('0.64.0', min))) throw new Error(`permissions.exec has an object entry, which Squadron reads since 0.64.0: declare "squadron": ">=0.64.0"`)
 
   const { changelog, problems } = read(dir, version)
   if (problems.length) throw new Error(problems.join('\n'))
