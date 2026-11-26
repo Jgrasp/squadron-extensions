@@ -354,6 +354,7 @@ The events of `agents: ["activity"]`, `projects: ["read"]` and `usage: ["read"]`
 | `host::forget(account, field)` | Removes a `captured` field from `account` and from the system keyring, for example once the service revoked a refresh token, so the user signs in again. A field of another kind fails. See [Tokens from a service](#tokens-from-a-service). Since 1.17.0. |
 | `host::authorize(account, url, field)` | Runs an OAuth sign-in in the user's browser. Squadron listens on a free port of `127.0.0.1`, replaces `{{redirect}}` in `url` by that address and `{{state}}` by a value it checks on the way back, both URL-encoded, opens `url` and returns the redirect address at once. `url` is `https://`, to the account's `host` or a host of `permissions.network`. The code the service sends back goes into the `captured` field `field` of `account`, never to the WebAssembly; the event `account.authorized` tells how it ended. See [Tokens from a service](#tokens-from-a-service). Since 1.18.0. |
 | `host::account_secrets(account)` | The ids of the `secret` and `captured` fields that are set on `account`, never their values, to know a captured token is there before using it. Inside `check_account`, it answers for the account being tested, saved or not. Since 1.17.0. |
+| `host::tool_file(path) -> Result<(), String>` | While `call_tool` runs, adds a file of the data folder to the tool's result, after its text, so the agent sees it without a `Read` outside its project, which asks for permission per file. `path` is what `host::download` or `host::data_dir` gives, `~/…` included, and stays inside the data folder. PNG, JPEG, GIF and WebP go as images, 5 MB at most each; a PDF goes as an embedded resource. See [Files and images](#files-and-images). Since 1.19.0, so declare `"squadron": ">=0.66.0"`. |
 
 `host::projects`, `host::groups` and `host::all_agents` give a project's `id`, a group's `id` and `parent`, and an agent's `project` as opaque ids: the same across restarts, different for each extension, never the folder. An `Agent` that an event, an action or a tool receives with `exec` or `agents: ["read"]` carries the folder as `project` instead. Agent ids are the same everywhere.
 
@@ -862,6 +863,27 @@ Once the account is saved, `sign_in` opens the consent page with `host::authoriz
 
 `host::fetch_bytes` keeps the body as bytes: send an image to a panel as a `data:` URL, which the panel's policy allows. `host::download` writes a larger file, 200 MB at most, to the data folder, and `host::open_file` opens it for the user.
 
+`host::tool_file` hands a file of the data folder to the agent with the tool's result, after its text: the agent sees it without a `Read` outside its project, which asks for permission per file. Since API 1.19.0, Squadron 0.66.0, so declare `"squadron": ">=0.66.0"`.
+
+```rust
+fn call_tool(name: String, input: String, _agent: Option<Agent>) -> Result<String, String> {
+    let request = Request {
+        method: "GET".into(),
+        url: "https://tickets.example.com/attachments/42".into(),
+        headers: vec![],
+        body: None,
+    };
+    let saved = host::download(&request, "attachments/42.png")?;
+    host::tool_file(&saved.path)?;
+    Ok("Attachment 42, a screenshot of the error.".into())
+}
+```
+
+- `path` is what `host::download` or `host::data_dir` gives, `~/…` included. It must stay inside the data folder.
+- PNG, JPEG, GIF and WebP go as images, 5 MB at most each. The type comes from the file's content, not its name.
+- A PDF goes as an embedded resource: Claude Code shows it whole only when the session allows it, otherwise it saves it and gives the agent its path.
+- 8 files and 20 MB at most per call. Refused outside `call_tool`, and dropped when `call_tool` returns an error.
+
 Since 1.17.0, a tool with a `command` receives no secret: Squadron no longer sets the `SQUADRON_<ID>` environment variables it got before. A tool that needs a secret has no `command`: Squadron calls `call_tool` in the WebAssembly, which uses `host::fetch` or `host::exec_input` with `{{…}}`. `host::exec` and `terminal.run` never receive secrets; `host::exec_input` receives them on the standard input only, see [Secrets for a program](#secrets-for-a-program).
 
 ## Permissions and approval
@@ -920,6 +942,7 @@ An extension built against a newer API than the installed Squadron fails to load
 | 1.16.0 | `>=0.64.0` |
 | 1.17.0 | `>=0.64.0` |
 | 1.18.0 | `>=0.64.0` |
+| 1.19.0 | `>=0.66.0` |
 
 Squadron reads `squadron` since 0.46.0; older versions ignore it.
 
