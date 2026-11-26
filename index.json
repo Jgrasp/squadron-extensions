@@ -1833,11 +1833,11 @@
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzE4NjhEQiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMTEuNTcxIDExLjUxM0gwYTUuMjE4IDUuMjE4IDAgMCAwIDUuMjMyIDUuMjE1aDIuMTN2Mi4wNTdBNS4yMTUgNS4yMTUgMCAwIDAgMTIuNTc1IDI0VjEyLjUxOGExLjAwNSAxLjAwNSAwIDAgMC0xLjAwNS0xLjAwNXptNS43MjMtNS43NTZINS43MzZhNS4yMTUgNS4yMTUgMCAwIDAgNS4yMTUgNS4yMTRoMi4xMjl2Mi4wNThhNS4yMTggNS4yMTggMCAwIDAgNS4yMTUgNS4yMTRWNi43NThhMS4wMDEgMS4wMDEgMCAwIDAtMS4wMDEtMS4wMDF6TTIzLjAxMyAwSDExLjQ1NWE1LjIxNSA1LjIxNSAwIDAgMCA1LjIxNSA1LjIxNWgyLjEyOXYyLjA1N0E1LjIxNSA1LjIxNSAwIDAgMCAyNCAxMi40ODNWMS4wMDVBMS4wMDEgMS4wMDEgMCAwIDAgMjMuMDEzIDBaIi8+PC9zdmc+Cg==",
       "repository": "https://github.com/Jgrasp/squadron-jira",
-      "version": "0.6.1",
-      "commit": "51ba42db1c6165fb86bdec830c4722515f98f836",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.6.1/jira-0.6.1.tar.gz",
-      "sha256": "d5a18626f77754fa6f3f432dab3fcb2281ad6dd7bbbcc7e985927d3fe2d05ff9",
-      "squadron": ">=0.52.0",
+      "version": "0.8.0",
+      "commit": "b62e779f33bff2dad0a2dfe6b01ca4a64bef89a9",
+      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
+      "sha256": "ff1b49227eadaed40b63358f1befd7864d15476b176921a6e84be7649204016e",
+      "squadron": ">=0.66.0",
       "permissions": {
         "exec": [
           "claude",
@@ -1853,6 +1853,30 @@
         ]
       },
       "changelog": [
+        {
+          "version": "0.8.0",
+          "date": "2026-11-26",
+          "notes": {
+            "en": [
+              "`jira_attachment` hands screenshots and PDFs straight to the agent: no more permission to read a file outside the project. Needs Squadron 0.66"
+            ],
+            "fr": [
+              "`jira_attachment` donne directement les captures d’écran et les PDF à l’agent : plus de permission à accorder pour lire un fichier hors du projet. Nécessite Squadron 0.66"
+            ]
+          }
+        },
+        {
+          "version": "0.7.0",
+          "date": "2026-11-26",
+          "notes": {
+            "en": [
+              "Agents can open a ticket's attachments: `jira_ticket` lists each one with its id, and the new `jira_attachment` tool downloads it so the agent reads screenshots and PDFs"
+            ],
+            "fr": [
+              "Les agents peuvent ouvrir les pièces jointes d’un ticket : `jira_ticket` donne l’id de chacune, et le nouvel outil `jira_attachment` la télécharge pour que l’agent lise les captures d’écran et les PDF"
+            ]
+          }
+        },
         {
           "version": "0.6.1",
           "date": "2026-11-26",
@@ -2003,6 +2027,201 @@
         }
       ],
       "versions": [
+        {
+          "version": "0.8.0",
+          "commit": "b62e779f33bff2dad0a2dfe6b01ca4a64bef89a9",
+          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
+          "sha256": "ff1b49227eadaed40b63358f1befd7864d15476b176921a6e84be7649204016e",
+          "squadron": ">=0.66.0",
+          "permissions": {
+            "exec": [
+              "claude",
+              "git"
+            ],
+            "network": [
+              "api.media.atlassian.com"
+            ],
+            "agents": [
+              "read",
+              "activity",
+              "show"
+            ]
+          },
+          "changelog": [
+            {
+              "version": "0.8.0",
+              "date": "2026-11-26",
+              "notes": {
+                "en": [
+                  "`jira_attachment` hands screenshots and PDFs straight to the agent: no more permission to read a file outside the project. Needs Squadron 0.66"
+                ],
+                "fr": [
+                  "`jira_attachment` donne directement les captures d’écran et les PDF à l’agent : plus de permission à accorder pour lire un fichier hors du projet. Nécessite Squadron 0.66"
+                ]
+              }
+            },
+            {
+              "version": "0.7.0",
+              "date": "2026-11-26",
+              "notes": {
+                "en": [
+                  "Agents can open a ticket's attachments: `jira_ticket` lists each one with its id, and the new `jira_attachment` tool downloads it so the agent reads screenshots and PDFs"
+                ],
+                "fr": [
+                  "Les agents peuvent ouvrir les pièces jointes d’un ticket : `jira_ticket` donne l’id de chacune, et le nouvel outil `jira_attachment` la télécharge pour que l’agent lise les captures d’écran et les PDF"
+                ]
+              }
+            },
+            {
+              "version": "0.6.1",
+              "date": "2026-11-26",
+              "notes": {
+                "en": [
+                  "When Launch agent fails from a sprint board card, its error now shows above the board instead of nothing"
+                ],
+                "fr": [
+                  "Quand « Lancer un agent » échoue depuis une carte du tableau du sprint, l’erreur s’affiche au-dessus du tableau au lieu de rien"
+                ]
+              }
+            },
+            {
+              "version": "0.6.0",
+              "date": "2026-11-25",
+              "notes": {
+                "en": [
+                  "The open sprint shows all its tickets, no longer only the first 500",
+                  "A linked project your Jira account cannot see shows a \"no access\" badge and a notice, with a way to choose other projects",
+                  "Agents searching Jira get up to 200 tickets per site, and are told when more match",
+                  "The empty board no longer shows \"false\" under its message"
+                ],
+                "fr": [
+                  "Le sprint en cours affiche tous ses tickets, plus seulement les 500 premiers",
+                  "Un projet lié que votre compte Jira ne voit pas affiche un badge « pas d’accès » et un avertissement, avec un moyen de choisir d’autres projets",
+                  "Les agents qui cherchent dans Jira obtiennent jusqu’à 200 tickets par site, et sont prévenus quand il y en a d’autres",
+                  "Le tableau vide n’affiche plus « false » sous son message"
+                ]
+              }
+            },
+            {
+              "version": "0.5.0",
+              "date": "2026-11-24",
+              "notes": {
+                "en": [
+                  "Once a ticket has agents, Launch agent becomes Agent ▾: launch a new agent or bring back one of the ticket's agents, and hover one to see its state, its branch and when it was launched",
+                  "Needs Squadron 0.52.0 and asks to see your agents and show them"
+                ],
+                "fr": [
+                  "Dès qu’un ticket a des agents, Lancer un agent devient Agent ▾ : lancez un nouvel agent ou reprenez un agent du ticket, et survolez-le pour voir son état, sa branche et quand il a été lancé",
+                  "Demande Squadron 0.52.0 et l’accès à vos agents pour les afficher"
+                ]
+              }
+            },
+            {
+              "version": "0.4.2",
+              "date": "2026-11-20",
+              "notes": {
+                "en": [
+                  "The current sprint shows the tickets of projects whose key is a JQL reserved word, such as MAX"
+                ],
+                "fr": [
+                  "Le sprint en cours affiche les tickets des projets dont la clé est un mot réservé du JQL, comme MAX"
+                ]
+              }
+            },
+            {
+              "version": "0.4.1",
+              "date": "2026-11-19",
+              "notes": {
+                "en": [
+                  "The filters of the panel stay as you set them when you switch conversation or reopen the panel"
+                ],
+                "fr": [
+                  "Les filtres du panneau restent tels que vous les avez réglés quand vous changez de conversation ou rouvrez le panneau"
+                ]
+              }
+            },
+            {
+              "version": "0.4.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "Test the connection before saving a Jira site, and see in the list whether each one works: connected as whom and how many projects, or why it fails",
+                  "Scrollbars in the panel take their own space instead of covering the filter counts"
+                ],
+                "fr": [
+                  "Testez la connexion avant d’enregistrer un site Jira, et voyez dans la liste si chacun marche : connecté en tant que qui et combien de projets, ou pourquoi il échoue",
+                  "Les barres de défilement du panneau prennent leur propre place au lieu de couvrir les compteurs des filtres"
+                ]
+              }
+            },
+            {
+              "version": "0.3.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The board and the list follow the columns of your Jira board, in its order, with the statuses each column holds",
+                  "Drag a column header to move it; Jira order puts them back",
+                  "The filters on the left of the board fold away and come back with the button next to the search",
+                  "Launch agent on a card is an outlined button with a sparkle, no longer an arrow"
+                ],
+                "fr": [
+                  "Le tableau et la liste suivent les colonnes de votre board Jira, dans son ordre, avec les statuts que chaque colonne regroupe",
+                  "Glissez l’en-tête d’une colonne pour la déplacer ; Ordre de Jira les remet en place",
+                  "Les filtres à gauche du tableau se replient et reviennent avec le bouton à côté de la recherche",
+                  "Lancer un agent, sur une carte, est un bouton à contour avec une étincelle, plus une flèche"
+                ]
+              }
+            },
+            {
+              "version": "0.2.0",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The Jira logo on the extension and on the Jira button of each agent",
+                  "Board: the open sprint in a column per status, with filters by project, assignee, status, type, priority and epic",
+                  "Launch agent opens the New agent window filled by Haiku from the ticket, with the fields it reads to check or uncheck",
+                  "The ticket shows its fields beside its description when the panel is wide, and its comments can be searched and sorted"
+                ],
+                "fr": [
+                  "Le logo Jira sur l’extension et sur le bouton Jira de chaque agent",
+                  "Tableau : le sprint en cours en une colonne par statut, avec des filtres par projet, assigné, statut, type, priorité et epic",
+                  "Lancer un agent ouvre la fenêtre Nouvel agent remplie par Haiku à partir du ticket, avec les champs qu’il lit à cocher ou décocher",
+                  "Le ticket montre ses champs à côté de sa description quand le panneau est large, et ses commentaires se cherchent et se trient"
+                ]
+              }
+            },
+            {
+              "version": "0.1.1",
+              "date": "2026-11-16",
+              "notes": {
+                "en": [
+                  "The API token field links to the Atlassian page that creates it, and says to pick the token without scopes"
+                ],
+                "fr": [
+                  "Le champ du jeton d’API mène à la page Atlassian qui le crée, et indique de prendre le jeton sans portées"
+                ]
+              }
+            },
+            {
+              "version": "0.1.0",
+              "date": "2026-11-13",
+              "notes": {
+                "en": [
+                  "The open sprint of the Jira projects of a Squadron project in a panel next to the agent",
+                  "A ticket goes into your message, or Haiku turns it into an instruction",
+                  "Attachments open in their app",
+                  "Agents get jira_ticket, jira_sprint and jira_search"
+                ],
+                "fr": [
+                  "Le sprint en cours des projets Jira d’un projet Squadron, dans un panneau à côté de l’agent",
+                  "Un ticket va dans votre message, ou Haiku en fait une consigne",
+                  "Les pièces jointes s’ouvrent dans leur application",
+                  "Les agents disposent de jira_ticket, jira_sprint et jira_search"
+                ]
+              }
+            }
+          ]
+        },
         {
           "version": "0.6.1",
           "commit": "51ba42db1c6165fb86bdec830c4722515f98f836",
