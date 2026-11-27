@@ -1,6 +1,6 @@
 # Squadron extensions
 
-The catalog of extensions for [Squadron](https://github.com/Jgrasp/squadron), and the kit to write them.
+The catalog of extensions for [Squadron](https://github.com/akki-team/squadron), and the kit to write them.
 
 **[Writing an extension: the guide](docs/guide.md)**: quick start, `extension.json`, the Rust API, panels, secrets, permissions, limits and publishing.
 

@@ -1,27 +1,27 @@
 {
   "hello": {
-    "repository": "https://github.com/Jgrasp/squadron-extensions",
+    "repository": "https://github.com/akki-team/squadron-extensions",
     "path": "examples/hello"
   },
   "google-workspace-share": {
-    "repository": "https://github.com/Jgrasp/squadron-google-workspace-share"
+    "repository": "https://github.com/akki-team/squadron-google-workspace-share"
   },
   "jira": {
-    "repository": "https://github.com/Jgrasp/squadron-jira"
+    "repository": "https://github.com/akki-team/squadron-jira"
   },
   "agent-office": {
-    "repository": "https://github.com/Jgrasp/squadron-agent-office"
+    "repository": "https://github.com/akki-team/squadron-agent-office"
   },
   "github": {
-    "repository": "https://github.com/Jgrasp/squadron-github"
+    "repository": "https://github.com/akki-team/squadron-github"
   },
   "bitbucket": {
-    "repository": "https://github.com/Jgrasp/squadron-bitbucket"
+    "repository": "https://github.com/akki-team/squadron-bitbucket"
   },
   "gitlab": {
-    "repository": "https://github.com/Jgrasp/squadron-gitlab"
+    "repository": "https://github.com/akki-team/squadron-gitlab"
   },
   "azure": {
-    "repository": "https://github.com/Jgrasp/squadron-azure"
+    "repository": "https://github.com/akki-team/squadron-azure"
   }
 }
