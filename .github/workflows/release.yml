@@ -5,7 +5,7 @@ on:
     inputs:
       scripts-repository:
         type: string
-        default: Jgrasp/squadron-extensions
+        default: akki-team/squadron-extensions
       scripts-ref:
         type: string
         default: main

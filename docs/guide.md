@@ -25,7 +25,7 @@ An extension adds things to Squadron without rebuilding it: buttons and menu ent
 
    ```toml
    [dependencies]
-   squadron_extension_api = { git = "https://github.com/Jgrasp/squadron-extensions" }
+   squadron_extension_api = { git = "https://github.com/akki-team/squadron-extensions" }
    ```
 
 3. Build:
@@ -1000,7 +1000,7 @@ jobs:
   release:
     permissions:
       contents: write
-    uses: Jgrasp/squadron-extensions/.github/workflows/release.yml@main
+    uses: akki-team/squadron-extensions/.github/workflows/release.yml@main
 ```
 
 No secret: the workflow publishes with the repository's own `GITHUB_TOKEN`, which `permissions: contents: write` allows. It replaces the `registry.yml` dispatch and the `SQUADRON_REGISTRY_TOKEN` secret, which you can delete.

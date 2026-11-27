@@ -12,10 +12,10 @@
         "fr": "Vos agents au travail dans un bureau isométrique : une pièce par projet, leur état en direct, et les limites de Claude sur un mur d’état"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzNhMzIzOCIvPjxwYXRoIGQ9Ik01IDE4bDgtNCA4IDQtOCA0eiIgZmlsbD0iI2M5YzJiNiIvPjxwYXRoIGQ9Ik01IDE4djRsOCA0di00eiIgZmlsbD0iIzhkODU5MCIvPjxwYXRoIGQ9Ik0yMSAxOHY0bC04IDR2LTR6IiBmaWxsPSIjNmE1ZTY2Ii8+PHBhdGggZD0iTTEzIDExbDctMy41IDcgMy41LTcgMy41eiIgZmlsbD0iI2U5ZTRkYyIvPjxwYXRoIGQ9Ik0xMyAxMXY4bDcgMy41di04eiIgZmlsbD0iI2E4YTE5NiIvPjxwYXRoIGQ9Ik0yNyAxMXY4bC03IDMuNXYtOHoiIGZpbGw9IiM3YTZlNzYiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjYiIHI9IjEuOCIgZmlsbD0iI0UwOEE1QiIvPjwvc3ZnPgo=",
-      "repository": "https://github.com/Jgrasp/squadron-agent-office",
+      "repository": "https://github.com/akki-team/squadron-agent-office",
       "version": "0.2.0",
       "commit": "fe89f936f48c98c8389eb9bbe9fe63fb24e9c46a",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
       "sha256": "df25d45b9c3dea9c24ff1b77f0aeb544a66ece2d86d52568fc90708a15a31121",
       "squadron": ">=0.53.0",
       "permissions": {
@@ -70,7 +70,7 @@
         {
           "version": "0.2.0",
           "commit": "fe89f936f48c98c8389eb9bbe9fe63fb24e9c46a",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/agent-office-0.2.0/agent-office-0.2.0.tar.gz",
           "sha256": "df25d45b9c3dea9c24ff1b77f0aeb544a66ece2d86d52568fc90708a15a31121",
           "squadron": ">=0.53.0",
           "permissions": {
@@ -125,7 +125,7 @@
         {
           "version": "0.1.0",
           "commit": "ef53c256084e26c18ba095398f4e95abbc23461a",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/agent-office-0.1.0/agent-office-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/agent-office-0.1.0/agent-office-0.1.0.tar.gz",
           "sha256": "ec31bd0b0983bbba1cb0658a211d2adfc475a7987323c421a8b4f1f3fe1ed6f2",
           "squadron": ">=0.52.0",
           "permissions": {
@@ -174,10 +174,10 @@
         "fr": "Les pull requests et les builds de pipelines de vos projets Azure DevOps dans Squadron : relire, commenter, fusionner"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFmOGJmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMCA4Ljg3N0wyLjI0NyA1LjkxbDguNDA1LTMuNDE2Vi4wMjJsNy4zNyA1LjM5M0wyLjk2NiA4LjMzOHY4LjIyNUwwIDE1LjcwN3ptMjQtNC40NXYxNC42NTFsLTUuNzUzIDQuOS05LjMwMy0zLjA1N3YzLjA1NmwtNS45NzgtNy40MTYgMTUuMDU3IDEuNzk4VjUuNDE1eiIvPjwvc3ZnPgo=",
-      "repository": "https://github.com/Jgrasp/squadron-azure",
+      "repository": "https://github.com/akki-team/squadron-azure",
       "version": "0.3.0",
       "commit": "e4ab816d77440f3b8f3ed8eab3e8417c3bae96a8",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
       "sha256": "feb83db0f2e2b2f063c1e75f983cde3bfc0ebcb5ceb306bf6d222ec149cc8b25",
       "squadron": ">=0.56.0",
       "permissions": {
@@ -250,7 +250,7 @@
         {
           "version": "0.3.0",
           "commit": "e4ab816d77440f3b8f3ed8eab3e8417c3bae96a8",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/azure-0.3.0/azure-0.3.0.tar.gz",
           "sha256": "feb83db0f2e2b2f063c1e75f983cde3bfc0ebcb5ceb306bf6d222ec149cc8b25",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -323,7 +323,7 @@
         {
           "version": "0.2.0",
           "commit": "735ed5d044abb7e5c4f1f7e6fb31bc192d6c4b9d",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.2.0/azure-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/azure-0.2.0/azure-0.2.0.tar.gz",
           "sha256": "0a3f0f299283a1436fa3bb03f7570f3683f5a31bba0b51eb480651bb4e9655c7",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -380,7 +380,7 @@
         {
           "version": "0.1.0",
           "commit": "ea8b6b7fbbc529d9b897a871ee25f51cfa76123c",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/azure-0.1.0/azure-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/azure-0.1.0/azure-0.1.0.tar.gz",
           "sha256": "54ea6eefc50fe5897f0264e2beba4408d36792257c309361980472325cf7d8d7",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -433,10 +433,10 @@
         "fr": "Les pull requests et les runs Pipelines de vos projets Bitbucket Cloud dans Squadron : relire, commenter, fusionner"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI2ODRmZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzggNS43NCkgc2NhbGUoLjA0KSIgZmlsbD0iI2ZmZiIgZD0iTTIyLjIgMzJBMTYgMTYgMCAwIDAgNiA0Ny44YTI2LjM1IDI2LjM1IDAgMCAwIC4yIDIuOGw2Ny45IDQxMi4xYTIxLjc3IDIxLjc3IDAgMCAwIDIxLjMgMTguMmgzMjUuN2ExNiAxNiAwIDAgMCAxNi0xMy40TDUwNSA1MC43YTE2IDE2IDAgMCAwLTEzLjItMTguMyAyNC41OCAyNC41OCAwIDAgMC0yLjgtLjJMMjIuMiAzMnptMjg1LjkgMjk3LjhoLTEwNGwtMjguMS0xNDdoMTU3LjNsLTI1LjIgMTQ3eiIvPjwvc3ZnPgo=",
-      "repository": "https://github.com/Jgrasp/squadron-bitbucket",
+      "repository": "https://github.com/akki-team/squadron-bitbucket",
       "version": "0.3.0",
       "commit": "f5cd0ff3ae4b29a1a84d1c3affc43943cd651d07",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
       "sha256": "743373ba299d9190cde5aab90274f5c701c7f563cb4c4d39b1fc6e215cd7be58",
       "squadron": ">=0.56.0",
       "permissions": {
@@ -511,7 +511,7 @@
         {
           "version": "0.3.0",
           "commit": "f5cd0ff3ae4b29a1a84d1c3affc43943cd651d07",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/bitbucket-0.3.0/bitbucket-0.3.0.tar.gz",
           "sha256": "743373ba299d9190cde5aab90274f5c701c7f563cb4c4d39b1fc6e215cd7be58",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -586,7 +586,7 @@
         {
           "version": "0.2.0",
           "commit": "c8f09bb03a93c7af7c747c863540481a71b9160f",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.2.0/bitbucket-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/bitbucket-0.2.0/bitbucket-0.2.0.tar.gz",
           "sha256": "a3ce34a57b14f04ed16ba5adb7dd5561d164dcebf1e68cc58690853cc05d7be5",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -645,7 +645,7 @@
         {
           "version": "0.1.0",
           "commit": "7f1b238fdcb7a8d45206371e04673a4edbb7a39e",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/bitbucket-0.1.0/bitbucket-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/bitbucket-0.1.0/bitbucket-0.1.0.tar.gz",
           "sha256": "fd58b22243b6c8be254a0d0d8c177882437cfe7aed978cb555877abd3aa7f023",
           "squadron": ">=0.54.0",
           "permissions": {
@@ -696,10 +696,10 @@
         "fr": "Les pull requests et les runs GitHub Actions de vos projets GitHub dans Squadron : relire, commenter, fusionner"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzI0MjkyZiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuMjUgNS45NSkgc2NhbGUoLjAzOTMpIiBmaWxsPSIjZmZmIiBkPSJNMjQ0LjggOEMxMDYuMSA4IDAgMTEzLjMgMCAyNTJjMCAxMTAuOSA2OS44IDIwNS44IDE2OS41IDIzOS4yIDEyLjggMi4zIDE3LjMtNS42IDE3LjMtMTIuMSAwLTYuMi0uMy00MC40LS4zLTYxLjQgMCAwLTcwIDE1LTg0LjctMjkuOCAwIDAtMTEuNC0yOS4xLTI3LjgtMzYuNiAwIDAtMjIuOS0xNS43IDEuNi0xNS40IDAgMCAyNC45IDIgMzguNiAyNS44IDIxLjkgMzguNiA1OC42IDI3LjUgNzIuOSAyMC45IDIuMy0xNiA4LjgtMjcuMSAxNi0zMy43LTU1LjktNi4yLTExMi4zLTE0LjMtMTEyLjMtMTEwLjUgMC0yNy41IDcuNi00MS4zIDIzLjYtNTguOS0yLjYtNi41LTExLjEtMzMuMyAyLjYtNjcuOSAyMC45LTYuNSA2OSAyNyA2OSAyNyAyMC01LjYgNDEuNS04LjUgNjIuOC04LjVzNDIuOCAyLjkgNjIuOCA4LjVjMCAwIDQ4LjEtMzMuNiA2OS0yNyAxMy43IDM0LjcgNS4yIDYxLjQgMi42IDY3LjkgMTYgMTcuNyAyNS44IDMxLjUgMjUuOCA1OC45IDAgOTYuNS01OC45IDEwNC4yLTExNC44IDExMC41IDkuMiA3LjkgMTcgMjIuOSAxNyA0Ni40IDAgMzMuNy0uMyA3NS40LS4zIDgzLjYgMCA2LjUgNC42IDE0LjQgMTcuMyAxMi4xQzQyOC4yIDQ1Ny44IDQ5NiAzNjIuOSA0OTYgMjUyIDQ5NiAxMTMuMyAzODMuNSA4IDI0NC44IDh6Ii8+PC9zdmc+Cg==",
-      "repository": "https://github.com/Jgrasp/squadron-github",
+      "repository": "https://github.com/akki-team/squadron-github",
       "version": "0.4.1",
       "commit": "227b040dc7af166da1780660043b0cf391415fa8",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
       "sha256": "eb765146cdfd65db083d27daf6223b2e79533b2abb7c1186210fc783675f03b4",
       "squadron": ">=0.56.0",
       "permissions": {
@@ -805,7 +805,7 @@
         {
           "version": "0.4.1",
           "commit": "227b040dc7af166da1780660043b0cf391415fa8",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.4.1/github-0.4.1.tar.gz",
           "sha256": "eb765146cdfd65db083d27daf6223b2e79533b2abb7c1186210fc783675f03b4",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -911,7 +911,7 @@
         {
           "version": "0.4.0",
           "commit": "d2ac59820d0ed53886a570eca7b57d3028c36ffc",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.4.0/github-0.4.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.4.0/github-0.4.0.tar.gz",
           "sha256": "899e9799e01986e922579b0e8747370740d3284fce42a92abcdbd702cb5703bf",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -1005,7 +1005,7 @@
         {
           "version": "0.3.0",
           "commit": "98823a3dd3854decf3f7a800f0f0005025442d76",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.3.0/github-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.3.0/github-0.3.0.tar.gz",
           "sha256": "ee2d46829322b597604e32dc41ce9b378dade619fb57773829c10859721fc35c",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -1087,7 +1087,7 @@
         {
           "version": "0.2.0",
           "commit": "2fa64377cb6c4143e0aaacfffc944fefe463a8b8",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.2.0/github-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.2.0/github-0.2.0.tar.gz",
           "sha256": "de942a130ad5956f2b1197d49f307a59ec467437c0ca42d315117bd17c69ffd6",
           "squadron": ">=0.53.0",
           "permissions": {
@@ -1155,7 +1155,7 @@
         {
           "version": "0.1.1",
           "commit": "76de9b7cff0646b1f553ddd98948f50db4de7198",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.1/github-0.1.1.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.1.1/github-0.1.1.tar.gz",
           "sha256": "ced240ba3a8c3a78dd7fd04c6deda3a1970000b916d74f5eb68efd747ee063d7",
           "squadron": ">=0.53.0",
           "permissions": {
@@ -1211,7 +1211,7 @@
         {
           "version": "0.1.0",
           "commit": "cb025b037a052d1a80f4d2f32d8d26647c7b9eec",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/github-0.1.0/github-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/github-0.1.0/github-0.1.0.tar.gz",
           "sha256": "8c0e20de058f442bf460e9336e96a191886e02f2f8f50765375a64edce169910",
           "squadron": ">=0.53.0",
           "permissions": {
@@ -1263,10 +1263,10 @@
         "fr": "Les merge requests et les pipelines de vos projets GitLab dans Squadron, sur gitlab.com ou votre propre serveur : relire, commenter, fusionner"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iI2ZjNmQyNiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuNzYgNS45KSBzY2FsZSguMDQpIiBmaWxsPSIjZmZmIiBkPSJNNTAzLjUgMjA0LjZMNTAyLjggMjAyLjhMNDMzLjEgMjEuMDJDNDMxLjcgMTcuNDUgNDI5LjIgMTQuNDMgNDI1LjkgMTIuMzhDNDIzLjUgMTAuODMgNDIwLjggOS44NjUgNDE3LjkgOS41N0M0MTUgOS4yNzUgNDEyLjIgOS42NTMgNDA5LjUgMTAuNjhDNDA2LjggMTEuNyA0MDQuNCAxMy4zNCA0MDIuNCAxNS40NkM0MDAuNSAxNy41OCAzOTkuMSAyMC4xMyAzOTguMyAyMi45TDM1MS4zIDE2Ni45SDE2MC44TDExMy43IDIyLjlDMTEyLjkgMjAuMTMgMTExLjUgMTcuNTkgMTA5LjYgMTUuNDdDMTA3LjYgMTMuMzUgMTA1LjIgMTEuNzIgMTAyLjUgMTAuN0M5OS44NiA5LjY3NSA5Ni45OCA5LjI5NSA5NC4xMiA5LjU4N0M5MS4yNiA5Ljg3OCA4OC41MSAxMC44MyA4Ni4wOCAxMi4zOEM4Mi44NCAxNC40MyA4MC4zMyAxNy40NSA3OC45MiAyMS4wMkw5LjI2NyAyMDIuOEw4LjU0MyAyMDQuNkMtMS40ODQgMjMwLjgtMi43MiAyNTkuNiA1LjAyMyAyODYuNkMxMi43NyAzMTMuNSAyOS4wNyAzMzcuMyA1MS40NyAzNTQuMkw1MS43NCAzNTQuNEw1Mi4zMyAzNTQuOEwxNTguMyA0MzQuM0wyMTAuOSA0NzRMMjQyLjkgNDk4LjJDMjQ2LjYgNTAwLjEgMjUxLjIgNTAyLjUgMjU1LjkgNTAyLjVDMjYwLjYgNTAyLjUgMjY1LjIgNTAwLjEgMjY4LjkgNDk4LjJMMzAwLjkgNDc0TDM1My41IDQzNC4zTDQ2MC4yIDM1NC40TDQ2MC41IDM1NC4xQzQ4Mi45IDMzNy4yIDQ5OS4yIDMxMy41IDUwNi4xIDI4Ni42QzUxNC43IDI1OS42IDUxMy41IDIzMC44IDUwMy41IDIwNC42eiIvPjwvc3ZnPgo=",
-      "repository": "https://github.com/Jgrasp/squadron-gitlab",
+      "repository": "https://github.com/akki-team/squadron-gitlab",
       "version": "0.3.0",
       "commit": "c91d796602592c5966d6c7cd9262be93997f1de5",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
       "sha256": "62f519b95f3e5cdcd4040fb5640e39540fbcbac8772c82df01a75182df582f08",
       "squadron": ">=0.56.0",
       "permissions": {
@@ -1334,7 +1334,7 @@
         {
           "version": "0.3.0",
           "commit": "c91d796602592c5966d6c7cd9262be93997f1de5",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/gitlab-0.3.0/gitlab-0.3.0.tar.gz",
           "sha256": "62f519b95f3e5cdcd4040fb5640e39540fbcbac8772c82df01a75182df582f08",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -1402,7 +1402,7 @@
         {
           "version": "0.2.0",
           "commit": "330ab139015ddbb80ba8778f8f4fff08f1d59c32",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.2.0/gitlab-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/gitlab-0.2.0/gitlab-0.2.0.tar.gz",
           "sha256": "d0815f23cb9ee89cde65714570cf19b13479b16f29126148c359fb23f110eb97",
           "squadron": ">=0.56.0",
           "permissions": {
@@ -1458,7 +1458,7 @@
         {
           "version": "0.1.0",
           "commit": "142afeae13892644e20186d281f68e7509fe81de",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/gitlab-0.1.0/gitlab-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/gitlab-0.1.0/gitlab-0.1.0.tar.gz",
           "sha256": "45dc7ff1d47749ceb1e1e454c7fcd427575388d3a92f1e2811680c0813e38748",
           "squadron": ">=0.57.0",
           "permissions": {
@@ -1510,10 +1510,10 @@
         "fr": "Partage un artifact html avec votre équipe en app web Google Apps Script, avec un état que tout le monde modifie ensemble"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0xMSAxNiAyMSAxME0xMSAxNiAyMSAyMiIgc3Ryb2tlPSIjRkJCQzA0IiBzdHJva2Utd2lkdGg9IjIuNCIvPjxjaXJjbGUgY3g9IjIxIiBjeT0iMTAiIHI9IjMuNCIgZmlsbD0iI0VBNDMzNSIvPjxjaXJjbGUgY3g9IjExIiBjeT0iMTYiIHI9IjMuNCIgZmlsbD0iIzQyODVGNCIvPjxjaXJjbGUgY3g9IjIxIiBjeT0iMjIiIHI9IjMuNCIgZmlsbD0iIzM0QTg1MyIvPjwvc3ZnPgo=",
-      "repository": "https://github.com/Jgrasp/squadron-google-workspace-share",
+      "repository": "https://github.com/akki-team/squadron-google-workspace-share",
       "version": "0.3.0",
       "commit": "966d91b7c22999353555b8002a5488fd0595521d",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.3.0/google-workspace-share-0.3.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/google-workspace-share-0.3.0/google-workspace-share-0.3.0.tar.gz",
       "sha256": "33fe32fb4b51ca4931e52cc299fd499e199ef43ef432a1d0674294542fff4c67",
       "squadron": ">=0.47.0",
       "permissions": {
@@ -1579,7 +1579,7 @@
         {
           "version": "0.3.0",
           "commit": "966d91b7c22999353555b8002a5488fd0595521d",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.3.0/google-workspace-share-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/google-workspace-share-0.3.0/google-workspace-share-0.3.0.tar.gz",
           "sha256": "33fe32fb4b51ca4931e52cc299fd499e199ef43ef432a1d0674294542fff4c67",
           "squadron": ">=0.47.0",
           "permissions": {
@@ -1645,7 +1645,7 @@
         {
           "version": "0.2.1",
           "commit": "35e27a1d2a67a311f6c194b1309a74083cb0e622",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.1/google-workspace-share-0.2.1.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/google-workspace-share-0.2.1/google-workspace-share-0.2.1.tar.gz",
           "sha256": "ce7f3d585280feb908ec4e4d1230c9c2f4993479bc367a598ca2d9b26feff520",
           "squadron": ">=0.45.0",
           "permissions": {
@@ -1699,7 +1699,7 @@
         {
           "version": "0.2.0",
           "commit": "1c65020c2e3f47a46a521d12b91ed343a86014d9",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/google-workspace-share-0.2.0/google-workspace-share-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/google-workspace-share-0.2.0/google-workspace-share-0.2.0.tar.gz",
           "sha256": "6b556b0627ad6836ec3f263c6f6327eb51c73c2452d42e3f5d8999abaafdc224",
           "permissions": {
             "exec": [
@@ -1719,10 +1719,10 @@
         "en": "Example extension written in Rust",
         "fr": "Extension d’exemple écrite en Rust"
       },
-      "repository": "https://github.com/Jgrasp/squadron-extensions",
+      "repository": "https://github.com/akki-team/squadron-extensions",
       "version": "1.1.0",
       "commit": "50555f791ed6c4b4aae81e8d48429f1dc6286c7f",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
       "sha256": "4df93b6764a7ed225e12898a6d82079c4d0f08185b5eba634c9fcabcdc8e10c3",
       "squadron": ">=0.47.0",
       "permissions": {
@@ -1765,7 +1765,7 @@
         {
           "version": "1.1.0",
           "commit": "50555f791ed6c4b4aae81e8d48429f1dc6286c7f",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/hello-1.1.0/hello-1.1.0.tar.gz",
           "sha256": "4df93b6764a7ed225e12898a6d82079c4d0f08185b5eba634c9fcabcdc8e10c3",
           "squadron": ">=0.47.0",
           "permissions": {
@@ -1808,7 +1808,7 @@
         {
           "version": "1.0.0",
           "commit": "7d59195e068d50246e40bb60efe4d933ea08c9be",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/hello-1.0.0/hello-1.0.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/hello-1.0.0/hello-1.0.0.tar.gz",
           "sha256": "753c63529a065be39045442aeb65fd05ec36dce4a3b4b102e067868726a8a507",
           "permissions": {
             "exec": [
@@ -1832,10 +1832,10 @@
         "fr": "Le sprint en cours de vos projets Jira à côté de vos agents : lire un ticket, le mettre dans votre message ou en faire une consigne"
       },
       "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzE4NjhEQiIvPjxwYXRoIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYgNikgc2NhbGUoLjgzMzMpIiBmaWxsPSIjZmZmIiBkPSJNMTEuNTcxIDExLjUxM0gwYTUuMjE4IDUuMjE4IDAgMCAwIDUuMjMyIDUuMjE1aDIuMTN2Mi4wNTdBNS4yMTUgNS4yMTUgMCAwIDAgMTIuNTc1IDI0VjEyLjUxOGExLjAwNSAxLjAwNSAwIDAgMC0xLjAwNS0xLjAwNXptNS43MjMtNS43NTZINS43MzZhNS4yMTUgNS4yMTUgMCAwIDAgNS4yMTUgNS4yMTRoMi4xMjl2Mi4wNThhNS4yMTggNS4yMTggMCAwIDAgNS4yMTUgNS4yMTRWNi43NThhMS4wMDEgMS4wMDEgMCAwIDAtMS4wMDEtMS4wMDF6TTIzLjAxMyAwSDExLjQ1NWE1LjIxNSA1LjIxNSAwIDAgMCA1LjIxNSA1LjIxNWgyLjEyOXYyLjA1N0E1LjIxNSA1LjIxNSAwIDAgMCAyNCAxMi40ODNWMS4wMDVBMS4wMDEgMS4wMDEgMCAwIDAgMjMuMDEzIDBaIi8+PC9zdmc+Cg==",
-      "repository": "https://github.com/Jgrasp/squadron-jira",
+      "repository": "https://github.com/akki-team/squadron-jira",
       "version": "0.8.0",
       "commit": "b62e779f33bff2dad0a2dfe6b01ca4a64bef89a9",
-      "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
+      "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
       "sha256": "ff1b49227eadaed40b63358f1befd7864d15476b176921a6e84be7649204016e",
       "squadron": ">=0.66.0",
       "permissions": {
@@ -2030,7 +2030,7 @@
         {
           "version": "0.8.0",
           "commit": "b62e779f33bff2dad0a2dfe6b01ca4a64bef89a9",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.8.0/jira-0.8.0.tar.gz",
           "sha256": "ff1b49227eadaed40b63358f1befd7864d15476b176921a6e84be7649204016e",
           "squadron": ">=0.66.0",
           "permissions": {
@@ -2225,7 +2225,7 @@
         {
           "version": "0.6.1",
           "commit": "51ba42db1c6165fb86bdec830c4722515f98f836",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.6.1/jira-0.6.1.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.6.1/jira-0.6.1.tar.gz",
           "sha256": "d5a18626f77754fa6f3f432dab3fcb2281ad6dd7bbbcc7e985927d3fe2d05ff9",
           "squadron": ">=0.52.0",
           "permissions": {
@@ -2396,7 +2396,7 @@
         {
           "version": "0.6.0",
           "commit": "6edd6da0f16d154035c08fd41bf7166541108ae5",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.6.0/jira-0.6.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.6.0/jira-0.6.0.tar.gz",
           "sha256": "92926879d5b85ea517db2be2fb40ab63cd5108983ef119a55a8ee924af9457ad",
           "squadron": ">=0.52.0",
           "permissions": {
@@ -2555,7 +2555,7 @@
         {
           "version": "0.5.0",
           "commit": "151cf346a23ea8cb96fdf813d2b23cc2b2103ac3",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.5.0/jira-0.5.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.5.0/jira-0.5.0.tar.gz",
           "sha256": "f7af6837054222ca75df1e03f78ac34a69ec4931011bc987ae40b312b283a980",
           "squadron": ">=0.52.0",
           "permissions": {
@@ -2696,7 +2696,7 @@
         {
           "version": "0.4.2",
           "commit": "3cb68a18c6685ef805a0f35c40bcf1e92d3f4754",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.2/jira-0.4.2.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.4.2/jira-0.4.2.tar.gz",
           "sha256": "a295f68d763b3d043ac18b7ad3424716cf02da0c63e6d6e3c95d0f68bbbd9d1d",
           "squadron": ">=0.49.0",
           "permissions": {
@@ -2818,7 +2818,7 @@
         {
           "version": "0.4.1",
           "commit": "cc3689fa637165a06bd97c7043a465188a19dc7d",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.1/jira-0.4.1.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.4.1/jira-0.4.1.tar.gz",
           "sha256": "7cbde396a2444e6703aabc3cb0ef03fcb33f554286758650ab04b115c87b070c",
           "squadron": ">=0.49.0",
           "permissions": {
@@ -2928,7 +2928,7 @@
         {
           "version": "0.4.0",
           "commit": "97e08bef382fd84cf5946359e75c9472311ea9a7",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.4.0/jira-0.4.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.4.0/jira-0.4.0.tar.gz",
           "sha256": "a53899331db37ae5a7a1d113456e11e9037ba063147604338d1ca27fd257076f",
           "squadron": ">=0.49.0",
           "permissions": {
@@ -3026,7 +3026,7 @@
         {
           "version": "0.3.0",
           "commit": "247687b03f94fb35eaccd06a26c304b3cc6c2320",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.3.0/jira-0.3.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.3.0/jira-0.3.0.tar.gz",
           "sha256": "bf98dd53c0e83e37babe7fe27d0f15b1944fb2a20cd3cdad6f7a94d4cc31ca0b",
           "squadron": ">=0.47.0",
           "permissions": {
@@ -3110,7 +3110,7 @@
         {
           "version": "0.2.0",
           "commit": "76666f73affcb6d6c5f0dffdac36590144c60e56",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.2.0/jira-0.2.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.2.0/jira-0.2.0.tar.gz",
           "sha256": "f58fe711a9a78c00c80b3c3358af0cc0625923239e483b7592aac5206c0232f8",
           "squadron": ">=0.47.0",
           "permissions": {
@@ -3176,7 +3176,7 @@
         {
           "version": "0.1.0",
           "commit": "f43101b7d936843624b963dff6d218ef2714b451",
-          "archive": "https://github.com/Jgrasp/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
+          "archive": "https://github.com/akki-team/squadron-extensions/releases/download/jira-0.1.0/jira-0.1.0.tar.gz",
           "sha256": "6da29acc5bc22931fd72240a32f23ebebab56e2b653974cc2e550503494c0df5",
           "permissions": {
             "exec": [
